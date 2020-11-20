@@ -113,5 +113,10 @@ namespace ClipsFormsExample
             }
         }
 
+        private void button1_Click(object sender, EventArgs e)
+        {
+            clips.Eval($"(assert (element (formula {FactBox.Text})))");
+        }
+
     }
 }
