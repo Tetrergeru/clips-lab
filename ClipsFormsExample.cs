@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -99,8 +100,8 @@ namespace ClipsFormsExample
         {
             try
             {
-                var mass = float.Parse(massInput.Text);
-                clips.Eval($"(assert (element (formula {FactBox.Text}) (mass {mass})))");
+                float.Parse(massInput.Text, CultureInfo.InvariantCulture);
+                clips.Eval($"(assert (element (formula {FactBox.Text}) (mass {massInput.Text})))");
                 nextBtn_Click(sender, e);
             }
             catch (Exception exc)
