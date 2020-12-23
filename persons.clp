@@ -248,8 +248,8 @@
    (declare (salience 40))
    (element (formula Котик) (mass ?m0))
    =>
-   (assert (element (formula Тепло) (mass (* (/ ?m0 1) 0.6235484))))
-   (assert (appendmessagehalt (str-cat "Котик (" ?m0 ") -(0.6235484)> t (" (* (/ ?m0 1) 0.6235484) ")")))
+   (assert (element (formula Тепло) (mass (* (/ ?m0 1) 2))))
+   (assert (appendmessagehalt (str-cat "Котик (" ?m0 ") -(2)> t (" (* (/ ?m0 1) 2) ")")))
 )
 
 
