@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-
+using AutoFormsExample.Properties;
 using CLIPSNET;
 
 
@@ -20,47 +20,35 @@ namespace ClipsFormsExample
         public ClipsFormsExample()
         {
             InitializeComponent();
-        }
+            var facts = new AutoCompleteStringCollection();
+            facts.AddRange(Resources.facts.Split('\n'));
+            FactBox.AutoCompleteCustomSource = facts;
+            FactBox.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+            FactBox.AutoCompleteSource = AutoCompleteSource.CustomSource;
 
-        protected override void OnLoad(EventArgs e)
-        {
-            base.OnLoad(e);
+            codeBox.Text = Resources.persons;
+            resetBtn_Click(null, null);
         }
 
         private void HandleResponse()
         {
             //  Вытаскиаваем факт из ЭС
             String evalStr = "(find-fact ((?f ioproxy)) TRUE)";
-            FactAddressValue fv = (FactAddressValue)((MultifieldValue)clips.Eval(evalStr))[0];
+            FactAddressValue fv = (FactAddressValue) ((MultifieldValue) clips.Eval(evalStr))[0];
 
-            MultifieldValue damf = (MultifieldValue)fv["messages"];
-            MultifieldValue vamf = (MultifieldValue)fv["answers"];
+            MultifieldValue damf = (MultifieldValue) fv["messages"];
+            MultifieldValue vamf = (MultifieldValue) fv["answers"];
 
-            outputBox.Text += "Новая итерация : " + System.Environment.NewLine;
             for (int i = 0; i < damf.Count; i++)
             {
-                LexemeValue da = (LexemeValue)damf[i];
+                LexemeValue da = (LexemeValue) damf[i];
                 byte[] bytes = Encoding.Default.GetBytes(da.Value);
                 string message = Encoding.UTF8.GetString(bytes);
                 outputBox.Text += message + System.Environment.NewLine;
             }
 
-            var phrases = new List<string>();
-            if (vamf.Count > 0)
-            {
-                outputBox.Text += "----------------------------------------------------" + System.Environment.NewLine;
-                for (int i = 0; i < vamf.Count; i++)
-                {
-                    //  Варианты !!!!!
-                    LexemeValue va = (LexemeValue)vamf[i];
-                    byte[] bytes = Encoding.Default.GetBytes(va.Value);
-                    string message = Encoding.UTF8.GetString(bytes);
-                    phrases.Add(message);
-                    outputBox.Text += "Добавлен вариант для распознавания " + message + System.Environment.NewLine;
-                }
-            }
-            
-            if(vamf.Count == 0)
+
+            if (vamf.Count == 0)
                 clips.Eval("(assert (clearmessage))");
         }
 
@@ -72,18 +60,12 @@ namespace ClipsFormsExample
 
         private void resetBtn_Click(object sender, EventArgs e)
         {
-            outputBox.Text = "Выполнены команды Clear и Reset." + System.Environment.NewLine;
-            //  Здесь сохранение в файл, и потом инициализация через него
+            outputBox.Text = "Перезагрузка..." + System.Environment.NewLine;
             clips.Clear();
-
-            /*string stroka = codeBox.Text;
-            System.IO.File.WriteAllText("tmp.clp", codeBox.Text);
-            clips.Load("tmp.clp");*/
-
-            //  Так тоже можно - без промежуточного вывода в файл
             clips.LoadFromString(codeBox.Text);
-
             clips.Reset();
+            outputBox.Text = "Перезагрузка завершена." + System.Environment.NewLine;
+            nextBtn_Click(sender, e);
         }
 
         private void openFile_Click(object sender, EventArgs e)
@@ -91,7 +73,7 @@ namespace ClipsFormsExample
             if (clipsOpenFileDialog.ShowDialog() == DialogResult.OK)
             {
                 codeBox.Text = System.IO.File.ReadAllText(clipsOpenFileDialog.FileName);
-                Text = "Экспертная система \"Тиндер\" – " + clipsOpenFileDialog.FileName;
+                resetBtn_Click(sender, e);
             }
         }
 
@@ -115,8 +97,30 @@ namespace ClipsFormsExample
 
         private void button1_Click(object sender, EventArgs e)
         {
-            clips.Eval($"(assert (element (formula {FactBox.Text})))");
+            try
+            {
+                var mass = float.Parse(massInput.Text);
+                clips.Eval($"(assert (element (formula {FactBox.Text}) (mass {mass})))");
+                nextBtn_Click(sender, e);
+            }
+            catch (Exception exc)
+            {
+                MessageBox.Show($"{exc.Message}", "Что-то пошло не так", MessageBoxButtons.OK,
+                    MessageBoxIcon.Information);
+            }
         }
 
+        private void FactBox_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                button1_Click(sender, e);
+            }
+        }
+
+        private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }

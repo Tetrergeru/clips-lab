@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace ClipsFormsExample.Properties {
+namespace AutoFormsExample.Properties {
     using System;
     
     
@@ -19,7 +19,7 @@ namespace ClipsFormsExample.Properties {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     internal class Resources {
@@ -57,6 +57,85 @@ namespace ClipsFormsExample.Properties {
             }
             set {
                 resourceCulture = value;
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Тепло
+        ///Холод
+        ///Свет
+        ///Электролиз
+        ///Кислород
+        ///Водород
+        ///Фтор
+        ///Азот
+        ///Хлор
+        ///Углерод
+        ///Сера
+        ///Натрий
+        ///Калий
+        ///Кремний
+        ///Фосфор
+        ///Хром
+        ///Барий
+        ///Марганец
+        ///Ртуть
+        ///Алюминий
+        ///Железо
+        ///Медь
+        ///Свинец
+        ///Гелий
+        ///Золото
+        ///Озон
+        ///БелыйФосфор
+        ///ДигидрогенаМонооксид
+        ///ПероксидВодорода
+        ///МонооксидСеры
+        ///ДиоксидСеры
+        ///ТриоксидСеры
+        ///УгарныйГаз
+        ///УглекислыйГаз
+        ///ОксидНатрия
+        ///ОксидКалия
+        ///СернаяКислота
+        ///ПероксодисернаяКислота
+        ///СолянаяКислота
+        ///ХлорсульфоноваяКислота
+        ///ХлоридНатрия
+        ///ГипохлоритНатрия
+        ///ГидроксидНатрия
+        ///ГидросульфатНатрия
+        ///АзотнаяКислота
+        ///Аммиак
+        ///УгольнаяКислота
+        ///КарбонатНатрия
+        ///Метакремн [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string facts {
+            get {
+                return ResourceManager.GetString("facts", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to (deftemplate ioproxy		; шаблон факта-посредника для обмена информацией с GUI
+        ///	(slot fact-id)		; теоретически тут id факта для изменения
+        ///	(multislot answers)	; возможные ответы
+        ///	(multislot messages)	; исходящие сообщения
+        ///	(slot reaction)		; возможные ответы пользователя
+        ///	(slot value)		; выбор пользователя
+        ///	(slot restore)		; забыл зачем это поле
+        ///)
+        ///
+        ///(deffacts proxy-fact
+        ///	(ioproxy
+        ///		(fact-id 0112)	; это поле пока что не задействовано
+        ///		(value none)	; значение пустое
+        ///		(messages)	; мультислот messag [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string persons {
+            get {
+                return ResourceManager.GetString("persons", resourceCulture);
             }
         }
     }
