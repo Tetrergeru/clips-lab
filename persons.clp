@@ -76,13 +76,26 @@
 )
 
 
+(defrule compose
+	(declare (salience 80))
+	?e0 <- (element (formula ?e2) (mass ?m0))
+	?e1 <- (element (formula ?e2) (mass ?m1))
+	(test (neq ?e0 ?e1))
+	=>
+	(assert (appendmessagehalt (str-cat ?e2 " (" ?m0 ") + " ?e2 " (" ?m1 ")")))
+	(retract ?e0)
+	(retract ?e1)
+	(assert (element (formula ?e2) (mass (+ ?m0 ?m1))))
+)
+
+
 (defrule Электричество_ДигидрогенаМонооксид_Электролиз
    (declare (salience 40))
    (element (formula Электричество) (mass ?m0))
    (element (formula ДигидрогенаМонооксид) (mass ?m1))
    =>
-   (assert (element (formula Электролиз) (mass (* (/ (+ ?m0 ?m1) 1) 0.9190238))))
-   (assert (appendmessagehalt (str-cat "Электричество (" ?m0 ") + H2O (" ?m1 ") -(0.9190238)> e (" (* (/ (+ ?m0 ?m1) 1) 0.9190238) ")")))
+   (assert (element (formula Электролиз) (mass (* (/ (+ ?m0 ?m1) 1) 0.702))))
+   (assert (appendmessagehalt (str-cat "Электричество (" ?m0 ") + H2O (" ?m1 ") -(0.702)> e (" (* (/ (+ ?m0 ?m1) 1) 0.702) ")")))
 )
 
 
@@ -90,8 +103,8 @@
    (declare (salience 40))
    (element (formula Киноварь) (mass ?m0))
    =>
-   (assert (element (formula СульфидРтути) (mass (* (/ ?m0 1) 0.3082173))))
-   (assert (appendmessagehalt (str-cat "Киноварь (" ?m0 ") -(0.3082173)> HgS (" (* (/ ?m0 1) 0.3082173) ")")))
+   (assert (element (formula СульфидРтути) (mass (* (/ ?m0 1) 0.305))))
+   (assert (appendmessagehalt (str-cat "Киноварь (" ?m0 ") -(0.305)> HgS (" (* (/ ?m0 1) 0.305) ")")))
 )
 
 
@@ -99,10 +112,10 @@
    (declare (salience 40))
    (element (formula Воздух) (mass ?m0))
    =>
-   (assert (element (formula Кислород) (mass (* (/ ?m0 3) 0.7831073))))
-   (assert (element (formula Азот) (mass (* (/ ?m0 3) 0.7831073))))
-   (assert (element (formula УглекислыйГаз) (mass (* (/ ?m0 3) 0.7831073))))
-   (assert (appendmessagehalt (str-cat "Воздух (" ?m0 ") -(0.7831073)> O2 (" (* (/ ?m0 3) 0.7831073) ") + N2 (" (* (/ ?m0 3) 0.7831073) ") + CO2 (" (* (/ ?m0 3) 0.7831073) ")")))
+   (assert (element (formula Кислород) (mass (* (/ ?m0 3) 0.722))))
+   (assert (element (formula Азот) (mass (* (/ ?m0 3) 0.722))))
+   (assert (element (formula УглекислыйГаз) (mass (* (/ ?m0 3) 0.722))))
+   (assert (appendmessagehalt (str-cat "Воздух (" ?m0 ") -(0.722)> O2 (" (* (/ ?m0 3) 0.722) ") + N2 (" (* (/ ?m0 3) 0.722) ") + CO2 (" (* (/ ?m0 3) 0.722) ")")))
 )
 
 
@@ -110,8 +123,8 @@
    (declare (salience 40))
    (element (formula ЩавелеваяКислота) (mass ?m0))
    =>
-   (assert (element (formula ЩавелеваяКислота) (mass (* (/ ?m0 1) 0.4698831))))
-   (assert (appendmessagehalt (str-cat "ЩавелеваяКислота (" ?m0 ") -(0.4698831)> H2C2O4 (" (* (/ ?m0 1) 0.4698831) ")")))
+   (assert (element (formula ЩавелеваяКислота) (mass (* (/ ?m0 1) 0.312))))
+   (assert (appendmessagehalt (str-cat "ЩавелеваяКислота (" ?m0 ") -(0.312)> H2C2O4 (" (* (/ ?m0 1) 0.312) ")")))
 )
 
 
@@ -119,8 +132,8 @@
    (declare (salience 40))
    (element (formula Песок) (mass ?m0))
    =>
-   (assert (element (formula ОксидКремния) (mass (* (/ ?m0 1) 0.8942624))))
-   (assert (appendmessagehalt (str-cat "Песок (" ?m0 ") -(0.8942624)> SiO2 (" (* (/ ?m0 1) 0.8942624) ")")))
+   (assert (element (formula ОксидКремния) (mass (* (/ ?m0 1) 0.353))))
+   (assert (appendmessagehalt (str-cat "Песок (" ?m0 ") -(0.353)> SiO2 (" (* (/ ?m0 1) 0.353) ")")))
 )
 
 
@@ -128,8 +141,8 @@
    (declare (salience 40))
    (element (formula Известняк) (mass ?m0))
    =>
-   (assert (element (formula КарбонатКальция) (mass (* (/ ?m0 1) 0.8709831))))
-   (assert (appendmessagehalt (str-cat "Известняк (" ?m0 ") -(0.8709831)> CaCO3 (" (* (/ ?m0 1) 0.8709831) ")")))
+   (assert (element (formula КарбонатКальция) (mass (* (/ ?m0 1) 0.930))))
+   (assert (appendmessagehalt (str-cat "Известняк (" ?m0 ") -(0.930)> CaCO3 (" (* (/ ?m0 1) 0.930) ")")))
 )
 
 
@@ -137,8 +150,8 @@
    (declare (salience 40))
    (element (formula Вода) (mass ?m0))
    =>
-   (assert (element (formula ДигидрогенаМонооксид) (mass (* (/ ?m0 1) 0.3590202))))
-   (assert (appendmessagehalt (str-cat "Вода (" ?m0 ") -(0.3590202)> H2O (" (* (/ ?m0 1) 0.3590202) ")")))
+   (assert (element (formula ДигидрогенаМонооксид) (mass (* (/ ?m0 1) 0.332))))
+   (assert (appendmessagehalt (str-cat "Вода (" ?m0 ") -(0.332)> H2O (" (* (/ ?m0 1) 0.332) ")")))
 )
 
 
@@ -146,10 +159,10 @@
    (declare (salience 40))
    (element (formula Боксит) (mass ?m0))
    =>
-   (assert (element (formula ГидроксидАлюминия) (mass (* (/ ?m0 3) 0.8570454))))
-   (assert (element (formula ОксидЖелеза3) (mass (* (/ ?m0 3) 0.8570454))))
-   (assert (element (formula ОксидЖелеза) (mass (* (/ ?m0 3) 0.8570454))))
-   (assert (appendmessagehalt (str-cat "Боксит (" ?m0 ") -(0.8570454)> Al(OH)3 (" (* (/ ?m0 3) 0.8570454) ") + Fe2O3 (" (* (/ ?m0 3) 0.8570454) ") + FeO (" (* (/ ?m0 3) 0.8570454) ")")))
+   (assert (element (formula ГидроксидАлюминия) (mass (* (/ ?m0 3) 0.325))))
+   (assert (element (formula ОксидЖелеза3) (mass (* (/ ?m0 3) 0.325))))
+   (assert (element (formula ОксидЖелеза) (mass (* (/ ?m0 3) 0.325))))
+   (assert (appendmessagehalt (str-cat "Боксит (" ?m0 ") -(0.325)> Al(OH)3 (" (* (/ ?m0 3) 0.325) ") + Fe2O3 (" (* (/ ?m0 3) 0.325) ") + FeO (" (* (/ ?m0 3) 0.325) ")")))
 )
 
 
@@ -157,9 +170,9 @@
    (declare (salience 40))
    (element (formula Магнетит) (mass ?m0))
    =>
-   (assert (element (formula ОксидЖелеза) (mass (* (/ ?m0 2) 0.9065762))))
-   (assert (element (formula ОксидЖелеза3) (mass (* (/ ?m0 2) 0.9065762))))
-   (assert (appendmessagehalt (str-cat "Магнетит (" ?m0 ") -(0.9065762)> FeO (" (* (/ ?m0 2) 0.9065762) ") + Fe2O3 (" (* (/ ?m0 2) 0.9065762) ")")))
+   (assert (element (formula ОксидЖелеза) (mass (* (/ ?m0 2) 0.446))))
+   (assert (element (formula ОксидЖелеза3) (mass (* (/ ?m0 2) 0.446))))
+   (assert (appendmessagehalt (str-cat "Магнетит (" ?m0 ") -(0.446)> FeO (" (* (/ ?m0 2) 0.446) ") + Fe2O3 (" (* (/ ?m0 2) 0.446) ")")))
 )
 
 
@@ -167,8 +180,8 @@
    (declare (salience 40))
    (element (formula Малахит) (mass ?m0))
    =>
-   (assert (element (formula Малахит) (mass (* (/ ?m0 1) 0.7494608))))
-   (assert (appendmessagehalt (str-cat "Малахит (" ?m0 ") -(0.7494608)> (CuOH)2CO3 (" (* (/ ?m0 1) 0.7494608) ")")))
+   (assert (element (formula Малахит) (mass (* (/ ?m0 1) 0.888))))
+   (assert (appendmessagehalt (str-cat "Малахит (" ?m0 ") -(0.888)> (CuOH)2CO3 (" (* (/ ?m0 1) 0.888) ")")))
 )
 
 
@@ -176,8 +189,8 @@
    (declare (salience 40))
    (element (formula Соль) (mass ?m0))
    =>
-   (assert (element (formula ХлоридНатрия) (mass (* (/ ?m0 1) 0.8263629))))
-   (assert (appendmessagehalt (str-cat "Соль (" ?m0 ") -(0.8263629)> NaCl (" (* (/ ?m0 1) 0.8263629) ")")))
+   (assert (element (formula ХлоридНатрия) (mass (* (/ ?m0 1) 0.838))))
+   (assert (appendmessagehalt (str-cat "Соль (" ?m0 ") -(0.838)> NaCl (" (* (/ ?m0 1) 0.838) ")")))
 )
 
 
@@ -185,17 +198,17 @@
    (declare (salience 40))
    (element (formula Барит) (mass ?m0))
    =>
-   (assert (element (formula СульфатБария) (mass (* (/ ?m0 1) 0.6140369))))
-   (assert (appendmessagehalt (str-cat "Барит (" ?m0 ") -(0.6140369)> BaSO4 (" (* (/ ?m0 1) 0.6140369) ")")))
+   (assert (element (formula СульфатБария) (mass (* (/ ?m0 1) 0.512))))
+   (assert (appendmessagehalt (str-cat "Барит (" ?m0 ") -(0.512)> BaSO4 (" (* (/ ?m0 1) 0.512) ")")))
 )
 
 
-(defrule Пиролюзит_ОксидМарганца
+(defrule Пиролюзит_ОксидМарганца4
    (declare (salience 40))
    (element (formula Пиролюзит) (mass ?m0))
    =>
-   (assert (element (formula ОксидМарганца) (mass (* (/ ?m0 1) 0.6983861))))
-   (assert (appendmessagehalt (str-cat "Пиролюзит (" ?m0 ") -(0.6983861)> MnO2 (" (* (/ ?m0 1) 0.6983861) ")")))
+   (assert (element (formula ОксидМарганца4) (mass (* (/ ?m0 1) 0.467))))
+   (assert (appendmessagehalt (str-cat "Пиролюзит (" ?m0 ") -(0.467)> MnO2 (" (* (/ ?m0 1) 0.467) ")")))
 )
 
 
@@ -203,8 +216,8 @@
    (declare (salience 40))
    (element (formula Фосфорит) (mass ?m0))
    =>
-   (assert (element (formula ОксидФосфора) (mass (* (/ ?m0 1) 0.7280934))))
-   (assert (appendmessagehalt (str-cat "Фосфорит (" ?m0 ") -(0.7280934)> P4O10 (" (* (/ ?m0 1) 0.7280934) ")")))
+   (assert (element (formula ОксидФосфора) (mass (* (/ ?m0 1) 0.452))))
+   (assert (appendmessagehalt (str-cat "Фосфорит (" ?m0 ") -(0.452)> P4O10 (" (* (/ ?m0 1) 0.452) ")")))
 )
 
 
@@ -212,8 +225,8 @@
    (declare (salience 40))
    (element (formula Пирит) (mass ?m0))
    =>
-   (assert (element (formula СульфидЖелеза) (mass (* (/ ?m0 1) 0.878032))))
-   (assert (appendmessagehalt (str-cat "Пирит (" ?m0 ") -(0.878032)> FeS2 (" (* (/ ?m0 1) 0.878032) ")")))
+   (assert (element (formula СульфидЖелеза) (mass (* (/ ?m0 1) 0.607))))
+   (assert (appendmessagehalt (str-cat "Пирит (" ?m0 ") -(0.607)> FeS2 (" (* (/ ?m0 1) 0.607) ")")))
 )
 
 
@@ -221,8 +234,8 @@
    (declare (salience 40))
    (element (formula МедныйКолчедан) (mass ?m0))
    =>
-   (assert (element (formula Халькопирит) (mass (* (/ ?m0 1) 0.8869864))))
-   (assert (appendmessagehalt (str-cat "МедныйКолчедан (" ?m0 ") -(0.8869864)> CuFeS2 (" (* (/ ?m0 1) 0.8869864) ")")))
+   (assert (element (formula Халькопирит) (mass (* (/ ?m0 1) 0.925))))
+   (assert (appendmessagehalt (str-cat "МедныйКолчедан (" ?m0 ") -(0.925)> CuFeS2 (" (* (/ ?m0 1) 0.925) ")")))
 )
 
 
@@ -230,8 +243,8 @@
    (declare (salience 40))
    (element (formula Галенит) (mass ?m0))
    =>
-   (assert (element (formula СульфидСвинца) (mass (* (/ ?m0 1) 0.873366))))
-   (assert (appendmessagehalt (str-cat "Галенит (" ?m0 ") -(0.873366)> PbS (" (* (/ ?m0 1) 0.873366) ")")))
+   (assert (element (formula СульфидСвинца) (mass (* (/ ?m0 1) 0.323))))
+   (assert (appendmessagehalt (str-cat "Галенит (" ?m0 ") -(0.323)> PbS (" (* (/ ?m0 1) 0.323) ")")))
 )
 
 
@@ -239,8 +252,8 @@
    (declare (salience 40))
    (element (formula Уголь) (mass ?m0))
    =>
-   (assert (element (formula Углерод) (mass (* (/ ?m0 1) 0.7846088))))
-   (assert (appendmessagehalt (str-cat "Уголь (" ?m0 ") -(0.7846088)> C (" (* (/ ?m0 1) 0.7846088) ")")))
+   (assert (element (formula Углерод) (mass (* (/ ?m0 1) 0.528))))
+   (assert (appendmessagehalt (str-cat "Уголь (" ?m0 ") -(0.528)> C (" (* (/ ?m0 1) 0.528) ")")))
 )
 
 
@@ -248,8 +261,8 @@
    (declare (salience 40))
    (element (formula Котик) (mass ?m0))
    =>
-   (assert (element (formula Тепло) (mass (* (/ ?m0 1) 2))))
-   (assert (appendmessagehalt (str-cat "Котик (" ?m0 ") -(2)> t (" (* (/ ?m0 1) 2) ")")))
+   (assert (element (formula Тепло) (mass (* (/ ?m0 1) 0.639))))
+   (assert (appendmessagehalt (str-cat "Котик (" ?m0 ") -(0.639)> t (" (* (/ ?m0 1) 0.639) ")")))
 )
 
 
@@ -258,29 +271,9 @@
    (element (formula Кислород) (mass ?m0))
    (element (formula Водород) (mass ?m1))
    =>
-   (assert (element (formula ДигидрогенаМонооксид) (mass (* (/ (+ ?m0 ?m1) 2) 0.7253122))))
-   (assert (element (formula Тепло) (mass (* (/ (+ ?m0 ?m1) 2) 0.7253122))))
-   (assert (appendmessagehalt (str-cat "O2 (" ?m0 ") + H2 (" ?m1 ") -(0.7253122)> H2O (" (* (/ (+ ?m0 ?m1) 2) 0.7253122) ") + t (" (* (/ (+ ?m0 ?m1) 2) 0.7253122) ")")))
-)
-
-
-(defrule Кислород_Тепло_Озон
-   (declare (salience 40))
-   (element (formula Кислород) (mass ?m0))
-   (element (formula Тепло) (mass ?m1))
-   =>
-   (assert (element (formula Озон) (mass (* (/ (+ ?m0 ?m1) 1) 0.403714))))
-   (assert (appendmessagehalt (str-cat "O2 (" ?m0 ") + t (" ?m1 ") -(0.403714)> O3 (" (* (/ (+ ?m0 ?m1) 1) 0.403714) ")")))
-)
-
-
-(defrule Кислород_Свет_Озон
-   (declare (salience 40))
-   (element (formula Кислород) (mass ?m0))
-   (element (formula Свет) (mass ?m1))
-   =>
-   (assert (element (formula Озон) (mass (* (/ (+ ?m0 ?m1) 1) 0.5229448))))
-   (assert (appendmessagehalt (str-cat "O2 (" ?m0 ") + hv (" ?m1 ") -(0.5229448)> O3 (" (* (/ (+ ?m0 ?m1) 1) 0.5229448) ")")))
+   (assert (element (formula ДигидрогенаМонооксид) (mass (* (/ (+ ?m0 ?m1) 2) 0.549))))
+   (assert (element (formula Тепло) (mass (* (/ (+ ?m0 ?m1) 2) 0.549))))
+   (assert (appendmessagehalt (str-cat "O2 (" ?m0 ") + H2 (" ?m1 ") -(0.549)> H2O (" (* (/ (+ ?m0 ?m1) 2) 0.549) ") + t (" (* (/ (+ ?m0 ?m1) 2) 0.549) ")")))
 )
 
 
@@ -288,9 +281,9 @@
    (declare (salience 40))
    (element (formula Озон) (mass ?m0))
    =>
-   (assert (element (formula Кислород) (mass (* (/ ?m0 2) 0.7094164))))
-   (assert (element (formula Тепло) (mass (* (/ ?m0 2) 0.7094164))))
-   (assert (appendmessagehalt (str-cat "O3 (" ?m0 ") -(0.7094164)> O2 (" (* (/ ?m0 2) 0.7094164) ") + t (" (* (/ ?m0 2) 0.7094164) ")")))
+   (assert (element (formula Кислород) (mass (* (/ ?m0 2) 0.389))))
+   (assert (element (formula Тепло) (mass (* (/ ?m0 2) 0.389))))
+   (assert (appendmessagehalt (str-cat "O3 (" ?m0 ") -(0.389)> O2 (" (* (/ ?m0 2) 0.389) ") + t (" (* (/ ?m0 2) 0.389) ")")))
 )
 
 
@@ -299,9 +292,9 @@
    (element (formula ДигидрогенаМонооксид) (mass ?m0))
    (element (formula Электролиз) (mass ?m1))
    =>
-   (assert (element (formula Водород) (mass (* (/ (+ ?m0 ?m1) 2) 0.8391053))))
-   (assert (element (formula Кислород) (mass (* (/ (+ ?m0 ?m1) 2) 0.8391053))))
-   (assert (appendmessagehalt (str-cat "H2O (" ?m0 ") + e (" ?m1 ") -(0.8391053)> H2 (" (* (/ (+ ?m0 ?m1) 2) 0.8391053) ") + O2 (" (* (/ (+ ?m0 ?m1) 2) 0.8391053) ")")))
+   (assert (element (formula Водород) (mass (* (/ (+ ?m0 ?m1) 2) 0.678))))
+   (assert (element (formula Кислород) (mass (* (/ (+ ?m0 ?m1) 2) 0.678))))
+   (assert (appendmessagehalt (str-cat "H2O (" ?m0 ") + e (" ?m1 ") -(0.678)> H2 (" (* (/ (+ ?m0 ?m1) 2) 0.678) ") + O2 (" (* (/ (+ ?m0 ?m1) 2) 0.678) ")")))
 )
 
 
@@ -310,10 +303,10 @@
    (element (formula Сера) (mass ?m0))
    (element (formula Кислород) (mass ?m1))
    =>
-   (assert (element (formula МонооксидСеры) (mass (* (/ (+ ?m0 ?m1) 3) 0.5375981))))
-   (assert (element (formula ДиоксидСеры) (mass (* (/ (+ ?m0 ?m1) 3) 0.5375981))))
-   (assert (element (formula ТриоксидСеры) (mass (* (/ (+ ?m0 ?m1) 3) 0.5375981))))
-   (assert (appendmessagehalt (str-cat "S (" ?m0 ") + O2 (" ?m1 ") -(0.5375981)> SO (" (* (/ (+ ?m0 ?m1) 3) 0.5375981) ") + SO2 (" (* (/ (+ ?m0 ?m1) 3) 0.5375981) ") + SO3 (" (* (/ (+ ?m0 ?m1) 3) 0.5375981) ")")))
+   (assert (element (formula МонооксидСеры) (mass (* (/ (+ ?m0 ?m1) 3) 0.796))))
+   (assert (element (formula ДиоксидСеры) (mass (* (/ (+ ?m0 ?m1) 3) 0.796))))
+   (assert (element (formula ТриоксидСеры) (mass (* (/ (+ ?m0 ?m1) 3) 0.796))))
+   (assert (appendmessagehalt (str-cat "S (" ?m0 ") + O2 (" ?m1 ") -(0.796)> SO (" (* (/ (+ ?m0 ?m1) 3) 0.796) ") + SO2 (" (* (/ (+ ?m0 ?m1) 3) 0.796) ") + SO3 (" (* (/ (+ ?m0 ?m1) 3) 0.796) ")")))
 )
 
 
@@ -322,8 +315,8 @@
    (element (formula Фтор) (mass ?m0))
    (element (formula Кислород) (mass ?m1))
    =>
-   (assert (element (formula ОксидФтора) (mass (* (/ (+ ?m0 ?m1) 1) 0.7799194))))
-   (assert (appendmessagehalt (str-cat "F2 (" ?m0 ") + O2 (" ?m1 ") -(0.7799194)> F2O (" (* (/ (+ ?m0 ?m1) 1) 0.7799194) ")")))
+   (assert (element (formula ОксидФтора) (mass (* (/ (+ ?m0 ?m1) 1) 0.688))))
+   (assert (appendmessagehalt (str-cat "F2 (" ?m0 ") + O2 (" ?m1 ") -(0.688)> F2O (" (* (/ (+ ?m0 ?m1) 1) 0.688) ")")))
 )
 
 
@@ -332,12 +325,12 @@
    (element (formula Азот) (mass ?m0))
    (element (formula Кислород) (mass ?m1))
    =>
-   (assert (element (formula ОксидАзота1) (mass (* (/ (+ ?m0 ?m1) 5) 0.3087668))))
-   (assert (element (formula ОксидАзота2) (mass (* (/ (+ ?m0 ?m1) 5) 0.3087668))))
-   (assert (element (formula ОксидАзота3) (mass (* (/ (+ ?m0 ?m1) 5) 0.3087668))))
-   (assert (element (formula ОксидАзота4) (mass (* (/ (+ ?m0 ?m1) 5) 0.3087668))))
-   (assert (element (formula ОксидАзота5) (mass (* (/ (+ ?m0 ?m1) 5) 0.3087668))))
-   (assert (appendmessagehalt (str-cat "N2 (" ?m0 ") + O2 (" ?m1 ") -(0.3087668)> N2O (" (* (/ (+ ?m0 ?m1) 5) 0.3087668) ") + NO (" (* (/ (+ ?m0 ?m1) 5) 0.3087668) ") + N2O3 (" (* (/ (+ ?m0 ?m1) 5) 0.3087668) ") + NO2 (" (* (/ (+ ?m0 ?m1) 5) 0.3087668) ") + N2O5 (" (* (/ (+ ?m0 ?m1) 5) 0.3087668) ")")))
+   (assert (element (formula ОксидАзота1) (mass (* (/ (+ ?m0 ?m1) 5) 0.642))))
+   (assert (element (formula ОксидАзота2) (mass (* (/ (+ ?m0 ?m1) 5) 0.642))))
+   (assert (element (formula ОксидАзота3) (mass (* (/ (+ ?m0 ?m1) 5) 0.642))))
+   (assert (element (formula ОксидАзота4) (mass (* (/ (+ ?m0 ?m1) 5) 0.642))))
+   (assert (element (formula ОксидАзота5) (mass (* (/ (+ ?m0 ?m1) 5) 0.642))))
+   (assert (appendmessagehalt (str-cat "N2 (" ?m0 ") + O2 (" ?m1 ") -(0.642)> N2O (" (* (/ (+ ?m0 ?m1) 5) 0.642) ") + NO (" (* (/ (+ ?m0 ?m1) 5) 0.642) ") + N2O3 (" (* (/ (+ ?m0 ?m1) 5) 0.642) ") + NO2 (" (* (/ (+ ?m0 ?m1) 5) 0.642) ") + N2O5 (" (* (/ (+ ?m0 ?m1) 5) 0.642) ")")))
 )
 
 
@@ -346,8 +339,8 @@
    (element (formula ОксидАзота2) (mass ?m0))
    (element (formula Кислород) (mass ?m1))
    =>
-   (assert (element (formula ОксидАзота4) (mass (* (/ (+ ?m0 ?m1) 1) 0.7427688))))
-   (assert (appendmessagehalt (str-cat "NO (" ?m0 ") + O2 (" ?m1 ") -(0.7427688)> NO2 (" (* (/ (+ ?m0 ?m1) 1) 0.7427688) ")")))
+   (assert (element (formula ОксидАзота4) (mass (* (/ (+ ?m0 ?m1) 1) 0.812))))
+   (assert (appendmessagehalt (str-cat "NO (" ?m0 ") + O2 (" ?m1 ") -(0.812)> NO2 (" (* (/ (+ ?m0 ?m1) 1) 0.812) ")")))
 )
 
 
@@ -356,10 +349,10 @@
    (element (formula Углерод) (mass ?m0))
    (element (formula Кислород) (mass ?m1))
    =>
-   (assert (element (formula УгарныйГаз) (mass (* (/ (+ ?m0 ?m1) 3) 0.6688216))))
-   (assert (element (formula УглекислыйГаз) (mass (* (/ (+ ?m0 ?m1) 3) 0.6688216))))
-   (assert (element (formula Тепло) (mass (* (/ (+ ?m0 ?m1) 3) 0.6688216))))
-   (assert (appendmessagehalt (str-cat "C (" ?m0 ") + O2 (" ?m1 ") -(0.6688216)> CO (" (* (/ (+ ?m0 ?m1) 3) 0.6688216) ") + CO2 (" (* (/ (+ ?m0 ?m1) 3) 0.6688216) ") + t (" (* (/ (+ ?m0 ?m1) 3) 0.6688216) ")")))
+   (assert (element (formula УгарныйГаз) (mass (* (/ (+ ?m0 ?m1) 3) 0.549))))
+   (assert (element (formula УглекислыйГаз) (mass (* (/ (+ ?m0 ?m1) 3) 0.549))))
+   (assert (element (formula Тепло) (mass (* (/ (+ ?m0 ?m1) 3) 0.549))))
+   (assert (appendmessagehalt (str-cat "C (" ?m0 ") + O2 (" ?m1 ") -(0.549)> CO (" (* (/ (+ ?m0 ?m1) 3) 0.549) ") + CO2 (" (* (/ (+ ?m0 ?m1) 3) 0.549) ") + t (" (* (/ (+ ?m0 ?m1) 3) 0.549) ")")))
 )
 
 
@@ -368,9 +361,9 @@
    (element (formula Натрий) (mass ?m0))
    (element (formula Кислород) (mass ?m1))
    =>
-   (assert (element (formula ОксидНатрия) (mass (* (/ (+ ?m0 ?m1) 2) 0.3239676))))
-   (assert (element (formula Тепло) (mass (* (/ (+ ?m0 ?m1) 2) 0.3239676))))
-   (assert (appendmessagehalt (str-cat "Na (" ?m0 ") + O2 (" ?m1 ") -(0.3239676)> NaO (" (* (/ (+ ?m0 ?m1) 2) 0.3239676) ") + t (" (* (/ (+ ?m0 ?m1) 2) 0.3239676) ")")))
+   (assert (element (formula ОксидНатрия) (mass (* (/ (+ ?m0 ?m1) 2) 0.948))))
+   (assert (element (formula Тепло) (mass (* (/ (+ ?m0 ?m1) 2) 0.948))))
+   (assert (appendmessagehalt (str-cat "Na (" ?m0 ") + O2 (" ?m1 ") -(0.948)> NaO (" (* (/ (+ ?m0 ?m1) 2) 0.948) ") + t (" (* (/ (+ ?m0 ?m1) 2) 0.948) ")")))
 )
 
 
@@ -379,9 +372,9 @@
    (element (formula Калий) (mass ?m0))
    (element (formula Кислород) (mass ?m1))
    =>
-   (assert (element (formula ОксидКалия) (mass (* (/ (+ ?m0 ?m1) 2) 0.3007154))))
-   (assert (element (formula Тепло) (mass (* (/ (+ ?m0 ?m1) 2) 0.3007154))))
-   (assert (appendmessagehalt (str-cat "K (" ?m0 ") + O2 (" ?m1 ") -(0.3007154)> K2O (" (* (/ (+ ?m0 ?m1) 2) 0.3007154) ") + t (" (* (/ (+ ?m0 ?m1) 2) 0.3007154) ")")))
+   (assert (element (formula ОксидКалия) (mass (* (/ (+ ?m0 ?m1) 2) 0.811))))
+   (assert (element (formula Тепло) (mass (* (/ (+ ?m0 ?m1) 2) 0.811))))
+   (assert (appendmessagehalt (str-cat "K (" ?m0 ") + O2 (" ?m1 ") -(0.811)> K2O (" (* (/ (+ ?m0 ?m1) 2) 0.811) ") + t (" (* (/ (+ ?m0 ?m1) 2) 0.811) ")")))
 )
 
 
@@ -390,8 +383,8 @@
    (element (formula ТриоксидСеры) (mass ?m0))
    (element (formula ДигидрогенаМонооксид) (mass ?m1))
    =>
-   (assert (element (formula СернаяКислота) (mass (* (/ (+ ?m0 ?m1) 1) 0.6429082))))
-   (assert (appendmessagehalt (str-cat "SO3 (" ?m0 ") + H2O (" ?m1 ") -(0.6429082)> H2SO4 (" (* (/ (+ ?m0 ?m1) 1) 0.6429082) ")")))
+   (assert (element (formula СернаяКислота) (mass (* (/ (+ ?m0 ?m1) 1) 0.385))))
+   (assert (appendmessagehalt (str-cat "SO3 (" ?m0 ") + H2O (" ?m1 ") -(0.385)> H2SO4 (" (* (/ (+ ?m0 ?m1) 1) 0.385) ")")))
 )
 
 
@@ -400,9 +393,9 @@
    (element (formula СернаяКислота) (mass ?m0))
    (element (formula Электролиз) (mass ?m1))
    =>
-   (assert (element (formula ПероксодисернаяКислота) (mass (* (/ (+ ?m0 ?m1) 2) 0.4277372))))
-   (assert (element (formula Водород) (mass (* (/ (+ ?m0 ?m1) 2) 0.4277372))))
-   (assert (appendmessagehalt (str-cat "H2SO4 (" ?m0 ") + e (" ?m1 ") -(0.4277372)> H2S2O8 (" (* (/ (+ ?m0 ?m1) 2) 0.4277372) ") + H2 (" (* (/ (+ ?m0 ?m1) 2) 0.4277372) ")")))
+   (assert (element (formula ПероксодисернаяКислота) (mass (* (/ (+ ?m0 ?m1) 2) 0.358))))
+   (assert (element (formula Водород) (mass (* (/ (+ ?m0 ?m1) 2) 0.358))))
+   (assert (appendmessagehalt (str-cat "H2SO4 (" ?m0 ") + e (" ?m1 ") -(0.358)> H2S2O8 (" (* (/ (+ ?m0 ?m1) 2) 0.358) ") + H2 (" (* (/ (+ ?m0 ?m1) 2) 0.358) ")")))
 )
 
 
@@ -411,9 +404,9 @@
    (element (formula ПероксодисернаяКислота) (mass ?m0))
    (element (formula ДигидрогенаМонооксид) (mass ?m1))
    =>
-   (assert (element (formula ПероксидВодорода) (mass (* (/ (+ ?m0 ?m1) 2) 0.4125701))))
-   (assert (element (formula СернаяКислота) (mass (* (/ (+ ?m0 ?m1) 2) 0.4125701))))
-   (assert (appendmessagehalt (str-cat "H2S2O8 (" ?m0 ") + H2O (" ?m1 ") -(0.4125701)> H2O2 (" (* (/ (+ ?m0 ?m1) 2) 0.4125701) ") + H2SO4 (" (* (/ (+ ?m0 ?m1) 2) 0.4125701) ")")))
+   (assert (element (formula ПероксидВодорода) (mass (* (/ (+ ?m0 ?m1) 2) 0.871))))
+   (assert (element (formula СернаяКислота) (mass (* (/ (+ ?m0 ?m1) 2) 0.871))))
+   (assert (appendmessagehalt (str-cat "H2S2O8 (" ?m0 ") + H2O (" ?m1 ") -(0.871)> H2O2 (" (* (/ (+ ?m0 ?m1) 2) 0.871) ") + H2SO4 (" (* (/ (+ ?m0 ?m1) 2) 0.871) ")")))
 )
 
 
@@ -422,8 +415,8 @@
    (element (formula СолянаяКислота) (mass ?m0))
    (element (formula ДиоксидСеры) (mass ?m1))
    =>
-   (assert (element (formula ХлорсульфоноваяКислота) (mass (* (/ (+ ?m0 ?m1) 1) 0.3928776))))
-   (assert (appendmessagehalt (str-cat "HCl (" ?m0 ") + SO2 (" ?m1 ") -(0.3928776)> HSO3Cl (" (* (/ (+ ?m0 ?m1) 1) 0.3928776) ")")))
+   (assert (element (formula ХлорсульфоноваяКислота) (mass (* (/ (+ ?m0 ?m1) 1) 0.347))))
+   (assert (appendmessagehalt (str-cat "HCl (" ?m0 ") + SO2 (" ?m1 ") -(0.347)> HSO3Cl (" (* (/ (+ ?m0 ?m1) 1) 0.347) ")")))
 )
 
 
@@ -432,8 +425,8 @@
    (element (formula Водород) (mass ?m0))
    (element (formula Хлор) (mass ?m1))
    =>
-   (assert (element (formula СолянаяКислота) (mass (* (/ (+ ?m0 ?m1) 1) 0.6755655))))
-   (assert (appendmessagehalt (str-cat "H2 (" ?m0 ") + Cl2 (" ?m1 ") -(0.6755655)> HCl (" (* (/ (+ ?m0 ?m1) 1) 0.6755655) ")")))
+   (assert (element (formula СолянаяКислота) (mass (* (/ (+ ?m0 ?m1) 1) 0.725))))
+   (assert (appendmessagehalt (str-cat "H2 (" ?m0 ") + Cl2 (" ?m1 ") -(0.725)> HCl (" (* (/ (+ ?m0 ?m1) 1) 0.725) ")")))
 )
 
 
@@ -442,10 +435,10 @@
    (element (formula ГидроксидНатрия) (mass ?m0))
    (element (formula Хлор) (mass ?m1))
    =>
-   (assert (element (formula ХлоридНатрия) (mass (* (/ (+ ?m0 ?m1) 3) 0.5959818))))
-   (assert (element (formula ГипохлоритНатрия) (mass (* (/ (+ ?m0 ?m1) 3) 0.5959818))))
-   (assert (element (formula ДигидрогенаМонооксид) (mass (* (/ (+ ?m0 ?m1) 3) 0.5959818))))
-   (assert (appendmessagehalt (str-cat "NaOH (" ?m0 ") + Cl2 (" ?m1 ") -(0.5959818)> NaCl (" (* (/ (+ ?m0 ?m1) 3) 0.5959818) ") + NaOCl (" (* (/ (+ ?m0 ?m1) 3) 0.5959818) ") + H2O (" (* (/ (+ ?m0 ?m1) 3) 0.5959818) ")")))
+   (assert (element (formula ХлоридНатрия) (mass (* (/ (+ ?m0 ?m1) 3) 0.529))))
+   (assert (element (formula ГипохлоритНатрия) (mass (* (/ (+ ?m0 ?m1) 3) 0.529))))
+   (assert (element (formula ДигидрогенаМонооксид) (mass (* (/ (+ ?m0 ?m1) 3) 0.529))))
+   (assert (appendmessagehalt (str-cat "NaOH (" ?m0 ") + Cl2 (" ?m1 ") -(0.529)> NaCl (" (* (/ (+ ?m0 ?m1) 3) 0.529) ") + NaOCl (" (* (/ (+ ?m0 ?m1) 3) 0.529) ") + H2O (" (* (/ (+ ?m0 ?m1) 3) 0.529) ")")))
 )
 
 
@@ -454,9 +447,9 @@
    (element (formula Натрий) (mass ?m0))
    (element (formula ДигидрогенаМонооксид) (mass ?m1))
    =>
-   (assert (element (formula ГидроксидНатрия) (mass (* (/ (+ ?m0 ?m1) 2) 0.7570152))))
-   (assert (element (formula Водород) (mass (* (/ (+ ?m0 ?m1) 2) 0.7570152))))
-   (assert (appendmessagehalt (str-cat "Na (" ?m0 ") + H2O (" ?m1 ") -(0.7570152)> NaOH (" (* (/ (+ ?m0 ?m1) 2) 0.7570152) ") + H2 (" (* (/ (+ ?m0 ?m1) 2) 0.7570152) ")")))
+   (assert (element (formula ГидроксидНатрия) (mass (* (/ (+ ?m0 ?m1) 2) 0.786))))
+   (assert (element (formula Водород) (mass (* (/ (+ ?m0 ?m1) 2) 0.786))))
+   (assert (appendmessagehalt (str-cat "Na (" ?m0 ") + H2O (" ?m1 ") -(0.786)> NaOH (" (* (/ (+ ?m0 ?m1) 2) 0.786) ") + H2 (" (* (/ (+ ?m0 ?m1) 2) 0.786) ")")))
 )
 
 
@@ -465,9 +458,9 @@
    (element (formula ХлоридНатрия) (mass ?m0))
    (element (formula СернаяКислота) (mass ?m1))
    =>
-   (assert (element (formula ГидросульфатНатрия) (mass (* (/ (+ ?m0 ?m1) 2) 0.3083471))))
-   (assert (element (formula СолянаяКислота) (mass (* (/ (+ ?m0 ?m1) 2) 0.3083471))))
-   (assert (appendmessagehalt (str-cat "NaCl (" ?m0 ") + H2SO4 (" ?m1 ") -(0.3083471)> NaHSO4 (" (* (/ (+ ?m0 ?m1) 2) 0.3083471) ") + HCl (" (* (/ (+ ?m0 ?m1) 2) 0.3083471) ")")))
+   (assert (element (formula ГидросульфатНатрия) (mass (* (/ (+ ?m0 ?m1) 2) 0.664))))
+   (assert (element (formula СолянаяКислота) (mass (* (/ (+ ?m0 ?m1) 2) 0.664))))
+   (assert (appendmessagehalt (str-cat "NaCl (" ?m0 ") + H2SO4 (" ?m1 ") -(0.664)> NaHSO4 (" (* (/ (+ ?m0 ?m1) 2) 0.664) ") + HCl (" (* (/ (+ ?m0 ?m1) 2) 0.664) ")")))
 )
 
 
@@ -476,8 +469,8 @@
    (element (formula Калий) (mass ?m0))
    (element (formula ДигидрогенаМонооксид) (mass ?m1))
    =>
-   (assert (element (formula ГидроксидКалия) (mass (* (/ (+ ?m0 ?m1) 1) 0.489677))))
-   (assert (appendmessagehalt (str-cat "K (" ?m0 ") + H2O (" ?m1 ") -(0.489677)> KOH (" (* (/ (+ ?m0 ?m1) 1) 0.489677) ")")))
+   (assert (element (formula ГидроксидКалия) (mass (* (/ (+ ?m0 ?m1) 1) 0.775))))
+   (assert (appendmessagehalt (str-cat "K (" ?m0 ") + H2O (" ?m1 ") -(0.775)> KOH (" (* (/ (+ ?m0 ?m1) 1) 0.775) ")")))
 )
 
 
@@ -486,10 +479,10 @@
    (element (formula АзотнаяКислота) (mass ?m0))
    (element (formula Свет) (mass ?m1))
    =>
-   (assert (element (formula ОксидАзота2) (mass (* (/ (+ ?m0 ?m1) 3) 0.8885624))))
-   (assert (element (formula ДигидрогенаМонооксид) (mass (* (/ (+ ?m0 ?m1) 3) 0.8885624))))
-   (assert (element (formula Кислород) (mass (* (/ (+ ?m0 ?m1) 3) 0.8885624))))
-   (assert (appendmessagehalt (str-cat "HNO3 (" ?m0 ") + hv (" ?m1 ") -(0.8885624)> NO (" (* (/ (+ ?m0 ?m1) 3) 0.8885624) ") + H2O (" (* (/ (+ ?m0 ?m1) 3) 0.8885624) ") + O2 (" (* (/ (+ ?m0 ?m1) 3) 0.8885624) ")")))
+   (assert (element (formula ОксидАзота2) (mass (* (/ (+ ?m0 ?m1) 3) 0.482))))
+   (assert (element (formula ДигидрогенаМонооксид) (mass (* (/ (+ ?m0 ?m1) 3) 0.482))))
+   (assert (element (formula Кислород) (mass (* (/ (+ ?m0 ?m1) 3) 0.482))))
+   (assert (appendmessagehalt (str-cat "HNO3 (" ?m0 ") + hv (" ?m1 ") -(0.482)> NO (" (* (/ (+ ?m0 ?m1) 3) 0.482) ") + H2O (" (* (/ (+ ?m0 ?m1) 3) 0.482) ") + O2 (" (* (/ (+ ?m0 ?m1) 3) 0.482) ")")))
 )
 
 
@@ -498,10 +491,10 @@
    (element (formula Метан) (mass ?m0))
    (element (formula Кислород) (mass ?m1))
    =>
-   (assert (element (formula ОксидАзота2) (mass (* (/ (+ ?m0 ?m1) 3) 0.9035382))))
-   (assert (element (formula ДигидрогенаМонооксид) (mass (* (/ (+ ?m0 ?m1) 3) 0.9035382))))
-   (assert (element (formula Тепло) (mass (* (/ (+ ?m0 ?m1) 3) 0.9035382))))
-   (assert (appendmessagehalt (str-cat "NH3 (" ?m0 ") + O2 (" ?m1 ") -(0.9035382)> NO (" (* (/ (+ ?m0 ?m1) 3) 0.9035382) ") + H2O (" (* (/ (+ ?m0 ?m1) 3) 0.9035382) ") + t (" (* (/ (+ ?m0 ?m1) 3) 0.9035382) ")")))
+   (assert (element (formula ОксидАзота2) (mass (* (/ (+ ?m0 ?m1) 3) 0.452))))
+   (assert (element (formula ДигидрогенаМонооксид) (mass (* (/ (+ ?m0 ?m1) 3) 0.452))))
+   (assert (element (formula Тепло) (mass (* (/ (+ ?m0 ?m1) 3) 0.452))))
+   (assert (appendmessagehalt (str-cat "NH3 (" ?m0 ") + O2 (" ?m1 ") -(0.452)> NO (" (* (/ (+ ?m0 ?m1) 3) 0.452) ") + H2O (" (* (/ (+ ?m0 ?m1) 3) 0.452) ") + t (" (* (/ (+ ?m0 ?m1) 3) 0.452) ")")))
 )
 
 
@@ -511,9 +504,9 @@
    (element (formula Кислород) (mass ?m1))
    (element (formula ДигидрогенаМонооксид) (mass ?m2))
    =>
-   (assert (element (formula АзотнаяКислота) (mass (* (/ (+ ?m0 ?m1 ?m2) 2) 0.947922))))
-   (assert (element (formula Тепло) (mass (* (/ (+ ?m0 ?m1 ?m2) 2) 0.947922))))
-   (assert (appendmessagehalt (str-cat "NO2 (" ?m0 ") + O2 (" ?m1 ") + H2O (" ?m2 ") -(0.947922)> HNO3 (" (* (/ (+ ?m0 ?m1 ?m2) 2) 0.947922) ") + t (" (* (/ (+ ?m0 ?m1 ?m2) 2) 0.947922) ")")))
+   (assert (element (formula АзотнаяКислота) (mass (* (/ (+ ?m0 ?m1 ?m2) 2) 0.310))))
+   (assert (element (formula Тепло) (mass (* (/ (+ ?m0 ?m1 ?m2) 2) 0.310))))
+   (assert (appendmessagehalt (str-cat "NO2 (" ?m0 ") + O2 (" ?m1 ") + H2O (" ?m2 ") -(0.310)> HNO3 (" (* (/ (+ ?m0 ?m1 ?m2) 2) 0.310) ") + t (" (* (/ (+ ?m0 ?m1 ?m2) 2) 0.310) ")")))
 )
 
 
@@ -522,9 +515,9 @@
    (element (formula Азот) (mass ?m0))
    (element (formula Водород) (mass ?m1))
    =>
-   (assert (element (formula Метан) (mass (* (/ (+ ?m0 ?m1) 2) 0.4593299))))
-   (assert (element (formula Тепло) (mass (* (/ (+ ?m0 ?m1) 2) 0.4593299))))
-   (assert (appendmessagehalt (str-cat "N2 (" ?m0 ") + H2 (" ?m1 ") -(0.4593299)> NH3 (" (* (/ (+ ?m0 ?m1) 2) 0.4593299) ") + t (" (* (/ (+ ?m0 ?m1) 2) 0.4593299) ")")))
+   (assert (element (formula Метан) (mass (* (/ (+ ?m0 ?m1) 2) 0.411))))
+   (assert (element (formula Тепло) (mass (* (/ (+ ?m0 ?m1) 2) 0.411))))
+   (assert (appendmessagehalt (str-cat "N2 (" ?m0 ") + H2 (" ?m1 ") -(0.411)> NH3 (" (* (/ (+ ?m0 ?m1) 2) 0.411) ") + t (" (* (/ (+ ?m0 ?m1) 2) 0.411) ")")))
 )
 
 
@@ -533,9 +526,9 @@
    (element (formula Метан) (mass ?m0))
    (element (formula Тепло) (mass ?m1))
    =>
-   (assert (element (formula Азот) (mass (* (/ (+ ?m0 ?m1) 2) 0.3066688))))
-   (assert (element (formula Водород) (mass (* (/ (+ ?m0 ?m1) 2) 0.3066688))))
-   (assert (appendmessagehalt (str-cat "NH3 (" ?m0 ") + t (" ?m1 ") -(0.3066688)> N2 (" (* (/ (+ ?m0 ?m1) 2) 0.3066688) ") + H2 (" (* (/ (+ ?m0 ?m1) 2) 0.3066688) ")")))
+   (assert (element (formula Азот) (mass (* (/ (+ ?m0 ?m1) 2) 0.841))))
+   (assert (element (formula Водород) (mass (* (/ (+ ?m0 ?m1) 2) 0.841))))
+   (assert (appendmessagehalt (str-cat "NH3 (" ?m0 ") + t (" ?m1 ") -(0.841)> N2 (" (* (/ (+ ?m0 ?m1) 2) 0.841) ") + H2 (" (* (/ (+ ?m0 ?m1) 2) 0.841) ")")))
 )
 
 
@@ -544,8 +537,8 @@
    (element (formula ДигидрогенаМонооксид) (mass ?m0))
    (element (formula УглекислыйГаз) (mass ?m1))
    =>
-   (assert (element (formula УгольнаяКислота) (mass (* (/ (+ ?m0 ?m1) 1) 0.6156793))))
-   (assert (appendmessagehalt (str-cat "H2O (" ?m0 ") + CO2 (" ?m1 ") -(0.6156793)> H2CO3 (" (* (/ (+ ?m0 ?m1) 1) 0.6156793) ")")))
+   (assert (element (formula УгольнаяКислота) (mass (* (/ (+ ?m0 ?m1) 1) 0.374))))
+   (assert (appendmessagehalt (str-cat "H2O (" ?m0 ") + CO2 (" ?m1 ") -(0.374)> H2CO3 (" (* (/ (+ ?m0 ?m1) 1) 0.374) ")")))
 )
 
 
@@ -553,9 +546,9 @@
    (declare (salience 40))
    (element (formula УгольнаяКислота) (mass ?m0))
    =>
-   (assert (element (formula ДигидрогенаМонооксид) (mass (* (/ ?m0 2) 0.6340592))))
-   (assert (element (formula УглекислыйГаз) (mass (* (/ ?m0 2) 0.6340592))))
-   (assert (appendmessagehalt (str-cat "H2CO3 (" ?m0 ") -(0.6340592)> H2O (" (* (/ ?m0 2) 0.6340592) ") + CO2 (" (* (/ ?m0 2) 0.6340592) ")")))
+   (assert (element (formula ДигидрогенаМонооксид) (mass (* (/ ?m0 2) 0.932))))
+   (assert (element (formula УглекислыйГаз) (mass (* (/ ?m0 2) 0.932))))
+   (assert (appendmessagehalt (str-cat "H2CO3 (" ?m0 ") -(0.932)> H2O (" (* (/ ?m0 2) 0.932) ") + CO2 (" (* (/ ?m0 2) 0.932) ")")))
 )
 
 
@@ -564,9 +557,9 @@
    (element (formula КарбонатНатрия) (mass ?m0))
    (element (formula СолянаяКислота) (mass ?m1))
    =>
-   (assert (element (formula ХлоридНатрия) (mass (* (/ (+ ?m0 ?m1) 2) 0.4851709))))
-   (assert (element (formula УгольнаяКислота) (mass (* (/ (+ ?m0 ?m1) 2) 0.4851709))))
-   (assert (appendmessagehalt (str-cat "Na2CO3 (" ?m0 ") + HCl (" ?m1 ") -(0.4851709)> NaCl (" (* (/ (+ ?m0 ?m1) 2) 0.4851709) ") + H2CO3 (" (* (/ (+ ?m0 ?m1) 2) 0.4851709) ")")))
+   (assert (element (formula ХлоридНатрия) (mass (* (/ (+ ?m0 ?m1) 2) 0.934))))
+   (assert (element (formula УгольнаяКислота) (mass (* (/ (+ ?m0 ?m1) 2) 0.934))))
+   (assert (appendmessagehalt (str-cat "Na2CO3 (" ?m0 ") + HCl (" ?m1 ") -(0.934)> NaCl (" (* (/ (+ ?m0 ?m1) 2) 0.934) ") + H2CO3 (" (* (/ (+ ?m0 ?m1) 2) 0.934) ")")))
 )
 
 
@@ -575,9 +568,9 @@
    (element (formula СиликатНатрия) (mass ?m0))
    (element (formula СолянаяКислота) (mass ?m1))
    =>
-   (assert (element (formula МетакремниеваяКислота) (mass (* (/ (+ ?m0 ?m1) 2) 0.3856403))))
-   (assert (element (formula ХлоридНатрия) (mass (* (/ (+ ?m0 ?m1) 2) 0.3856403))))
-   (assert (appendmessagehalt (str-cat "Na2SiO3 (" ?m0 ") + HCl (" ?m1 ") -(0.3856403)> H2SiO3 (" (* (/ (+ ?m0 ?m1) 2) 0.3856403) ") + NaCl (" (* (/ (+ ?m0 ?m1) 2) 0.3856403) ")")))
+   (assert (element (formula МетакремниеваяКислота) (mass (* (/ (+ ?m0 ?m1) 2) 0.615))))
+   (assert (element (formula ХлоридНатрия) (mass (* (/ (+ ?m0 ?m1) 2) 0.615))))
+   (assert (appendmessagehalt (str-cat "Na2SiO3 (" ?m0 ") + HCl (" ?m1 ") -(0.615)> H2SiO3 (" (* (/ (+ ?m0 ?m1) 2) 0.615) ") + NaCl (" (* (/ (+ ?m0 ?m1) 2) 0.615) ")")))
 )
 
 
@@ -586,10 +579,10 @@
    (element (formula Дихлорсилан) (mass ?m0))
    (element (formula ДигидрогенаМонооксид) (mass ?m1))
    =>
-   (assert (element (formula СернистаяКислота) (mass (* (/ (+ ?m0 ?m1) 3) 0.7102435))))
-   (assert (element (formula СолянаяКислота) (mass (* (/ (+ ?m0 ?m1) 3) 0.7102435))))
-   (assert (element (formula Водород) (mass (* (/ (+ ?m0 ?m1) 3) 0.7102435))))
-   (assert (appendmessagehalt (str-cat "SiH2Cl2 (" ?m0 ") + H2O (" ?m1 ") -(0.7102435)> H2SO3 (" (* (/ (+ ?m0 ?m1) 3) 0.7102435) ") + HCl (" (* (/ (+ ?m0 ?m1) 3) 0.7102435) ") + H2 (" (* (/ (+ ?m0 ?m1) 3) 0.7102435) ")")))
+   (assert (element (formula СернистаяКислота) (mass (* (/ (+ ?m0 ?m1) 3) 0.518))))
+   (assert (element (formula СолянаяКислота) (mass (* (/ (+ ?m0 ?m1) 3) 0.518))))
+   (assert (element (formula Водород) (mass (* (/ (+ ?m0 ?m1) 3) 0.518))))
+   (assert (appendmessagehalt (str-cat "SiH2Cl2 (" ?m0 ") + H2O (" ?m1 ") -(0.518)> H2SO3 (" (* (/ (+ ?m0 ?m1) 3) 0.518) ") + HCl (" (* (/ (+ ?m0 ?m1) 3) 0.518) ") + H2 (" (* (/ (+ ?m0 ?m1) 3) 0.518) ")")))
 )
 
 
@@ -598,8 +591,8 @@
    (element (formula ОксидАзота3) (mass ?m0))
    (element (formula ДигидрогенаМонооксид) (mass ?m1))
    =>
-   (assert (element (formula АзотистаяКислота) (mass (* (/ (+ ?m0 ?m1) 1) 0.880854))))
-   (assert (appendmessagehalt (str-cat "N2O3 (" ?m0 ") + H2O (" ?m1 ") -(0.880854)> HNO2 (" (* (/ (+ ?m0 ?m1) 1) 0.880854) ")")))
+   (assert (element (formula АзотистаяКислота) (mass (* (/ (+ ?m0 ?m1) 1) 0.342))))
+   (assert (appendmessagehalt (str-cat "N2O3 (" ?m0 ") + H2O (" ?m1 ") -(0.342)> HNO2 (" (* (/ (+ ?m0 ?m1) 1) 0.342) ")")))
 )
 
 
@@ -608,9 +601,9 @@
    (element (formula ОксидАзота4) (mass ?m0))
    (element (formula ДигидрогенаМонооксид) (mass ?m1))
    =>
-   (assert (element (formula АзотнаяКислота) (mass (* (/ (+ ?m0 ?m1) 2) 0.4328692))))
-   (assert (element (formula АзотистаяКислота) (mass (* (/ (+ ?m0 ?m1) 2) 0.4328692))))
-   (assert (appendmessagehalt (str-cat "NO2 (" ?m0 ") + H2O (" ?m1 ") -(0.4328692)> HNO3 (" (* (/ (+ ?m0 ?m1) 2) 0.4328692) ") + HNO2 (" (* (/ (+ ?m0 ?m1) 2) 0.4328692) ")")))
+   (assert (element (formula АзотнаяКислота) (mass (* (/ (+ ?m0 ?m1) 2) 0.760))))
+   (assert (element (formula АзотистаяКислота) (mass (* (/ (+ ?m0 ?m1) 2) 0.760))))
+   (assert (appendmessagehalt (str-cat "NO2 (" ?m0 ") + H2O (" ?m1 ") -(0.760)> HNO3 (" (* (/ (+ ?m0 ?m1) 2) 0.760) ") + HNO2 (" (* (/ (+ ?m0 ?m1) 2) 0.760) ")")))
 )
 
 
@@ -620,9 +613,9 @@
    (element (formula АзотнаяКислота) (mass ?m1))
    (element (formula ДигидрогенаМонооксид) (mass ?m2))
    =>
-   (assert (element (formula ОртофосфорнаяКислота) (mass (* (/ (+ ?m0 ?m1 ?m2) 2) 0.87753))))
-   (assert (element (formula ОксидАзота2) (mass (* (/ (+ ?m0 ?m1 ?m2) 2) 0.87753))))
-   (assert (appendmessagehalt (str-cat "P (" ?m0 ") + HNO3 (" ?m1 ") + H2O (" ?m2 ") -(0.87753)> H3PO4 (" (* (/ (+ ?m0 ?m1 ?m2) 2) 0.87753) ") + NO (" (* (/ (+ ?m0 ?m1 ?m2) 2) 0.87753) ")")))
+   (assert (element (formula ОртофосфорнаяКислота) (mass (* (/ (+ ?m0 ?m1 ?m2) 2) 0.517))))
+   (assert (element (formula ОксидАзота2) (mass (* (/ (+ ?m0 ?m1 ?m2) 2) 0.517))))
+   (assert (appendmessagehalt (str-cat "P (" ?m0 ") + HNO3 (" ?m1 ") + H2O (" ?m2 ") -(0.517)> H3PO4 (" (* (/ (+ ?m0 ?m1 ?m2) 2) 0.517) ") + NO (" (* (/ (+ ?m0 ?m1 ?m2) 2) 0.517) ")")))
 )
 
 
@@ -632,8 +625,8 @@
    (element (formula Кислород) (mass ?m1))
    (element (formula Тепло) (mass ?m2))
    =>
-   (assert (element (formula ОксидФосфора) (mass (* (/ (+ ?m0 ?m1 ?m2) 1) 0.6724645))))
-   (assert (appendmessagehalt (str-cat "P4 (" ?m0 ") + O2 (" ?m1 ") + t (" ?m2 ") -(0.6724645)> P4O10 (" (* (/ (+ ?m0 ?m1 ?m2) 1) 0.6724645) ")")))
+   (assert (element (formula ОксидФосфора) (mass (* (/ (+ ?m0 ?m1 ?m2) 1) 0.809))))
+   (assert (appendmessagehalt (str-cat "P4 (" ?m0 ") + O2 (" ?m1 ") + t (" ?m2 ") -(0.809)> P4O10 (" (* (/ (+ ?m0 ?m1 ?m2) 1) 0.809) ")")))
 )
 
 
@@ -642,8 +635,8 @@
    (element (formula ОксидФосфора) (mass ?m0))
    (element (formula ДигидрогенаМонооксид) (mass ?m1))
    =>
-   (assert (element (formula ОртофосфорнаяКислота) (mass (* (/ (+ ?m0 ?m1) 1) 0.8398992))))
-   (assert (appendmessagehalt (str-cat "P4O10 (" ?m0 ") + H2O (" ?m1 ") -(0.8398992)> H3PO4 (" (* (/ (+ ?m0 ?m1) 1) 0.8398992) ")")))
+   (assert (element (formula ОртофосфорнаяКислота) (mass (* (/ (+ ?m0 ?m1) 1) 0.789))))
+   (assert (appendmessagehalt (str-cat "P4O10 (" ?m0 ") + H2O (" ?m1 ") -(0.789)> H3PO4 (" (* (/ (+ ?m0 ?m1) 1) 0.789) ")")))
 )
 
 
@@ -652,8 +645,8 @@
    (element (formula ОксидФосфора3) (mass ?m0))
    (element (formula ДигидрогенаМонооксид) (mass ?m1))
    =>
-   (assert (element (formula ФосфористаяКислота) (mass (* (/ (+ ?m0 ?m1) 1) 0.696079))))
-   (assert (appendmessagehalt (str-cat "P2O3 (" ?m0 ") + H2O (" ?m1 ") -(0.696079)> H3PO3 (" (* (/ (+ ?m0 ?m1) 1) 0.696079) ")")))
+   (assert (element (formula ФосфористаяКислота) (mass (* (/ (+ ?m0 ?m1) 1) 0.849))))
+   (assert (appendmessagehalt (str-cat "P2O3 (" ?m0 ") + H2O (" ?m1 ") -(0.849)> H3PO3 (" (* (/ (+ ?m0 ?m1) 1) 0.849) ")")))
 )
 
 
@@ -662,9 +655,9 @@
    (element (formula ХлоридФосфора) (mass ?m0))
    (element (formula ДигидрогенаМонооксид) (mass ?m1))
    =>
-   (assert (element (formula ФосфористаяКислота) (mass (* (/ (+ ?m0 ?m1) 2) 0.5488008))))
-   (assert (element (formula СолянаяКислота) (mass (* (/ (+ ?m0 ?m1) 2) 0.5488008))))
-   (assert (appendmessagehalt (str-cat "PCl3 (" ?m0 ") + H2O (" ?m1 ") -(0.5488008)> H3PO3 (" (* (/ (+ ?m0 ?m1) 2) 0.5488008) ") + HCl (" (* (/ (+ ?m0 ?m1) 2) 0.5488008) ")")))
+   (assert (element (formula ФосфористаяКислота) (mass (* (/ (+ ?m0 ?m1) 2) 0.865))))
+   (assert (element (formula СолянаяКислота) (mass (* (/ (+ ?m0 ?m1) 2) 0.865))))
+   (assert (appendmessagehalt (str-cat "PCl3 (" ?m0 ") + H2O (" ?m1 ") -(0.865)> H3PO3 (" (* (/ (+ ?m0 ?m1) 2) 0.865) ") + HCl (" (* (/ (+ ?m0 ?m1) 2) 0.865) ")")))
 )
 
 
@@ -673,9 +666,9 @@
    (element (formula ГидрофосфатКалия) (mass ?m0))
    (element (formula СолянаяКислота) (mass ?m1))
    =>
-   (assert (element (formula ХлоридКалия) (mass (* (/ (+ ?m0 ?m1) 2) 0.8940021))))
-   (assert (element (formula ФосфористаяКислота) (mass (* (/ (+ ?m0 ?m1) 2) 0.8940021))))
-   (assert (appendmessagehalt (str-cat "K2HPO3 (" ?m0 ") + HCl (" ?m1 ") -(0.8940021)> KCl (" (* (/ (+ ?m0 ?m1) 2) 0.8940021) ") + H3PO3 (" (* (/ (+ ?m0 ?m1) 2) 0.8940021) ")")))
+   (assert (element (formula ХлоридКалия) (mass (* (/ (+ ?m0 ?m1) 2) 0.344))))
+   (assert (element (formula ФосфористаяКислота) (mass (* (/ (+ ?m0 ?m1) 2) 0.344))))
+   (assert (appendmessagehalt (str-cat "K2HPO3 (" ?m0 ") + HCl (" ?m1 ") -(0.344)> KCl (" (* (/ (+ ?m0 ?m1) 2) 0.344) ") + H3PO3 (" (* (/ (+ ?m0 ?m1) 2) 0.344) ")")))
 )
 
 
@@ -684,9 +677,9 @@
    (element (formula ОксидХрома) (mass ?m0))
    (element (formula ДигидрогенаМонооксид) (mass ?m1))
    =>
-   (assert (element (formula ХромоваяКислота) (mass (* (/ (+ ?m0 ?m1) 2) 0.8822851))))
-   (assert (element (formula ДихромоваяКислота) (mass (* (/ (+ ?m0 ?m1) 2) 0.8822851))))
-   (assert (appendmessagehalt (str-cat "CrO3 (" ?m0 ") + H2O (" ?m1 ") -(0.8822851)> H2CrO4 (" (* (/ (+ ?m0 ?m1) 2) 0.8822851) ") + H2Cr2O7 (" (* (/ (+ ?m0 ?m1) 2) 0.8822851) ")")))
+   (assert (element (formula ХромоваяКислота) (mass (* (/ (+ ?m0 ?m1) 2) 0.466))))
+   (assert (element (formula ДихромоваяКислота) (mass (* (/ (+ ?m0 ?m1) 2) 0.466))))
+   (assert (appendmessagehalt (str-cat "CrO3 (" ?m0 ") + H2O (" ?m1 ") -(0.466)> H2CrO4 (" (* (/ (+ ?m0 ?m1) 2) 0.466) ") + H2Cr2O7 (" (* (/ (+ ?m0 ?m1) 2) 0.466) ")")))
 )
 
 
@@ -695,9 +688,9 @@
    (element (formula Хлор) (mass ?m0))
    (element (formula ДигидрогенаМонооксид) (mass ?m1))
    =>
-   (assert (element (formula ХлорноватистаяКислота) (mass (* (/ (+ ?m0 ?m1) 2) 0.414343))))
-   (assert (element (formula СолянаяКислота) (mass (* (/ (+ ?m0 ?m1) 2) 0.414343))))
-   (assert (appendmessagehalt (str-cat "Cl2 (" ?m0 ") + H2O (" ?m1 ") -(0.414343)> HClO (" (* (/ (+ ?m0 ?m1) 2) 0.414343) ") + HCl (" (* (/ (+ ?m0 ?m1) 2) 0.414343) ")")))
+   (assert (element (formula ХлорноватистаяКислота) (mass (* (/ (+ ?m0 ?m1) 2) 0.614))))
+   (assert (element (formula СолянаяКислота) (mass (* (/ (+ ?m0 ?m1) 2) 0.614))))
+   (assert (appendmessagehalt (str-cat "Cl2 (" ?m0 ") + H2O (" ?m1 ") -(0.614)> HClO (" (* (/ (+ ?m0 ?m1) 2) 0.614) ") + HCl (" (* (/ (+ ?m0 ?m1) 2) 0.614) ")")))
 )
 
 
@@ -706,8 +699,8 @@
    (element (formula ОксидХлора) (mass ?m0))
    (element (formula ДигидрогенаМонооксид) (mass ?m1))
    =>
-   (assert (element (formula ХлорноватистаяКислота) (mass (* (/ (+ ?m0 ?m1) 1) 0.8622164))))
-   (assert (appendmessagehalt (str-cat "Cl2O (" ?m0 ") + H2O (" ?m1 ") -(0.8622164)> HClO (" (* (/ (+ ?m0 ?m1) 1) 0.8622164) ")")))
+   (assert (element (formula ХлорноватистаяКислота) (mass (* (/ (+ ?m0 ?m1) 1) 0.588))))
+   (assert (appendmessagehalt (str-cat "Cl2O (" ?m0 ") + H2O (" ?m1 ") -(0.588)> HClO (" (* (/ (+ ?m0 ?m1) 1) 0.588) ")")))
 )
 
 
@@ -717,10 +710,10 @@
    (element (formula ПероксидВодорода) (mass ?m1))
    (element (formula ГидроксидНатрия) (mass ?m2))
    =>
-   (assert (element (formula ХлоритНатрия) (mass (* (/ (+ ?m0 ?m1 ?m2) 3) 0.5662515))))
-   (assert (element (formula Кислород) (mass (* (/ (+ ?m0 ?m1 ?m2) 3) 0.5662515))))
-   (assert (element (formula ДигидрогенаМонооксид) (mass (* (/ (+ ?m0 ?m1 ?m2) 3) 0.5662515))))
-   (assert (appendmessagehalt (str-cat "ClO2 (" ?m0 ") + H2O2 (" ?m1 ") + NaOH (" ?m2 ") -(0.5662515)> NaClO2 (" (* (/ (+ ?m0 ?m1 ?m2) 3) 0.5662515) ") + O2 (" (* (/ (+ ?m0 ?m1 ?m2) 3) 0.5662515) ") + H2O (" (* (/ (+ ?m0 ?m1 ?m2) 3) 0.5662515) ")")))
+   (assert (element (formula ХлоритНатрия) (mass (* (/ (+ ?m0 ?m1 ?m2) 3) 0.470))))
+   (assert (element (formula Кислород) (mass (* (/ (+ ?m0 ?m1 ?m2) 3) 0.470))))
+   (assert (element (formula ДигидрогенаМонооксид) (mass (* (/ (+ ?m0 ?m1 ?m2) 3) 0.470))))
+   (assert (appendmessagehalt (str-cat "ClO2 (" ?m0 ") + H2O2 (" ?m1 ") + NaOH (" ?m2 ") -(0.470)> NaClO2 (" (* (/ (+ ?m0 ?m1 ?m2) 3) 0.470) ") + O2 (" (* (/ (+ ?m0 ?m1 ?m2) 3) 0.470) ") + H2O (" (* (/ (+ ?m0 ?m1 ?m2) 3) 0.470) ")")))
 )
 
 
@@ -729,9 +722,9 @@
    (element (formula ГипохлоритБария) (mass ?m0))
    (element (formula СернаяКислота) (mass ?m1))
    =>
-   (assert (element (formula СульфатБария) (mass (* (/ (+ ?m0 ?m1) 2) 0.4882237))))
-   (assert (element (formula ХлористаяКислота) (mass (* (/ (+ ?m0 ?m1) 2) 0.4882237))))
-   (assert (appendmessagehalt (str-cat "Ba(ClO2)2 (" ?m0 ") + H2SO4 (" ?m1 ") -(0.4882237)> BaSO4 (" (* (/ (+ ?m0 ?m1) 2) 0.4882237) ") + HClO2 (" (* (/ (+ ?m0 ?m1) 2) 0.4882237) ")")))
+   (assert (element (formula СульфатБария) (mass (* (/ (+ ?m0 ?m1) 2) 0.726))))
+   (assert (element (formula ХлористаяКислота) (mass (* (/ (+ ?m0 ?m1) 2) 0.726))))
+   (assert (appendmessagehalt (str-cat "Ba(ClO2)2 (" ?m0 ") + H2SO4 (" ?m1 ") -(0.726)> BaSO4 (" (* (/ (+ ?m0 ?m1) 2) 0.726) ") + HClO2 (" (* (/ (+ ?m0 ?m1) 2) 0.726) ")")))
 )
 
 
@@ -740,9 +733,9 @@
    (element (formula ХлоратБария) (mass ?m0))
    (element (formula СернаяКислота) (mass ?m1))
    =>
-   (assert (element (formula СульфатБария) (mass (* (/ (+ ?m0 ?m1) 2) 0.8826085))))
-   (assert (element (formula ХлорноватаяКислота) (mass (* (/ (+ ?m0 ?m1) 2) 0.8826085))))
-   (assert (appendmessagehalt (str-cat "Ba(ClO3)2 (" ?m0 ") + H2SO4 (" ?m1 ") -(0.8826085)> BaSO4 (" (* (/ (+ ?m0 ?m1) 2) 0.8826085) ") + HClO3 (" (* (/ (+ ?m0 ?m1) 2) 0.8826085) ")")))
+   (assert (element (formula СульфатБария) (mass (* (/ (+ ?m0 ?m1) 2) 0.447))))
+   (assert (element (formula ХлорноватаяКислота) (mass (* (/ (+ ?m0 ?m1) 2) 0.447))))
+   (assert (appendmessagehalt (str-cat "Ba(ClO3)2 (" ?m0 ") + H2SO4 (" ?m1 ") -(0.447)> BaSO4 (" (* (/ (+ ?m0 ?m1) 2) 0.447) ") + HClO3 (" (* (/ (+ ?m0 ?m1) 2) 0.447) ")")))
 )
 
 
@@ -751,9 +744,9 @@
    (element (formula ПерхлоратКалия) (mass ?m0))
    (element (formula СернаяКислота) (mass ?m1))
    =>
-   (assert (element (formula ГидросульфатКалия) (mass (* (/ (+ ?m0 ?m1) 2) 0.7487454))))
-   (assert (element (formula ХлорнаяКислота) (mass (* (/ (+ ?m0 ?m1) 2) 0.7487454))))
-   (assert (appendmessagehalt (str-cat "KClO4 (" ?m0 ") + H2SO4 (" ?m1 ") -(0.7487454)> KHSO4 (" (* (/ (+ ?m0 ?m1) 2) 0.7487454) ") + HClO4 (" (* (/ (+ ?m0 ?m1) 2) 0.7487454) ")")))
+   (assert (element (formula ГидросульфатКалия) (mass (* (/ (+ ?m0 ?m1) 2) 0.377))))
+   (assert (element (formula ХлорнаяКислота) (mass (* (/ (+ ?m0 ?m1) 2) 0.377))))
+   (assert (appendmessagehalt (str-cat "KClO4 (" ?m0 ") + H2SO4 (" ?m1 ") -(0.377)> KHSO4 (" (* (/ (+ ?m0 ?m1) 2) 0.377) ") + HClO4 (" (* (/ (+ ?m0 ?m1) 2) 0.377) ")")))
 )
 
 
@@ -762,19 +755,19 @@
    (element (formula ПерманганатБария) (mass ?m0))
    (element (formula СернаяКислота) (mass ?m1))
    =>
-   (assert (element (formula МарганцоваяКислота) (mass (* (/ (+ ?m0 ?m1) 2) 0.4834546))))
-   (assert (element (formula СульфатБария) (mass (* (/ (+ ?m0 ?m1) 2) 0.4834546))))
-   (assert (appendmessagehalt (str-cat "Ba(MnO4)2 (" ?m0 ") + H2SO4 (" ?m1 ") -(0.4834546)> HMnO4 (" (* (/ (+ ?m0 ?m1) 2) 0.4834546) ") + BaSO4 (" (* (/ (+ ?m0 ?m1) 2) 0.4834546) ")")))
+   (assert (element (formula МарганцоваяКислота) (mass (* (/ (+ ?m0 ?m1) 2) 0.752))))
+   (assert (element (formula СульфатБария) (mass (* (/ (+ ?m0 ?m1) 2) 0.752))))
+   (assert (appendmessagehalt (str-cat "Ba(MnO4)2 (" ?m0 ") + H2SO4 (" ?m1 ") -(0.752)> HMnO4 (" (* (/ (+ ?m0 ?m1) 2) 0.752) ") + BaSO4 (" (* (/ (+ ?m0 ?m1) 2) 0.752) ")")))
 )
 
 
-(defrule ОксидМарганца_ДигидрогенаМонооксид_МарганцоваяКислота
+(defrule ОксидМарганца7_ДигидрогенаМонооксид_МарганцоваяКислота
    (declare (salience 40))
-   (element (formula ОксидМарганца) (mass ?m0))
+   (element (formula ОксидМарганца7) (mass ?m0))
    (element (formula ДигидрогенаМонооксид) (mass ?m1))
    =>
-   (assert (element (formula МарганцоваяКислота) (mass (* (/ (+ ?m0 ?m1) 1) 0.4862997))))
-   (assert (appendmessagehalt (str-cat "Mn2O7 (" ?m0 ") + H2O (" ?m1 ") -(0.4862997)> HMnO4 (" (* (/ (+ ?m0 ?m1) 1) 0.4862997) ")")))
+   (assert (element (formula МарганцоваяКислота) (mass (* (/ (+ ?m0 ?m1) 1) 0.454))))
+   (assert (appendmessagehalt (str-cat "Mn2O7 (" ?m0 ") + H2O (" ?m1 ") -(0.454)> HMnO4 (" (* (/ (+ ?m0 ?m1) 1) 0.454) ")")))
 )
 
 
@@ -783,9 +776,9 @@
    (element (formula СульфатНатрия) (mass ?m0))
    (element (formula Углерод) (mass ?m1))
    =>
-   (assert (element (formula СульфидНатрия) (mass (* (/ (+ ?m0 ?m1) 2) 0.5858159))))
-   (assert (element (formula УглекислыйГаз) (mass (* (/ (+ ?m0 ?m1) 2) 0.5858159))))
-   (assert (appendmessagehalt (str-cat "Na2SO4 (" ?m0 ") + C (" ?m1 ") -(0.5858159)> Na2S (" (* (/ (+ ?m0 ?m1) 2) 0.5858159) ") + CO2 (" (* (/ (+ ?m0 ?m1) 2) 0.5858159) ")")))
+   (assert (element (formula СульфидНатрия) (mass (* (/ (+ ?m0 ?m1) 2) 0.545))))
+   (assert (element (formula УглекислыйГаз) (mass (* (/ (+ ?m0 ?m1) 2) 0.545))))
+   (assert (appendmessagehalt (str-cat "Na2SO4 (" ?m0 ") + C (" ?m1 ") -(0.545)> Na2S (" (* (/ (+ ?m0 ?m1) 2) 0.545) ") + CO2 (" (* (/ (+ ?m0 ?m1) 2) 0.545) ")")))
 )
 
 
@@ -794,9 +787,9 @@
    (element (formula СульфидНатрия) (mass ?m0))
    (element (formula КарбонатКальция) (mass ?m1))
    =>
-   (assert (element (formula КарбонатНатрия) (mass (* (/ (+ ?m0 ?m1) 2) 0.6352158))))
-   (assert (element (formula СульфидКальция) (mass (* (/ (+ ?m0 ?m1) 2) 0.6352158))))
-   (assert (appendmessagehalt (str-cat "Na2S (" ?m0 ") + CaCO3 (" ?m1 ") -(0.6352158)> Na2CO3 (" (* (/ (+ ?m0 ?m1) 2) 0.6352158) ") + CaS (" (* (/ (+ ?m0 ?m1) 2) 0.6352158) ")")))
+   (assert (element (formula КарбонатНатрия) (mass (* (/ (+ ?m0 ?m1) 2) 0.405))))
+   (assert (element (formula СульфидКальция) (mass (* (/ (+ ?m0 ?m1) 2) 0.405))))
+   (assert (appendmessagehalt (str-cat "Na2S (" ?m0 ") + CaCO3 (" ?m1 ") -(0.405)> Na2CO3 (" (* (/ (+ ?m0 ?m1) 2) 0.405) ") + CaS (" (* (/ (+ ?m0 ?m1) 2) 0.405) ")")))
 )
 
 
@@ -805,9 +798,9 @@
    (element (formula ХлоридНатрия) (mass ?m0))
    (element (formula СернаяКислота) (mass ?m1))
    =>
-   (assert (element (formula СульфатНатрия) (mass (* (/ (+ ?m0 ?m1) 2) 0.5024664))))
-   (assert (element (formula СолянаяКислота) (mass (* (/ (+ ?m0 ?m1) 2) 0.5024664))))
-   (assert (appendmessagehalt (str-cat "NaCl (" ?m0 ") + H2SO4 (" ?m1 ") -(0.5024664)> Na2SO4 (" (* (/ (+ ?m0 ?m1) 2) 0.5024664) ") + HCl (" (* (/ (+ ?m0 ?m1) 2) 0.5024664) ")")))
+   (assert (element (formula СульфатНатрия) (mass (* (/ (+ ?m0 ?m1) 2) 0.831))))
+   (assert (element (formula СолянаяКислота) (mass (* (/ (+ ?m0 ?m1) 2) 0.831))))
+   (assert (appendmessagehalt (str-cat "NaCl (" ?m0 ") + H2SO4 (" ?m1 ") -(0.831)> Na2SO4 (" (* (/ (+ ?m0 ?m1) 2) 0.831) ") + HCl (" (* (/ (+ ?m0 ?m1) 2) 0.831) ")")))
 )
 
 
@@ -818,9 +811,9 @@
    (element (formula ДигидрогенаМонооксид) (mass ?m2))
    (element (formula ХлоридНатрия) (mass ?m3))
    =>
-   (assert (element (formula ГидрокарбонатНатрия) (mass (* (/ (+ ?m0 ?m1 ?m2 ?m3) 2) 0.5910046))))
-   (assert (element (formula ХлоридАммония) (mass (* (/ (+ ?m0 ?m1 ?m2 ?m3) 2) 0.5910046))))
-   (assert (appendmessagehalt (str-cat "NH3 (" ?m0 ") + CO2 (" ?m1 ") + H2O (" ?m2 ") + NaCl (" ?m3 ") -(0.5910046)> NaHCO3 (" (* (/ (+ ?m0 ?m1 ?m2 ?m3) 2) 0.5910046) ") + HN4Cl (" (* (/ (+ ?m0 ?m1 ?m2 ?m3) 2) 0.5910046) ")")))
+   (assert (element (formula ГидрокарбонатНатрия) (mass (* (/ (+ ?m0 ?m1 ?m2 ?m3) 2) 0.695))))
+   (assert (element (formula ХлоридАммония) (mass (* (/ (+ ?m0 ?m1 ?m2 ?m3) 2) 0.695))))
+   (assert (appendmessagehalt (str-cat "NH3 (" ?m0 ") + CO2 (" ?m1 ") + H2O (" ?m2 ") + NaCl (" ?m3 ") -(0.695)> NaHCO3 (" (* (/ (+ ?m0 ?m1 ?m2 ?m3) 2) 0.695) ") + HN4Cl (" (* (/ (+ ?m0 ?m1 ?m2 ?m3) 2) 0.695) ")")))
 )
 
 
@@ -829,10 +822,10 @@
    (element (formula ГидрокарбонатНатрия) (mass ?m0))
    (element (formula Тепло) (mass ?m1))
    =>
-   (assert (element (formula КарбонатНатрия) (mass (* (/ (+ ?m0 ?m1) 3) 0.4163508))))
-   (assert (element (formula ДигидрогенаМонооксид) (mass (* (/ (+ ?m0 ?m1) 3) 0.4163508))))
-   (assert (element (formula УглекислыйГаз) (mass (* (/ (+ ?m0 ?m1) 3) 0.4163508))))
-   (assert (appendmessagehalt (str-cat "NaHCO3 (" ?m0 ") + t (" ?m1 ") -(0.4163508)> Na2CO3 (" (* (/ (+ ?m0 ?m1) 3) 0.4163508) ") + H2O (" (* (/ (+ ?m0 ?m1) 3) 0.4163508) ") + CO2 (" (* (/ (+ ?m0 ?m1) 3) 0.4163508) ")")))
+   (assert (element (formula КарбонатНатрия) (mass (* (/ (+ ?m0 ?m1) 3) 0.486))))
+   (assert (element (formula ДигидрогенаМонооксид) (mass (* (/ (+ ?m0 ?m1) 3) 0.486))))
+   (assert (element (formula УглекислыйГаз) (mass (* (/ (+ ?m0 ?m1) 3) 0.486))))
+   (assert (appendmessagehalt (str-cat "NaHCO3 (" ?m0 ") + t (" ?m1 ") -(0.486)> Na2CO3 (" (* (/ (+ ?m0 ?m1) 3) 0.486) ") + H2O (" (* (/ (+ ?m0 ?m1) 3) 0.486) ") + CO2 (" (* (/ (+ ?m0 ?m1) 3) 0.486) ")")))
 )
 
 
@@ -841,9 +834,9 @@
    (element (formula ОксидКремния) (mass ?m0))
    (element (formula ГидроксидНатрия) (mass ?m1))
    =>
-   (assert (element (formula СиликатНатрия) (mass (* (/ (+ ?m0 ?m1) 2) 0.7762617))))
-   (assert (element (formula ДигидрогенаМонооксид) (mass (* (/ (+ ?m0 ?m1) 2) 0.7762617))))
-   (assert (appendmessagehalt (str-cat "SiO2 (" ?m0 ") + NaOH (" ?m1 ") -(0.7762617)> Na2SiO3 (" (* (/ (+ ?m0 ?m1) 2) 0.7762617) ") + H2O (" (* (/ (+ ?m0 ?m1) 2) 0.7762617) ")")))
+   (assert (element (formula СиликатНатрия) (mass (* (/ (+ ?m0 ?m1) 2) 0.813))))
+   (assert (element (formula ДигидрогенаМонооксид) (mass (* (/ (+ ?m0 ?m1) 2) 0.813))))
+   (assert (appendmessagehalt (str-cat "SiO2 (" ?m0 ") + NaOH (" ?m1 ") -(0.813)> Na2SiO3 (" (* (/ (+ ?m0 ?m1) 2) 0.813) ") + H2O (" (* (/ (+ ?m0 ?m1) 2) 0.813) ")")))
 )
 
 
@@ -852,9 +845,9 @@
    (element (formula ОксидКремния) (mass ?m0))
    (element (formula КарбонатНатрия) (mass ?m1))
    =>
-   (assert (element (formula СиликатНатрия) (mass (* (/ (+ ?m0 ?m1) 2) 0.4338714))))
-   (assert (element (formula УглекислыйГаз) (mass (* (/ (+ ?m0 ?m1) 2) 0.4338714))))
-   (assert (appendmessagehalt (str-cat "SiO2 (" ?m0 ") + Na2CO3 (" ?m1 ") -(0.4338714)> Na2SiO3 (" (* (/ (+ ?m0 ?m1) 2) 0.4338714) ") + CO2 (" (* (/ (+ ?m0 ?m1) 2) 0.4338714) ")")))
+   (assert (element (formula СиликатНатрия) (mass (* (/ (+ ?m0 ?m1) 2) 0.813))))
+   (assert (element (formula УглекислыйГаз) (mass (* (/ (+ ?m0 ?m1) 2) 0.813))))
+   (assert (appendmessagehalt (str-cat "SiO2 (" ?m0 ") + Na2CO3 (" ?m1 ") -(0.813)> Na2SiO3 (" (* (/ (+ ?m0 ?m1) 2) 0.813) ") + CO2 (" (* (/ (+ ?m0 ?m1) 2) 0.813) ")")))
 )
 
 
@@ -863,9 +856,9 @@
    (element (formula ОртосиликатНатрия) (mass ?m0))
    (element (formula Тепло) (mass ?m1))
    =>
-   (assert (element (formula СиликатНатрия) (mass (* (/ (+ ?m0 ?m1) 2) 0.7867498))))
-   (assert (element (formula ОксидНатрия) (mass (* (/ (+ ?m0 ?m1) 2) 0.7867498))))
-   (assert (appendmessagehalt (str-cat "Na4SiO4 (" ?m0 ") + t (" ?m1 ") -(0.7867498)> Na2SiO3 (" (* (/ (+ ?m0 ?m1) 2) 0.7867498) ") + Na2O (" (* (/ (+ ?m0 ?m1) 2) 0.7867498) ")")))
+   (assert (element (formula СиликатНатрия) (mass (* (/ (+ ?m0 ?m1) 2) 0.366))))
+   (assert (element (formula ОксидНатрия) (mass (* (/ (+ ?m0 ?m1) 2) 0.366))))
+   (assert (appendmessagehalt (str-cat "Na4SiO4 (" ?m0 ") + t (" ?m1 ") -(0.366)> Na2SiO3 (" (* (/ (+ ?m0 ?m1) 2) 0.366) ") + Na2O (" (* (/ (+ ?m0 ?m1) 2) 0.366) ")")))
 )
 
 
@@ -874,10 +867,10 @@
    (element (formula СлоридАммония) (mass ?m0))
    (element (formula ГидроксидНатрия) (mass ?m1))
    =>
-   (assert (element (formula Метан) (mass (* (/ (+ ?m0 ?m1) 3) 0.4501759))))
-   (assert (element (formula ХлоридНатрия) (mass (* (/ (+ ?m0 ?m1) 3) 0.4501759))))
-   (assert (element (formula ДигидрогенаМонооксид) (mass (* (/ (+ ?m0 ?m1) 3) 0.4501759))))
-   (assert (appendmessagehalt (str-cat "NH4Cl (" ?m0 ") + NaOH (" ?m1 ") -(0.4501759)> NH3 (" (* (/ (+ ?m0 ?m1) 3) 0.4501759) ") + NaCl (" (* (/ (+ ?m0 ?m1) 3) 0.4501759) ") + H2O (" (* (/ (+ ?m0 ?m1) 3) 0.4501759) ")")))
+   (assert (element (formula Метан) (mass (* (/ (+ ?m0 ?m1) 3) 0.914))))
+   (assert (element (formula ХлоридНатрия) (mass (* (/ (+ ?m0 ?m1) 3) 0.914))))
+   (assert (element (formula ДигидрогенаМонооксид) (mass (* (/ (+ ?m0 ?m1) 3) 0.914))))
+   (assert (appendmessagehalt (str-cat "NH4Cl (" ?m0 ") + NaOH (" ?m1 ") -(0.914)> NH3 (" (* (/ (+ ?m0 ?m1) 3) 0.914) ") + NaCl (" (* (/ (+ ?m0 ?m1) 3) 0.914) ") + H2O (" (* (/ (+ ?m0 ?m1) 3) 0.914) ")")))
 )
 
 
@@ -886,10 +879,10 @@
    (element (formula МетафосфорнаяКислота) (mass ?m0))
    (element (formula Углерод) (mass ?m1))
    =>
-   (assert (element (formula БелыйФосфор) (mass (* (/ (+ ?m0 ?m1) 3) 0.5250228))))
-   (assert (element (formula ДигидрогенаМонооксид) (mass (* (/ (+ ?m0 ?m1) 3) 0.5250228))))
-   (assert (element (formula УгарныйГаз) (mass (* (/ (+ ?m0 ?m1) 3) 0.5250228))))
-   (assert (appendmessagehalt (str-cat "HPO3 (" ?m0 ") + C (" ?m1 ") -(0.5250228)> P4 (" (* (/ (+ ?m0 ?m1) 3) 0.5250228) ") + H2O (" (* (/ (+ ?m0 ?m1) 3) 0.5250228) ") + CO (" (* (/ (+ ?m0 ?m1) 3) 0.5250228) ")")))
+   (assert (element (formula БелыйФосфор) (mass (* (/ (+ ?m0 ?m1) 3) 0.792))))
+   (assert (element (formula ДигидрогенаМонооксид) (mass (* (/ (+ ?m0 ?m1) 3) 0.792))))
+   (assert (element (formula УгарныйГаз) (mass (* (/ (+ ?m0 ?m1) 3) 0.792))))
+   (assert (appendmessagehalt (str-cat "HPO3 (" ?m0 ") + C (" ?m1 ") -(0.792)> P4 (" (* (/ (+ ?m0 ?m1) 3) 0.792) ") + H2O (" (* (/ (+ ?m0 ?m1) 3) 0.792) ") + CO (" (* (/ (+ ?m0 ?m1) 3) 0.792) ")")))
 )
 
 
@@ -898,9 +891,9 @@
    (element (formula Фосфор) (mass ?m0))
    (element (formula Кислород) (mass ?m1))
    =>
-   (assert (element (formula ОксидФосфора5) (mass (* (/ (+ ?m0 ?m1) 2) 0.5500866))))
-   (assert (element (formula ОксидФосфора3) (mass (* (/ (+ ?m0 ?m1) 2) 0.5500866))))
-   (assert (appendmessagehalt (str-cat "P (" ?m0 ") + O2 (" ?m1 ") -(0.5500866)> P2O5 (" (* (/ (+ ?m0 ?m1) 2) 0.5500866) ") + P2O3 (" (* (/ (+ ?m0 ?m1) 2) 0.5500866) ")")))
+   (assert (element (formula ОксидФосфора5) (mass (* (/ (+ ?m0 ?m1) 2) 0.928))))
+   (assert (element (formula ОксидФосфора3) (mass (* (/ (+ ?m0 ?m1) 2) 0.928))))
+   (assert (appendmessagehalt (str-cat "P (" ?m0 ") + O2 (" ?m1 ") -(0.928)> P2O5 (" (* (/ (+ ?m0 ?m1) 2) 0.928) ") + P2O3 (" (* (/ (+ ?m0 ?m1) 2) 0.928) ")")))
 )
 
 
@@ -909,8 +902,8 @@
    (element (formula Фосфор) (mass ?m0))
    (element (formula Кальций) (mass ?m1))
    =>
-   (assert (element (formula ФосфидКальция) (mass (* (/ (+ ?m0 ?m1) 1) 0.8324365))))
-   (assert (appendmessagehalt (str-cat "P (" ?m0 ") + Ca (" ?m1 ") -(0.8324365)> Ca3P2 (" (* (/ (+ ?m0 ?m1) 1) 0.8324365) ")")))
+   (assert (element (formula ФосфидКальция) (mass (* (/ (+ ?m0 ?m1) 1) 0.786))))
+   (assert (appendmessagehalt (str-cat "P (" ?m0 ") + Ca (" ?m1 ") -(0.786)> Ca3P2 (" (* (/ (+ ?m0 ?m1) 1) 0.786) ")")))
 )
 
 
@@ -919,8 +912,8 @@
    (element (formula Фосфор) (mass ?m0))
    (element (formula Сера) (mass ?m1))
    =>
-   (assert (element (formula СульфидФосфора) (mass (* (/ (+ ?m0 ?m1) 1) 0.8719187))))
-   (assert (appendmessagehalt (str-cat "P (" ?m0 ") + S (" ?m1 ") -(0.8719187)> P2S3 (" (* (/ (+ ?m0 ?m1) 1) 0.8719187) ")")))
+   (assert (element (formula СульфидФосфора) (mass (* (/ (+ ?m0 ?m1) 1) 0.721))))
+   (assert (appendmessagehalt (str-cat "P (" ?m0 ") + S (" ?m1 ") -(0.721)> P2S3 (" (* (/ (+ ?m0 ?m1) 1) 0.721) ")")))
 )
 
 
@@ -929,9 +922,9 @@
    (element (formula Фосфор) (mass ?m0))
    (element (formula Хлор) (mass ?m1))
    =>
-   (assert (element (formula ХлоридФосфора) (mass (* (/ (+ ?m0 ?m1) 2) 0.4458602))))
-   (assert (element (formula ХлоридФосфора) (mass (* (/ (+ ?m0 ?m1) 2) 0.4458602))))
-   (assert (appendmessagehalt (str-cat "P (" ?m0 ") + Cl2 (" ?m1 ") -(0.4458602)> PCl3 (" (* (/ (+ ?m0 ?m1) 2) 0.4458602) ") + PCl5 (" (* (/ (+ ?m0 ?m1) 2) 0.4458602) ")")))
+   (assert (element (formula ХлоридФосфора) (mass (* (/ (+ ?m0 ?m1) 2) 0.706))))
+   (assert (element (formula ХлоридФосфора) (mass (* (/ (+ ?m0 ?m1) 2) 0.706))))
+   (assert (appendmessagehalt (str-cat "P (" ?m0 ") + Cl2 (" ?m1 ") -(0.706)> PCl3 (" (* (/ (+ ?m0 ?m1) 2) 0.706) ") + PCl5 (" (* (/ (+ ?m0 ?m1) 2) 0.706) ")")))
 )
 
 
@@ -941,9 +934,9 @@
    (element (formula ДигидрогенаМонооксид) (mass ?m1))
    (element (formula Тепло) (mass ?m2))
    =>
-   (assert (element (formula Фосфин) (mass (* (/ (+ ?m0 ?m1 ?m2) 2) 0.7735959))))
-   (assert (element (formula ОртофосфорнаяКислота) (mass (* (/ (+ ?m0 ?m1 ?m2) 2) 0.7735959))))
-   (assert (appendmessagehalt (str-cat "P (" ?m0 ") + H2O (" ?m1 ") + t (" ?m2 ") -(0.7735959)> PH3 (" (* (/ (+ ?m0 ?m1 ?m2) 2) 0.7735959) ") + H3PO4 (" (* (/ (+ ?m0 ?m1 ?m2) 2) 0.7735959) ")")))
+   (assert (element (formula Фосфин) (mass (* (/ (+ ?m0 ?m1 ?m2) 2) 0.657))))
+   (assert (element (formula ОртофосфорнаяКислота) (mass (* (/ (+ ?m0 ?m1 ?m2) 2) 0.657))))
+   (assert (appendmessagehalt (str-cat "P (" ?m0 ") + H2O (" ?m1 ") + t (" ?m2 ") -(0.657)> PH3 (" (* (/ (+ ?m0 ?m1 ?m2) 2) 0.657) ") + H3PO4 (" (* (/ (+ ?m0 ?m1 ?m2) 2) 0.657) ")")))
 )
 
 
@@ -953,9 +946,9 @@
    (element (formula ДигидрогенаМонооксид) (mass ?m1))
    (element (formula Тепло) (mass ?m2))
    =>
-   (assert (element (formula ОртофосфорнаяКислота) (mass (* (/ (+ ?m0 ?m1 ?m2) 2) 0.6571285))))
-   (assert (element (formula Водород) (mass (* (/ (+ ?m0 ?m1 ?m2) 2) 0.6571285))))
-   (assert (appendmessagehalt (str-cat "P (" ?m0 ") + H2O (" ?m1 ") + t (" ?m2 ") -(0.6571285)> H3PO4 (" (* (/ (+ ?m0 ?m1 ?m2) 2) 0.6571285) ") + H2 (" (* (/ (+ ?m0 ?m1 ?m2) 2) 0.6571285) ")")))
+   (assert (element (formula ОртофосфорнаяКислота) (mass (* (/ (+ ?m0 ?m1 ?m2) 2) 0.496))))
+   (assert (element (formula Водород) (mass (* (/ (+ ?m0 ?m1 ?m2) 2) 0.496))))
+   (assert (appendmessagehalt (str-cat "P (" ?m0 ") + H2O (" ?m1 ") + t (" ?m2 ") -(0.496)> H3PO4 (" (* (/ (+ ?m0 ?m1 ?m2) 2) 0.496) ") + H2 (" (* (/ (+ ?m0 ?m1 ?m2) 2) 0.496) ")")))
 )
 
 
@@ -964,8 +957,8 @@
    (element (formula БелыйФосфор) (mass ?m0))
    (element (formula Тепло) (mass ?m1))
    =>
-   (assert (element (formula Фосфор) (mass (* (/ (+ ?m0 ?m1) 1) 0.9085781))))
-   (assert (appendmessagehalt (str-cat "P4 (" ?m0 ") + t (" ?m1 ") -(0.9085781)> P (" (* (/ (+ ?m0 ?m1) 1) 0.9085781) ")")))
+   (assert (element (formula Фосфор) (mass (* (/ (+ ?m0 ?m1) 1) 0.330))))
+   (assert (appendmessagehalt (str-cat "P4 (" ?m0 ") + t (" ?m1 ") -(0.330)> P (" (* (/ (+ ?m0 ?m1) 1) 0.330) ")")))
 )
 
 
@@ -974,8 +967,8 @@
    (element (formula БелыйФосфор) (mass ?m0))
    (element (formula Свет) (mass ?m1))
    =>
-   (assert (element (formula Фосфор) (mass (* (/ (+ ?m0 ?m1) 1) 0.3931136))))
-   (assert (appendmessagehalt (str-cat "P4 (" ?m0 ") + hv (" ?m1 ") -(0.3931136)> P (" (* (/ (+ ?m0 ?m1) 1) 0.3931136) ")")))
+   (assert (element (formula Фосфор) (mass (* (/ (+ ?m0 ?m1) 1) 0.905))))
+   (assert (appendmessagehalt (str-cat "P4 (" ?m0 ") + hv (" ?m1 ") -(0.905)> P (" (* (/ (+ ?m0 ?m1) 1) 0.905) ")")))
 )
 
 
@@ -984,9 +977,9 @@
    (element (formula БелыйФосфор) (mass ?m0))
    (element (formula ОксидАзота1) (mass ?m1))
    =>
-   (assert (element (formula ОксидФосфора) (mass (* (/ (+ ?m0 ?m1) 2) 0.8178462))))
-   (assert (element (formula Азот) (mass (* (/ (+ ?m0 ?m1) 2) 0.8178462))))
-   (assert (appendmessagehalt (str-cat "P4 (" ?m0 ") + N2O (" ?m1 ") -(0.8178462)> P4O5 (" (* (/ (+ ?m0 ?m1) 2) 0.8178462) ") + N2 (" (* (/ (+ ?m0 ?m1) 2) 0.8178462) ")")))
+   (assert (element (formula ОксидФосфора) (mass (* (/ (+ ?m0 ?m1) 2) 0.351))))
+   (assert (element (formula Азот) (mass (* (/ (+ ?m0 ?m1) 2) 0.351))))
+   (assert (appendmessagehalt (str-cat "P4 (" ?m0 ") + N2O (" ?m1 ") -(0.351)> P4O5 (" (* (/ (+ ?m0 ?m1) 2) 0.351) ") + N2 (" (* (/ (+ ?m0 ?m1) 2) 0.351) ")")))
 )
 
 
@@ -995,9 +988,9 @@
    (element (formula БелыйФосфор) (mass ?m0))
    (element (formula УглекислыйГаз) (mass ?m1))
    =>
-   (assert (element (formula ОксидФосфора) (mass (* (/ (+ ?m0 ?m1) 2) 0.7153782))))
-   (assert (element (formula УгарныйГаз) (mass (* (/ (+ ?m0 ?m1) 2) 0.7153782))))
-   (assert (appendmessagehalt (str-cat "P4 (" ?m0 ") + CO2 (" ?m1 ") -(0.7153782)> P4O5 (" (* (/ (+ ?m0 ?m1) 2) 0.7153782) ") + CO (" (* (/ (+ ?m0 ?m1) 2) 0.7153782) ")")))
+   (assert (element (formula ОксидФосфора) (mass (* (/ (+ ?m0 ?m1) 2) 0.818))))
+   (assert (element (formula УгарныйГаз) (mass (* (/ (+ ?m0 ?m1) 2) 0.818))))
+   (assert (appendmessagehalt (str-cat "P4 (" ?m0 ") + CO2 (" ?m1 ") -(0.818)> P4O5 (" (* (/ (+ ?m0 ?m1) 2) 0.818) ") + CO (" (* (/ (+ ?m0 ?m1) 2) 0.818) ")")))
 )
 
 
@@ -1006,10 +999,10 @@
    (element (formula ДихроматНатрия) (mass ?m0))
    (element (formula СернаяКислота) (mass ?m1))
    =>
-   (assert (element (formula ОксидХрома) (mass (* (/ (+ ?m0 ?m1) 3) 0.7052727))))
-   (assert (element (formula СульфатНатрия) (mass (* (/ (+ ?m0 ?m1) 3) 0.7052727))))
-   (assert (element (formula ДигидрогенаМонооксид) (mass (* (/ (+ ?m0 ?m1) 3) 0.7052727))))
-   (assert (appendmessagehalt (str-cat "Na2Cr2O7 (" ?m0 ") + H2SO4 (" ?m1 ") -(0.7052727)> CrO3 (" (* (/ (+ ?m0 ?m1) 3) 0.7052727) ") + Na2SO4 (" (* (/ (+ ?m0 ?m1) 3) 0.7052727) ") + H2O (" (* (/ (+ ?m0 ?m1) 3) 0.7052727) ")")))
+   (assert (element (formula ОксидХрома) (mass (* (/ (+ ?m0 ?m1) 3) 0.498))))
+   (assert (element (formula СульфатНатрия) (mass (* (/ (+ ?m0 ?m1) 3) 0.498))))
+   (assert (element (formula ДигидрогенаМонооксид) (mass (* (/ (+ ?m0 ?m1) 3) 0.498))))
+   (assert (appendmessagehalt (str-cat "Na2Cr2O7 (" ?m0 ") + H2SO4 (" ?m1 ") -(0.498)> CrO3 (" (* (/ (+ ?m0 ?m1) 3) 0.498) ") + Na2SO4 (" (* (/ (+ ?m0 ?m1) 3) 0.498) ") + H2O (" (* (/ (+ ?m0 ?m1) 3) 0.498) ")")))
 )
 
 
@@ -1018,9 +1011,9 @@
    (element (formula ОксидРтути) (mass ?m0))
    (element (formula Хлор) (mass ?m1))
    =>
-   (assert (element (formula ГипохлоридРтути) (mass (* (/ (+ ?m0 ?m1) 2) 0.5226709))))
-   (assert (element (formula ОксидХлора) (mass (* (/ (+ ?m0 ?m1) 2) 0.5226709))))
-   (assert (appendmessagehalt (str-cat "HgO (" ?m0 ") + Cl2 (" ?m1 ") -(0.5226709)> Hg2OCl2 (" (* (/ (+ ?m0 ?m1) 2) 0.5226709) ") + Cl2O (" (* (/ (+ ?m0 ?m1) 2) 0.5226709) ")")))
+   (assert (element (formula ГипохлоридРтути) (mass (* (/ (+ ?m0 ?m1) 2) 0.382))))
+   (assert (element (formula ОксидХлора) (mass (* (/ (+ ?m0 ?m1) 2) 0.382))))
+   (assert (appendmessagehalt (str-cat "HgO (" ?m0 ") + Cl2 (" ?m1 ") -(0.382)> Hg2OCl2 (" (* (/ (+ ?m0 ?m1) 2) 0.382) ") + Cl2O (" (* (/ (+ ?m0 ?m1) 2) 0.382) ")")))
 )
 
 
@@ -1029,9 +1022,9 @@
    (element (formula ОксидРтути) (mass ?m0))
    (element (formula Хлор) (mass ?m1))
    =>
-   (assert (element (formula ХлоридРтути) (mass (* (/ (+ ?m0 ?m1) 2) 0.6467987))))
-   (assert (element (formula ОксидХлора) (mass (* (/ (+ ?m0 ?m1) 2) 0.6467987))))
-   (assert (appendmessagehalt (str-cat "HgO (" ?m0 ") + Cl2 (" ?m1 ") -(0.6467987)> HgCl2 (" (* (/ (+ ?m0 ?m1) 2) 0.6467987) ") + Cl2O (" (* (/ (+ ?m0 ?m1) 2) 0.6467987) ")")))
+   (assert (element (formula ХлоридРтути) (mass (* (/ (+ ?m0 ?m1) 2) 0.447))))
+   (assert (element (formula ОксидХлора) (mass (* (/ (+ ?m0 ?m1) 2) 0.447))))
+   (assert (appendmessagehalt (str-cat "HgO (" ?m0 ") + Cl2 (" ?m1 ") -(0.447)> HgCl2 (" (* (/ (+ ?m0 ?m1) 2) 0.447) ") + Cl2O (" (* (/ (+ ?m0 ?m1) 2) 0.447) ")")))
 )
 
 
@@ -1041,10 +1034,10 @@
    (element (formula КарбонатНатрия) (mass ?m1))
    (element (formula ДигидрогенаМонооксид) (mass ?m2))
    =>
-   (assert (element (formula ГидрокарбонатНатрия) (mass (* (/ (+ ?m0 ?m1 ?m2) 3) 0.4267648))))
-   (assert (element (formula ХлоридНатрия) (mass (* (/ (+ ?m0 ?m1 ?m2) 3) 0.4267648))))
-   (assert (element (formula ОксидХлора) (mass (* (/ (+ ?m0 ?m1 ?m2) 3) 0.4267648))))
-   (assert (appendmessagehalt (str-cat "Cl2 (" ?m0 ") + Na2CO3 (" ?m1 ") + H2O (" ?m2 ") -(0.4267648)> NaHCO3 (" (* (/ (+ ?m0 ?m1 ?m2) 3) 0.4267648) ") + NaCl (" (* (/ (+ ?m0 ?m1 ?m2) 3) 0.4267648) ") + Cl2O (" (* (/ (+ ?m0 ?m1 ?m2) 3) 0.4267648) ")")))
+   (assert (element (formula ГидрокарбонатНатрия) (mass (* (/ (+ ?m0 ?m1 ?m2) 3) 0.810))))
+   (assert (element (formula ХлоридНатрия) (mass (* (/ (+ ?m0 ?m1 ?m2) 3) 0.810))))
+   (assert (element (formula ОксидХлора) (mass (* (/ (+ ?m0 ?m1 ?m2) 3) 0.810))))
+   (assert (appendmessagehalt (str-cat "Cl2 (" ?m0 ") + Na2CO3 (" ?m1 ") + H2O (" ?m2 ") -(0.810)> NaHCO3 (" (* (/ (+ ?m0 ?m1 ?m2) 3) 0.810) ") + NaCl (" (* (/ (+ ?m0 ?m1 ?m2) 3) 0.810) ") + Cl2O (" (* (/ (+ ?m0 ?m1 ?m2) 3) 0.810) ")")))
 )
 
 
@@ -1053,11 +1046,11 @@
    (element (formula ХлоратКалия) (mass ?m0))
    (element (formula ЩавелеваяКислота) (mass ?m1))
    =>
-   (assert (element (formula ОксидХлора) (mass (* (/ (+ ?m0 ?m1) 4) 0.6519798))))
-   (assert (element (formula КарбонатКалия) (mass (* (/ (+ ?m0 ?m1) 4) 0.6519798))))
-   (assert (element (formula УглекислыйГаз) (mass (* (/ (+ ?m0 ?m1) 4) 0.6519798))))
-   (assert (element (formula ДигидрогенаМонооксид) (mass (* (/ (+ ?m0 ?m1) 4) 0.6519798))))
-   (assert (appendmessagehalt (str-cat "KClO3 (" ?m0 ") + H2C2O4 (" ?m1 ") -(0.6519798)> ClO2 (" (* (/ (+ ?m0 ?m1) 4) 0.6519798) ") + K2CO3 (" (* (/ (+ ?m0 ?m1) 4) 0.6519798) ") + CO2 (" (* (/ (+ ?m0 ?m1) 4) 0.6519798) ") + H2O (" (* (/ (+ ?m0 ?m1) 4) 0.6519798) ")")))
+   (assert (element (formula ОксидХлора) (mass (* (/ (+ ?m0 ?m1) 4) 0.485))))
+   (assert (element (formula КарбонатКалия) (mass (* (/ (+ ?m0 ?m1) 4) 0.485))))
+   (assert (element (formula УглекислыйГаз) (mass (* (/ (+ ?m0 ?m1) 4) 0.485))))
+   (assert (element (formula ДигидрогенаМонооксид) (mass (* (/ (+ ?m0 ?m1) 4) 0.485))))
+   (assert (appendmessagehalt (str-cat "KClO3 (" ?m0 ") + H2C2O4 (" ?m1 ") -(0.485)> ClO2 (" (* (/ (+ ?m0 ?m1) 4) 0.485) ") + K2CO3 (" (* (/ (+ ?m0 ?m1) 4) 0.485) ") + CO2 (" (* (/ (+ ?m0 ?m1) 4) 0.485) ") + H2O (" (* (/ (+ ?m0 ?m1) 4) 0.485) ")")))
 )
 
 
@@ -1067,9 +1060,9 @@
    (element (formula ДиоксидСеры) (mass ?m1))
    (element (formula СернаяКислота) (mass ?m2))
    =>
-   (assert (element (formula ГидросульфатНатрия) (mass (* (/ (+ ?m0 ?m1 ?m2) 2) 0.8247302))))
-   (assert (element (formula ОксидХлора) (mass (* (/ (+ ?m0 ?m1 ?m2) 2) 0.8247302))))
-   (assert (appendmessagehalt (str-cat "NaClO3 (" ?m0 ") + SO2 (" ?m1 ") + H2SO4 (" ?m2 ") -(0.8247302)> NaHSO4 (" (* (/ (+ ?m0 ?m1 ?m2) 2) 0.8247302) ") + ClO2 (" (* (/ (+ ?m0 ?m1 ?m2) 2) 0.8247302) ")")))
+   (assert (element (formula ГидросульфатНатрия) (mass (* (/ (+ ?m0 ?m1 ?m2) 2) 0.620))))
+   (assert (element (formula ОксидХлора) (mass (* (/ (+ ?m0 ?m1 ?m2) 2) 0.620))))
+   (assert (appendmessagehalt (str-cat "NaClO3 (" ?m0 ") + SO2 (" ?m1 ") + H2SO4 (" ?m2 ") -(0.620)> NaHSO4 (" (* (/ (+ ?m0 ?m1 ?m2) 2) 0.620) ") + ClO2 (" (* (/ (+ ?m0 ?m1 ?m2) 2) 0.620) ")")))
 )
 
 
@@ -1078,10 +1071,10 @@
    (element (formula ГидроксидБария) (mass ?m0))
    (element (formula Хлор) (mass ?m1))
    =>
-   (assert (element (formula ГипохлоритБария) (mass (* (/ (+ ?m0 ?m1) 3) 0.8440042))))
-   (assert (element (formula ХлоридБария) (mass (* (/ (+ ?m0 ?m1) 3) 0.8440042))))
-   (assert (element (formula ДигидрогенаМонооксид) (mass (* (/ (+ ?m0 ?m1) 3) 0.8440042))))
-   (assert (appendmessagehalt (str-cat "Ba(OH)2 (" ?m0 ") + Cl2 (" ?m1 ") -(0.8440042)> Ba(ClO)2 (" (* (/ (+ ?m0 ?m1) 3) 0.8440042) ") + BaCl2 (" (* (/ (+ ?m0 ?m1) 3) 0.8440042) ") + H2O (" (* (/ (+ ?m0 ?m1) 3) 0.8440042) ")")))
+   (assert (element (formula ГипохлоритБария) (mass (* (/ (+ ?m0 ?m1) 3) 0.350))))
+   (assert (element (formula ХлоридБария) (mass (* (/ (+ ?m0 ?m1) 3) 0.350))))
+   (assert (element (formula ДигидрогенаМонооксид) (mass (* (/ (+ ?m0 ?m1) 3) 0.350))))
+   (assert (appendmessagehalt (str-cat "Ba(OH)2 (" ?m0 ") + Cl2 (" ?m1 ") -(0.350)> Ba(ClO)2 (" (* (/ (+ ?m0 ?m1) 3) 0.350) ") + BaCl2 (" (* (/ (+ ?m0 ?m1) 3) 0.350) ") + H2O (" (* (/ (+ ?m0 ?m1) 3) 0.350) ")")))
 )
 
 
@@ -1090,10 +1083,10 @@
    (element (formula ХлоридБария) (mass ?m0))
    (element (formula ДигидрогенаМонооксид) (mass ?m1))
    =>
-   (assert (element (formula ГидроксидБария) (mass (* (/ (+ ?m0 ?m1) 3) 0.5774605))))
-   (assert (element (formula Водород) (mass (* (/ (+ ?m0 ?m1) 3) 0.5774605))))
-   (assert (element (formula Хлор) (mass (* (/ (+ ?m0 ?m1) 3) 0.5774605))))
-   (assert (appendmessagehalt (str-cat "BaCl2 (" ?m0 ") + H2O (" ?m1 ") -(0.5774605)> Ba(OH)2 (" (* (/ (+ ?m0 ?m1) 3) 0.5774605) ") + H2 (" (* (/ (+ ?m0 ?m1) 3) 0.5774605) ") + Cl2 (" (* (/ (+ ?m0 ?m1) 3) 0.5774605) ")")))
+   (assert (element (formula ГидроксидБария) (mass (* (/ (+ ?m0 ?m1) 3) 0.486))))
+   (assert (element (formula Водород) (mass (* (/ (+ ?m0 ?m1) 3) 0.486))))
+   (assert (element (formula Хлор) (mass (* (/ (+ ?m0 ?m1) 3) 0.486))))
+   (assert (appendmessagehalt (str-cat "BaCl2 (" ?m0 ") + H2O (" ?m1 ") -(0.486)> Ba(OH)2 (" (* (/ (+ ?m0 ?m1) 3) 0.486) ") + H2 (" (* (/ (+ ?m0 ?m1) 3) 0.486) ") + Cl2 (" (* (/ (+ ?m0 ?m1) 3) 0.486) ")")))
 )
 
 
@@ -1102,10 +1095,10 @@
    (element (formula ГидроксидБария) (mass ?m0))
    (element (formula Хлор) (mass ?m1))
    =>
-   (assert (element (formula ХлоридБария) (mass (* (/ (+ ?m0 ?m1) 3) 0.6223109))))
-   (assert (element (formula ХлоратБария) (mass (* (/ (+ ?m0 ?m1) 3) 0.6223109))))
-   (assert (element (formula ДигидрогенаМонооксид) (mass (* (/ (+ ?m0 ?m1) 3) 0.6223109))))
-   (assert (appendmessagehalt (str-cat "Ba(OH)2 (" ?m0 ") + Cl2 (" ?m1 ") -(0.6223109)> BaCl2 (" (* (/ (+ ?m0 ?m1) 3) 0.6223109) ") + Ba(ClO3)2 (" (* (/ (+ ?m0 ?m1) 3) 0.6223109) ") + H2O (" (* (/ (+ ?m0 ?m1) 3) 0.6223109) ")")))
+   (assert (element (formula ХлоридБария) (mass (* (/ (+ ?m0 ?m1) 3) 0.312))))
+   (assert (element (formula ХлоратБария) (mass (* (/ (+ ?m0 ?m1) 3) 0.312))))
+   (assert (element (formula ДигидрогенаМонооксид) (mass (* (/ (+ ?m0 ?m1) 3) 0.312))))
+   (assert (appendmessagehalt (str-cat "Ba(OH)2 (" ?m0 ") + Cl2 (" ?m1 ") -(0.312)> BaCl2 (" (* (/ (+ ?m0 ?m1) 3) 0.312) ") + Ba(ClO3)2 (" (* (/ (+ ?m0 ?m1) 3) 0.312) ") + H2O (" (* (/ (+ ?m0 ?m1) 3) 0.312) ")")))
 )
 
 
@@ -1114,9 +1107,9 @@
    (element (formula ПерхлоратНатрия) (mass ?m0))
    (element (formula ХлоридКалия) (mass ?m1))
    =>
-   (assert (element (formula ПерхлоратКалия) (mass (* (/ (+ ?m0 ?m1) 2) 0.7153144))))
-   (assert (element (formula ХлоридНатрия) (mass (* (/ (+ ?m0 ?m1) 2) 0.7153144))))
-   (assert (appendmessagehalt (str-cat "NaClO4 (" ?m0 ") + KCl (" ?m1 ") -(0.7153144)> KClO4 (" (* (/ (+ ?m0 ?m1) 2) 0.7153144) ") + NaCl (" (* (/ (+ ?m0 ?m1) 2) 0.7153144) ")")))
+   (assert (element (formula ПерхлоратКалия) (mass (* (/ (+ ?m0 ?m1) 2) 0.676))))
+   (assert (element (formula ХлоридНатрия) (mass (* (/ (+ ?m0 ?m1) 2) 0.676))))
+   (assert (appendmessagehalt (str-cat "NaClO4 (" ?m0 ") + KCl (" ?m1 ") -(0.676)> KClO4 (" (* (/ (+ ?m0 ?m1) 2) 0.676) ") + NaCl (" (* (/ (+ ?m0 ?m1) 2) 0.676) ")")))
 )
 
 
@@ -1125,9 +1118,9 @@
    (element (formula ХлоратКалия) (mass ?m0))
    (element (formula Электролиз) (mass ?m1))
    =>
-   (assert (element (formula ПерхлоратКалия) (mass (* (/ (+ ?m0 ?m1) 2) 0.3653135))))
-   (assert (element (formula ХлоридКалия) (mass (* (/ (+ ?m0 ?m1) 2) 0.3653135))))
-   (assert (appendmessagehalt (str-cat "KClO3 (" ?m0 ") + e (" ?m1 ") -(0.3653135)> KClO4 (" (* (/ (+ ?m0 ?m1) 2) 0.3653135) ") + KCl (" (* (/ (+ ?m0 ?m1) 2) 0.3653135) ")")))
+   (assert (element (formula ПерхлоратКалия) (mass (* (/ (+ ?m0 ?m1) 2) 0.812))))
+   (assert (element (formula ХлоридКалия) (mass (* (/ (+ ?m0 ?m1) 2) 0.812))))
+   (assert (appendmessagehalt (str-cat "KClO3 (" ?m0 ") + e (" ?m1 ") -(0.812)> KClO4 (" (* (/ (+ ?m0 ?m1) 2) 0.812) ") + KCl (" (* (/ (+ ?m0 ?m1) 2) 0.812) ")")))
 )
 
 
@@ -1136,43 +1129,43 @@
    (element (formula ХлоратКалия) (mass ?m0))
    (element (formula Тепло) (mass ?m1))
    =>
-   (assert (element (formula ПерхлоратКалия) (mass (* (/ (+ ?m0 ?m1) 2) 0.6605845))))
-   (assert (element (formula ХлоридКалия) (mass (* (/ (+ ?m0 ?m1) 2) 0.6605845))))
-   (assert (appendmessagehalt (str-cat "KClO3 (" ?m0 ") + t (" ?m1 ") -(0.6605845)> KClO4 (" (* (/ (+ ?m0 ?m1) 2) 0.6605845) ") + KCl (" (* (/ (+ ?m0 ?m1) 2) 0.6605845) ")")))
+   (assert (element (formula ПерхлоратКалия) (mass (* (/ (+ ?m0 ?m1) 2) 0.334))))
+   (assert (element (formula ХлоридКалия) (mass (* (/ (+ ?m0 ?m1) 2) 0.334))))
+   (assert (appendmessagehalt (str-cat "KClO3 (" ?m0 ") + t (" ?m1 ") -(0.334)> KClO4 (" (* (/ (+ ?m0 ?m1) 2) 0.334) ") + KCl (" (* (/ (+ ?m0 ?m1) 2) 0.334) ")")))
 )
 
 
-(defrule ПерманганатКалия_СернаяКислота_ОксидМарганца_СульфатКалия_ДигидрогенаМонооксид
+(defrule ПерманганатКалия_СернаяКислота_ОксидМарганца7_СульфатКалия_ДигидрогенаМонооксид
    (declare (salience 40))
    (element (formula ПерманганатКалия) (mass ?m0))
    (element (formula СернаяКислота) (mass ?m1))
    =>
-   (assert (element (formula ОксидМарганца) (mass (* (/ (+ ?m0 ?m1) 3) 0.7732141))))
-   (assert (element (formula СульфатКалия) (mass (* (/ (+ ?m0 ?m1) 3) 0.7732141))))
-   (assert (element (formula ДигидрогенаМонооксид) (mass (* (/ (+ ?m0 ?m1) 3) 0.7732141))))
-   (assert (appendmessagehalt (str-cat "KMnO4 (" ?m0 ") + H2SO4 (" ?m1 ") -(0.7732141)> Mn2O7 (" (* (/ (+ ?m0 ?m1) 3) 0.7732141) ") + K2SO4 (" (* (/ (+ ?m0 ?m1) 3) 0.7732141) ") + H2O (" (* (/ (+ ?m0 ?m1) 3) 0.7732141) ")")))
+   (assert (element (formula ОксидМарганца7) (mass (* (/ (+ ?m0 ?m1) 3) 0.389))))
+   (assert (element (formula СульфатКалия) (mass (* (/ (+ ?m0 ?m1) 3) 0.389))))
+   (assert (element (formula ДигидрогенаМонооксид) (mass (* (/ (+ ?m0 ?m1) 3) 0.389))))
+   (assert (appendmessagehalt (str-cat "KMnO4 (" ?m0 ") + H2SO4 (" ?m1 ") -(0.389)> Mn2O7 (" (* (/ (+ ?m0 ?m1) 3) 0.389) ") + K2SO4 (" (* (/ (+ ?m0 ?m1) 3) 0.389) ") + H2O (" (* (/ (+ ?m0 ?m1) 3) 0.389) ")")))
 )
 
 
-(defrule ОксидМарганца_ОксидМарганца_Кислород_Озон_Тепло
+(defrule ОксидМарганца7_ОксидМарганца4_Кислород_Озон_Тепло
    (declare (salience 40))
-   (element (formula ОксидМарганца) (mass ?m0))
+   (element (formula ОксидМарганца7) (mass ?m0))
    =>
-   (assert (element (formula ОксидМарганца) (mass (* (/ ?m0 4) 0.4293796))))
-   (assert (element (formula Кислород) (mass (* (/ ?m0 4) 0.4293796))))
-   (assert (element (formula Озон) (mass (* (/ ?m0 4) 0.4293796))))
-   (assert (element (formula Тепло) (mass (* (/ ?m0 4) 0.4293796))))
-   (assert (appendmessagehalt (str-cat "Mn2O7 (" ?m0 ") -(0.4293796)> MnO2 (" (* (/ ?m0 4) 0.4293796) ") + O2 (" (* (/ ?m0 4) 0.4293796) ") + O3 (" (* (/ ?m0 4) 0.4293796) ") + t (" (* (/ ?m0 4) 0.4293796) ")")))
+   (assert (element (formula ОксидМарганца4) (mass (* (/ ?m0 4) 0.869))))
+   (assert (element (formula Кислород) (mass (* (/ ?m0 4) 0.869))))
+   (assert (element (formula Озон) (mass (* (/ ?m0 4) 0.869))))
+   (assert (element (formula Тепло) (mass (* (/ ?m0 4) 0.869))))
+   (assert (appendmessagehalt (str-cat "Mn2O7 (" ?m0 ") -(0.869)> MnO2 (" (* (/ ?m0 4) 0.869) ") + O2 (" (* (/ ?m0 4) 0.869) ") + O3 (" (* (/ ?m0 4) 0.869) ") + t (" (* (/ ?m0 4) 0.869) ")")))
 )
 
 
-(defrule ОксидМарганца_ДигидрогенаМонооксид_МарганцоваяКислота
+(defrule ОксидМарганца7_ДигидрогенаМонооксид_МарганцоваяКислота
    (declare (salience 40))
-   (element (formula ОксидМарганца) (mass ?m0))
+   (element (formula ОксидМарганца7) (mass ?m0))
    (element (formula ДигидрогенаМонооксид) (mass ?m1))
    =>
-   (assert (element (formula МарганцоваяКислота) (mass (* (/ (+ ?m0 ?m1) 1) 0.3482433))))
-   (assert (appendmessagehalt (str-cat "Mn2O7 (" ?m0 ") + H2O (" ?m1 ") -(0.3482433)> HMnO4 (" (* (/ (+ ?m0 ?m1) 1) 0.3482433) ")")))
+   (assert (element (formula МарганцоваяКислота) (mass (* (/ (+ ?m0 ?m1) 1) 0.686))))
+   (assert (appendmessagehalt (str-cat "Mn2O7 (" ?m0 ") + H2O (" ?m1 ") -(0.686)> HMnO4 (" (* (/ (+ ?m0 ?m1) 1) 0.686) ")")))
 )
 
 
@@ -1181,9 +1174,9 @@
    (element (formula ХлоридНатрия) (mass ?m0))
    (element (formula СернаяКислота) (mass ?m1))
    =>
-   (assert (element (formula СульфатНатрия) (mass (* (/ (+ ?m0 ?m1) 2) 0.7999551))))
-   (assert (element (formula СолянаяКислота) (mass (* (/ (+ ?m0 ?m1) 2) 0.7999551))))
-   (assert (appendmessagehalt (str-cat "NaCl (" ?m0 ") + H2SO4 (" ?m1 ") -(0.7999551)> Na2SO4 (" (* (/ (+ ?m0 ?m1) 2) 0.7999551) ") + HCl (" (* (/ (+ ?m0 ?m1) 2) 0.7999551) ")")))
+   (assert (element (formula СульфатНатрия) (mass (* (/ (+ ?m0 ?m1) 2) 0.829))))
+   (assert (element (formula СолянаяКислота) (mass (* (/ (+ ?m0 ?m1) 2) 0.829))))
+   (assert (appendmessagehalt (str-cat "NaCl (" ?m0 ") + H2SO4 (" ?m1 ") -(0.829)> Na2SO4 (" (* (/ (+ ?m0 ?m1) 2) 0.829) ") + HCl (" (* (/ (+ ?m0 ?m1) 2) 0.829) ")")))
 )
 
 
@@ -1192,8 +1185,8 @@
    (element (formula ОксидКальция) (mass ?m0))
    (element (formula ДигидрогенаМонооксид) (mass ?m1))
    =>
-   (assert (element (formula ГидроксидКальция) (mass (* (/ (+ ?m0 ?m1) 1) 0.8331739))))
-   (assert (appendmessagehalt (str-cat "CaO (" ?m0 ") + H2O (" ?m1 ") -(0.8331739)> Ca(OH)2 (" (* (/ (+ ?m0 ?m1) 1) 0.8331739) ")")))
+   (assert (element (formula ГидроксидКальция) (mass (* (/ (+ ?m0 ?m1) 1) 0.733))))
+   (assert (appendmessagehalt (str-cat "CaO (" ?m0 ") + H2O (" ?m1 ") -(0.733)> Ca(OH)2 (" (* (/ (+ ?m0 ?m1) 1) 0.733) ")")))
 )
 
 
@@ -1202,9 +1195,9 @@
    (element (formula ГидроксидКальция) (mass ?m0))
    (element (formula УглекислыйГаз) (mass ?m1))
    =>
-   (assert (element (formula КарбонатКальция) (mass (* (/ (+ ?m0 ?m1) 2) 0.4192389))))
-   (assert (element (formula ДигидрогенаМонооксид) (mass (* (/ (+ ?m0 ?m1) 2) 0.4192389))))
-   (assert (appendmessagehalt (str-cat "Ca(OH)2 (" ?m0 ") + CO2 (" ?m1 ") -(0.4192389)> CaCO3 (" (* (/ (+ ?m0 ?m1) 2) 0.4192389) ") + H2O (" (* (/ (+ ?m0 ?m1) 2) 0.4192389) ")")))
+   (assert (element (formula КарбонатКальция) (mass (* (/ (+ ?m0 ?m1) 2) 0.773))))
+   (assert (element (formula ДигидрогенаМонооксид) (mass (* (/ (+ ?m0 ?m1) 2) 0.773))))
+   (assert (appendmessagehalt (str-cat "Ca(OH)2 (" ?m0 ") + CO2 (" ?m1 ") -(0.773)> CaCO3 (" (* (/ (+ ?m0 ?m1) 2) 0.773) ") + H2O (" (* (/ (+ ?m0 ?m1) 2) 0.773) ")")))
 )
 
 
@@ -1213,9 +1206,9 @@
    (element (formula Кремний) (mass ?m0))
    (element (formula ГидроксидНатрия) (mass ?m1))
    =>
-   (assert (element (formula ОртосиликатНатрия) (mass (* (/ (+ ?m0 ?m1) 2) 0.7645032))))
-   (assert (element (formula Водород) (mass (* (/ (+ ?m0 ?m1) 2) 0.7645032))))
-   (assert (appendmessagehalt (str-cat "Si (" ?m0 ") + NaOH (" ?m1 ") -(0.7645032)> Na4SiO4 (" (* (/ (+ ?m0 ?m1) 2) 0.7645032) ") + H2 (" (* (/ (+ ?m0 ?m1) 2) 0.7645032) ")")))
+   (assert (element (formula ОртосиликатНатрия) (mass (* (/ (+ ?m0 ?m1) 2) 0.806))))
+   (assert (element (formula Водород) (mass (* (/ (+ ?m0 ?m1) 2) 0.806))))
+   (assert (appendmessagehalt (str-cat "Si (" ?m0 ") + NaOH (" ?m1 ") -(0.806)> Na4SiO4 (" (* (/ (+ ?m0 ?m1) 2) 0.806) ") + H2 (" (* (/ (+ ?m0 ?m1) 2) 0.806) ")")))
 )
 
 
@@ -1224,9 +1217,9 @@
    (element (formula ОксидКремния) (mass ?m0))
    (element (formula ГидроксидНатрия) (mass ?m1))
    =>
-   (assert (element (formula ОртосиликатНатрия) (mass (* (/ (+ ?m0 ?m1) 2) 0.6066075))))
-   (assert (element (formula ДигидрогенаМонооксид) (mass (* (/ (+ ?m0 ?m1) 2) 0.6066075))))
-   (assert (appendmessagehalt (str-cat "SiO2 (" ?m0 ") + NaOH (" ?m1 ") -(0.6066075)> Na4SiO4 (" (* (/ (+ ?m0 ?m1) 2) 0.6066075) ") + H2O (" (* (/ (+ ?m0 ?m1) 2) 0.6066075) ")")))
+   (assert (element (formula ОртосиликатНатрия) (mass (* (/ (+ ?m0 ?m1) 2) 0.897))))
+   (assert (element (formula ДигидрогенаМонооксид) (mass (* (/ (+ ?m0 ?m1) 2) 0.897))))
+   (assert (appendmessagehalt (str-cat "SiO2 (" ?m0 ") + NaOH (" ?m1 ") -(0.897)> Na4SiO4 (" (* (/ (+ ?m0 ?m1) 2) 0.897) ") + H2O (" (* (/ (+ ?m0 ?m1) 2) 0.897) ")")))
 )
 
 
@@ -1235,9 +1228,9 @@
    (element (formula ОксидКремния) (mass ?m0))
    (element (formula КарбонатНатрия) (mass ?m1))
    =>
-   (assert (element (formula ОртосиликатНатрия) (mass (* (/ (+ ?m0 ?m1) 2) 0.7436586))))
-   (assert (element (formula УглекислыйГаз) (mass (* (/ (+ ?m0 ?m1) 2) 0.7436586))))
-   (assert (appendmessagehalt (str-cat "SiO2 (" ?m0 ") + Na2CO3 (" ?m1 ") -(0.7436586)> Na4SiO4 (" (* (/ (+ ?m0 ?m1) 2) 0.7436586) ") + CO2 (" (* (/ (+ ?m0 ?m1) 2) 0.7436586) ")")))
+   (assert (element (formula ОртосиликатНатрия) (mass (* (/ (+ ?m0 ?m1) 2) 0.653))))
+   (assert (element (formula УглекислыйГаз) (mass (* (/ (+ ?m0 ?m1) 2) 0.653))))
+   (assert (appendmessagehalt (str-cat "SiO2 (" ?m0 ") + Na2CO3 (" ?m1 ") -(0.653)> Na4SiO4 (" (* (/ (+ ?m0 ?m1) 2) 0.653) ") + CO2 (" (* (/ (+ ?m0 ?m1) 2) 0.653) ")")))
 )
 
 
@@ -1245,8 +1238,8 @@
    (declare (salience 40))
    (element (formula ОксидФосфора) (mass ?m0))
    =>
-   (assert (element (formula ОксидФосфора5) (mass (* (/ ?m0 1) 0.8357147))))
-   (assert (appendmessagehalt (str-cat "P4O10 (" ?m0 ") -(0.8357147)> P2O5 (" (* (/ ?m0 1) 0.8357147) ")")))
+   (assert (element (formula ОксидФосфора5) (mass (* (/ ?m0 1) 0.743))))
+   (assert (appendmessagehalt (str-cat "P4O10 (" ?m0 ") -(0.743)> P2O5 (" (* (/ ?m0 1) 0.743) ")")))
 )
 
 
@@ -1254,8 +1247,8 @@
    (declare (salience 40))
    (element (formula ОксидФосфора5) (mass ?m0))
    =>
-   (assert (element (formula ОксидФосфора) (mass (* (/ ?m0 1) 0.6897234))))
-   (assert (appendmessagehalt (str-cat "P2O5 (" ?m0 ") -(0.6897234)> P4O10 (" (* (/ ?m0 1) 0.6897234) ")")))
+   (assert (element (formula ОксидФосфора) (mass (* (/ ?m0 1) 0.825))))
+   (assert (appendmessagehalt (str-cat "P2O5 (" ?m0 ") -(0.825)> P4O10 (" (* (/ ?m0 1) 0.825) ")")))
 )
 
 
@@ -1264,8 +1257,8 @@
    (element (formula ОксидФосфора5) (mass ?m0))
    (element (formula ДигидрогенаМонооксид) (mass ?m1))
    =>
-   (assert (element (formula МетафосфорнаяКислота) (mass (* (/ (+ ?m0 ?m1) 1) 0.4710562))))
-   (assert (appendmessagehalt (str-cat "P2O5 (" ?m0 ") + H2O (" ?m1 ") -(0.4710562)> HPO3 (" (* (/ (+ ?m0 ?m1) 1) 0.4710562) ")")))
+   (assert (element (formula МетафосфорнаяКислота) (mass (* (/ (+ ?m0 ?m1) 1) 0.357))))
+   (assert (appendmessagehalt (str-cat "P2O5 (" ?m0 ") + H2O (" ?m1 ") -(0.357)> HPO3 (" (* (/ (+ ?m0 ?m1) 1) 0.357) ")")))
 )
 
 
@@ -1274,9 +1267,9 @@
    (element (formula СолянаяКислота) (mass ?m0))
    (element (formula ГидроксидКалия) (mass ?m1))
    =>
-   (assert (element (formula ХлоридКалия) (mass (* (/ (+ ?m0 ?m1) 2) 0.9487142))))
-   (assert (element (formula ДигидрогенаМонооксид) (mass (* (/ (+ ?m0 ?m1) 2) 0.9487142))))
-   (assert (appendmessagehalt (str-cat "HCl (" ?m0 ") + KOH (" ?m1 ") -(0.9487142)> KCl (" (* (/ (+ ?m0 ?m1) 2) 0.9487142) ") + H2O (" (* (/ (+ ?m0 ?m1) 2) 0.9487142) ")")))
+   (assert (element (formula ХлоридКалия) (mass (* (/ (+ ?m0 ?m1) 2) 0.886))))
+   (assert (element (formula ДигидрогенаМонооксид) (mass (* (/ (+ ?m0 ?m1) 2) 0.886))))
+   (assert (appendmessagehalt (str-cat "HCl (" ?m0 ") + KOH (" ?m1 ") -(0.886)> KCl (" (* (/ (+ ?m0 ?m1) 2) 0.886) ") + H2O (" (* (/ (+ ?m0 ?m1) 2) 0.886) ")")))
 )
 
 
@@ -1287,8 +1280,8 @@
    (element (formula Кислород) (mass ?m2))
    (element (formula Тепло) (mass ?m3))
    =>
-   (assert (element (formula ДихроматНатрия) (mass (* (/ (+ ?m0 ?m1 ?m2 ?m3) 1) 0.3615655))))
-   (assert (appendmessagehalt (str-cat "Cr2O3 (" ?m0 ") + Na2CO3 (" ?m1 ") + O2 (" ?m2 ") + t (" ?m3 ") -(0.3615655)> Na2Cr2O7 (" (* (/ (+ ?m0 ?m1 ?m2 ?m3) 1) 0.3615655) ")")))
+   (assert (element (formula ДихроматНатрия) (mass (* (/ (+ ?m0 ?m1 ?m2 ?m3) 1) 0.507))))
+   (assert (appendmessagehalt (str-cat "Cr2O3 (" ?m0 ") + Na2CO3 (" ?m1 ") + O2 (" ?m2 ") + t (" ?m3 ") -(0.507)> Na2Cr2O7 (" (* (/ (+ ?m0 ?m1 ?m2 ?m3) 1) 0.507) ")")))
 )
 
 
@@ -1298,8 +1291,8 @@
    (element (formula Кислород) (mass ?m1))
    (element (formula Тепло) (mass ?m2))
    =>
-   (assert (element (formula ОксидРтути) (mass (* (/ (+ ?m0 ?m1 ?m2) 1) 0.3103664))))
-   (assert (appendmessagehalt (str-cat "Hg (" ?m0 ") + O2 (" ?m1 ") + t (" ?m2 ") -(0.3103664)> HgO (" (* (/ (+ ?m0 ?m1 ?m2) 1) 0.3103664) ")")))
+   (assert (element (formula ОксидРтути) (mass (* (/ (+ ?m0 ?m1 ?m2) 1) 0.694))))
+   (assert (appendmessagehalt (str-cat "Hg (" ?m0 ") + O2 (" ?m1 ") + t (" ?m2 ") -(0.694)> HgO (" (* (/ (+ ?m0 ?m1 ?m2) 1) 0.694) ")")))
 )
 
 
@@ -1308,10 +1301,10 @@
    (element (formula СульфидРтути) (mass ?m0))
    (element (formula ГидроксидНатрия) (mass ?m1))
    =>
-   (assert (element (formula ОксидРтути) (mass (* (/ (+ ?m0 ?m1) 3) 0.9184827))))
-   (assert (element (formula СульфидНатрия) (mass (* (/ (+ ?m0 ?m1) 3) 0.9184827))))
-   (assert (element (formula ДигидрогенаМонооксид) (mass (* (/ (+ ?m0 ?m1) 3) 0.9184827))))
-   (assert (appendmessagehalt (str-cat "HgS (" ?m0 ") + NaOH (" ?m1 ") -(0.9184827)> HgO (" (* (/ (+ ?m0 ?m1) 3) 0.9184827) ") + Na2S (" (* (/ (+ ?m0 ?m1) 3) 0.9184827) ") + H2O (" (* (/ (+ ?m0 ?m1) 3) 0.9184827) ")")))
+   (assert (element (formula ОксидРтути) (mass (* (/ (+ ?m0 ?m1) 3) 0.858))))
+   (assert (element (formula СульфидНатрия) (mass (* (/ (+ ?m0 ?m1) 3) 0.858))))
+   (assert (element (formula ДигидрогенаМонооксид) (mass (* (/ (+ ?m0 ?m1) 3) 0.858))))
+   (assert (appendmessagehalt (str-cat "HgS (" ?m0 ") + NaOH (" ?m1 ") -(0.858)> HgO (" (* (/ (+ ?m0 ?m1) 3) 0.858) ") + Na2S (" (* (/ (+ ?m0 ?m1) 3) 0.858) ") + H2O (" (* (/ (+ ?m0 ?m1) 3) 0.858) ")")))
 )
 
 
@@ -1321,9 +1314,9 @@
    (element (formula Кислород) (mass ?m1))
    (element (formula Тепло) (mass ?m2))
    =>
-   (assert (element (formula Ртуть) (mass (* (/ (+ ?m0 ?m1 ?m2) 2) 0.3886205))))
-   (assert (element (formula ДиоксидСеры) (mass (* (/ (+ ?m0 ?m1 ?m2) 2) 0.3886205))))
-   (assert (appendmessagehalt (str-cat "HgS (" ?m0 ") + O2 (" ?m1 ") + t (" ?m2 ") -(0.3886205)> Hg (" (* (/ (+ ?m0 ?m1 ?m2) 2) 0.3886205) ") + SO2 (" (* (/ (+ ?m0 ?m1 ?m2) 2) 0.3886205) ")")))
+   (assert (element (formula Ртуть) (mass (* (/ (+ ?m0 ?m1 ?m2) 2) 0.881))))
+   (assert (element (formula ДиоксидСеры) (mass (* (/ (+ ?m0 ?m1 ?m2) 2) 0.881))))
+   (assert (appendmessagehalt (str-cat "HgS (" ?m0 ") + O2 (" ?m1 ") + t (" ?m2 ") -(0.881)> Hg (" (* (/ (+ ?m0 ?m1 ?m2) 2) 0.881) ") + SO2 (" (* (/ (+ ?m0 ?m1 ?m2) 2) 0.881) ")")))
 )
 
 
@@ -1333,9 +1326,9 @@
    (element (formula Железо) (mass ?m1))
    (element (formula Тепло) (mass ?m2))
    =>
-   (assert (element (formula Ртуть) (mass (* (/ (+ ?m0 ?m1 ?m2) 2) 0.859123))))
-   (assert (element (formula ОксидЖелеза3) (mass (* (/ (+ ?m0 ?m1 ?m2) 2) 0.859123))))
-   (assert (appendmessagehalt (str-cat "HgS (" ?m0 ") + Fe (" ?m1 ") + t (" ?m2 ") -(0.859123)> Hg (" (* (/ (+ ?m0 ?m1 ?m2) 2) 0.859123) ") + Fe2O3 (" (* (/ (+ ?m0 ?m1 ?m2) 2) 0.859123) ")")))
+   (assert (element (formula Ртуть) (mass (* (/ (+ ?m0 ?m1 ?m2) 2) 0.923))))
+   (assert (element (formula ОксидЖелеза3) (mass (* (/ (+ ?m0 ?m1 ?m2) 2) 0.923))))
+   (assert (appendmessagehalt (str-cat "HgS (" ?m0 ") + Fe (" ?m1 ") + t (" ?m2 ") -(0.923)> Hg (" (* (/ (+ ?m0 ?m1 ?m2) 2) 0.923) ") + Fe2O3 (" (* (/ (+ ?m0 ?m1 ?m2) 2) 0.923) ")")))
 )
 
 
@@ -1344,10 +1337,10 @@
    (element (formula Хлор) (mass ?m0))
    (element (formula ГидроксидКалия) (mass ?m1))
    =>
-   (assert (element (formula ХлоратКалия) (mass (* (/ (+ ?m0 ?m1) 3) 0.5296456))))
-   (assert (element (formula ХлоридКалия) (mass (* (/ (+ ?m0 ?m1) 3) 0.5296456))))
-   (assert (element (formula ДигидрогенаМонооксид) (mass (* (/ (+ ?m0 ?m1) 3) 0.5296456))))
-   (assert (appendmessagehalt (str-cat "Cl2 (" ?m0 ") + KOH (" ?m1 ") -(0.5296456)> KClO3 (" (* (/ (+ ?m0 ?m1) 3) 0.5296456) ") + KCl (" (* (/ (+ ?m0 ?m1) 3) 0.5296456) ") + H2O (" (* (/ (+ ?m0 ?m1) 3) 0.5296456) ")")))
+   (assert (element (formula ХлоратКалия) (mass (* (/ (+ ?m0 ?m1) 3) 0.695))))
+   (assert (element (formula ХлоридКалия) (mass (* (/ (+ ?m0 ?m1) 3) 0.695))))
+   (assert (element (formula ДигидрогенаМонооксид) (mass (* (/ (+ ?m0 ?m1) 3) 0.695))))
+   (assert (appendmessagehalt (str-cat "Cl2 (" ?m0 ") + KOH (" ?m1 ") -(0.695)> KClO3 (" (* (/ (+ ?m0 ?m1) 3) 0.695) ") + KCl (" (* (/ (+ ?m0 ?m1) 3) 0.695) ") + H2O (" (* (/ (+ ?m0 ?m1) 3) 0.695) ")")))
 )
 
 
@@ -1356,10 +1349,10 @@
    (element (formula ХлоратНатрия) (mass ?m0))
    (element (formula ХлорноватаяКислота) (mass ?m1))
    =>
-   (assert (element (formula ХлоратНатрия) (mass (* (/ (+ ?m0 ?m1) 3) 0.7894949))))
-   (assert (element (formula ДигидрогенаМонооксид) (mass (* (/ (+ ?m0 ?m1) 3) 0.7894949))))
-   (assert (element (formula УглекислыйГаз) (mass (* (/ (+ ?m0 ?m1) 3) 0.7894949))))
-   (assert (appendmessagehalt (str-cat "Na2ClO3 (" ?m0 ") + HClO3 (" ?m1 ") -(0.7894949)> NaClO3 (" (* (/ (+ ?m0 ?m1) 3) 0.7894949) ") + H2O (" (* (/ (+ ?m0 ?m1) 3) 0.7894949) ") + CO2 (" (* (/ (+ ?m0 ?m1) 3) 0.7894949) ")")))
+   (assert (element (formula ХлоратНатрия) (mass (* (/ (+ ?m0 ?m1) 3) 0.492))))
+   (assert (element (formula ДигидрогенаМонооксид) (mass (* (/ (+ ?m0 ?m1) 3) 0.492))))
+   (assert (element (formula УглекислыйГаз) (mass (* (/ (+ ?m0 ?m1) 3) 0.492))))
+   (assert (appendmessagehalt (str-cat "Na2ClO3 (" ?m0 ") + HClO3 (" ?m1 ") -(0.492)> NaClO3 (" (* (/ (+ ?m0 ?m1) 3) 0.492) ") + H2O (" (* (/ (+ ?m0 ?m1) 3) 0.492) ") + CO2 (" (* (/ (+ ?m0 ?m1) 3) 0.492) ")")))
 )
 
 
@@ -1368,10 +1361,10 @@
    (element (formula ГидроксидНатрия) (mass ?m0))
    (element (formula Хлор) (mass ?m1))
    =>
-   (assert (element (formula ХлоратНатрия) (mass (* (/ (+ ?m0 ?m1) 3) 0.8808991))))
-   (assert (element (formula ХлоридНатрия) (mass (* (/ (+ ?m0 ?m1) 3) 0.8808991))))
-   (assert (element (formula ДигидрогенаМонооксид) (mass (* (/ (+ ?m0 ?m1) 3) 0.8808991))))
-   (assert (appendmessagehalt (str-cat "NaOH (" ?m0 ") + Cl2 (" ?m1 ") -(0.8808991)> NaClO3 (" (* (/ (+ ?m0 ?m1) 3) 0.8808991) ") + NaCl (" (* (/ (+ ?m0 ?m1) 3) 0.8808991) ") + H2O (" (* (/ (+ ?m0 ?m1) 3) 0.8808991) ")")))
+   (assert (element (formula ХлоратНатрия) (mass (* (/ (+ ?m0 ?m1) 3) 0.325))))
+   (assert (element (formula ХлоридНатрия) (mass (* (/ (+ ?m0 ?m1) 3) 0.325))))
+   (assert (element (formula ДигидрогенаМонооксид) (mass (* (/ (+ ?m0 ?m1) 3) 0.325))))
+   (assert (appendmessagehalt (str-cat "NaOH (" ?m0 ") + Cl2 (" ?m1 ") -(0.325)> NaClO3 (" (* (/ (+ ?m0 ?m1) 3) 0.325) ") + NaCl (" (* (/ (+ ?m0 ?m1) 3) 0.325) ") + H2O (" (* (/ (+ ?m0 ?m1) 3) 0.325) ")")))
 )
 
 
@@ -1381,10 +1374,10 @@
    (element (formula ДигидрогенаМонооксид) (mass ?m1))
    (element (formula Электролиз) (mass ?m2))
    =>
-   (assert (element (formula ХлоратНатрия) (mass (* (/ (+ ?m0 ?m1 ?m2) 3) 0.7180765))))
-   (assert (element (formula ХлоридНатрия) (mass (* (/ (+ ?m0 ?m1 ?m2) 3) 0.7180765))))
-   (assert (element (formula Водород) (mass (* (/ (+ ?m0 ?m1 ?m2) 3) 0.7180765))))
-   (assert (appendmessagehalt (str-cat "NaCl (" ?m0 ") + H2O (" ?m1 ") + e (" ?m2 ") -(0.7180765)> NaClO3 (" (* (/ (+ ?m0 ?m1 ?m2) 3) 0.7180765) ") + NaCl (" (* (/ (+ ?m0 ?m1 ?m2) 3) 0.7180765) ") + H2 (" (* (/ (+ ?m0 ?m1 ?m2) 3) 0.7180765) ")")))
+   (assert (element (formula ХлоратНатрия) (mass (* (/ (+ ?m0 ?m1 ?m2) 3) 0.883))))
+   (assert (element (formula ХлоридНатрия) (mass (* (/ (+ ?m0 ?m1 ?m2) 3) 0.883))))
+   (assert (element (formula Водород) (mass (* (/ (+ ?m0 ?m1 ?m2) 3) 0.883))))
+   (assert (appendmessagehalt (str-cat "NaCl (" ?m0 ") + H2O (" ?m1 ") + e (" ?m2 ") -(0.883)> NaClO3 (" (* (/ (+ ?m0 ?m1 ?m2) 3) 0.883) ") + NaCl (" (* (/ (+ ?m0 ?m1 ?m2) 3) 0.883) ") + H2 (" (* (/ (+ ?m0 ?m1 ?m2) 3) 0.883) ")")))
 )
 
 
@@ -1393,9 +1386,9 @@
    (element (formula Барий) (mass ?m0))
    (element (formula ДигидрогенаМонооксид) (mass ?m1))
    =>
-   (assert (element (formula ГидроксидБария) (mass (* (/ (+ ?m0 ?m1) 2) 0.731027))))
-   (assert (element (formula Водород) (mass (* (/ (+ ?m0 ?m1) 2) 0.731027))))
-   (assert (appendmessagehalt (str-cat "Ba (" ?m0 ") + H2O (" ?m1 ") -(0.731027)> Ba(OH)2 (" (* (/ (+ ?m0 ?m1) 2) 0.731027) ") + H2 (" (* (/ (+ ?m0 ?m1) 2) 0.731027) ")")))
+   (assert (element (formula ГидроксидБария) (mass (* (/ (+ ?m0 ?m1) 2) 0.906))))
+   (assert (element (formula Водород) (mass (* (/ (+ ?m0 ?m1) 2) 0.906))))
+   (assert (appendmessagehalt (str-cat "Ba (" ?m0 ") + H2O (" ?m1 ") -(0.906)> Ba(OH)2 (" (* (/ (+ ?m0 ?m1) 2) 0.906) ") + H2 (" (* (/ (+ ?m0 ?m1) 2) 0.906) ")")))
 )
 
 
@@ -1404,8 +1397,8 @@
    (element (formula ОксидБария) (mass ?m0))
    (element (formula ДигидрогенаМонооксид) (mass ?m1))
    =>
-   (assert (element (formula ГидроксидБария) (mass (* (/ (+ ?m0 ?m1) 1) 0.363145))))
-   (assert (appendmessagehalt (str-cat "BaO (" ?m0 ") + H2O (" ?m1 ") -(0.363145)> Ba(OH)2 (" (* (/ (+ ?m0 ?m1) 1) 0.363145) ")")))
+   (assert (element (formula ГидроксидБария) (mass (* (/ (+ ?m0 ?m1) 1) 0.463))))
+   (assert (appendmessagehalt (str-cat "BaO (" ?m0 ") + H2O (" ?m1 ") -(0.463)> Ba(OH)2 (" (* (/ (+ ?m0 ?m1) 1) 0.463) ")")))
 )
 
 
@@ -1414,9 +1407,9 @@
    (element (formula СульфидБария) (mass ?m0))
    (element (formula ДигидрогенаМонооксид) (mass ?m1))
    =>
-   (assert (element (formula ГидроксидБария) (mass (* (/ (+ ?m0 ?m1) 2) 0.9384171))))
-   (assert (element (formula Сероводород) (mass (* (/ (+ ?m0 ?m1) 2) 0.9384171))))
-   (assert (appendmessagehalt (str-cat "BaS (" ?m0 ") + H2O (" ?m1 ") -(0.9384171)> Ba(OH)2 (" (* (/ (+ ?m0 ?m1) 2) 0.9384171) ") + H2S (" (* (/ (+ ?m0 ?m1) 2) 0.9384171) ")")))
+   (assert (element (formula ГидроксидБария) (mass (* (/ (+ ?m0 ?m1) 2) 0.907))))
+   (assert (element (formula Сероводород) (mass (* (/ (+ ?m0 ?m1) 2) 0.907))))
+   (assert (appendmessagehalt (str-cat "BaS (" ?m0 ") + H2O (" ?m1 ") -(0.907)> Ba(OH)2 (" (* (/ (+ ?m0 ?m1) 2) 0.907) ") + H2S (" (* (/ (+ ?m0 ?m1) 2) 0.907) ")")))
 )
 
 
@@ -1425,22 +1418,22 @@
    (element (formula ХлоратНатрия) (mass ?m0))
    (element (formula Тепло) (mass ?m1))
    =>
-   (assert (element (formula ПерхлоратНатрия) (mass (* (/ (+ ?m0 ?m1) 2) 0.3757016))))
-   (assert (element (formula ХлоридНатрия) (mass (* (/ (+ ?m0 ?m1) 2) 0.3757016))))
-   (assert (appendmessagehalt (str-cat "NaClO3 (" ?m0 ") + t (" ?m1 ") -(0.3757016)> NaClO4 (" (* (/ (+ ?m0 ?m1) 2) 0.3757016) ") + NaCl (" (* (/ (+ ?m0 ?m1) 2) 0.3757016) ")")))
+   (assert (element (formula ПерхлоратНатрия) (mass (* (/ (+ ?m0 ?m1) 2) 0.320))))
+   (assert (element (formula ХлоридНатрия) (mass (* (/ (+ ?m0 ?m1) 2) 0.320))))
+   (assert (appendmessagehalt (str-cat "NaClO3 (" ?m0 ") + t (" ?m1 ") -(0.320)> NaClO4 (" (* (/ (+ ?m0 ?m1) 2) 0.320) ") + NaCl (" (* (/ (+ ?m0 ?m1) 2) 0.320) ")")))
 )
 
 
-(defrule ОксидМарганца_Хлор_ГидроксидКалия_ПерманганатКалия_ХлоридКалия_ДигидрогенаМонооксид
+(defrule ОксидМарганца4_Хлор_ГидроксидКалия_ПерманганатКалия_ХлоридКалия_ДигидрогенаМонооксид
    (declare (salience 40))
-   (element (formula ОксидМарганца) (mass ?m0))
+   (element (formula ОксидМарганца4) (mass ?m0))
    (element (formula Хлор) (mass ?m1))
    (element (formula ГидроксидКалия) (mass ?m2))
    =>
-   (assert (element (formula ПерманганатКалия) (mass (* (/ (+ ?m0 ?m1 ?m2) 3) 0.8890248))))
-   (assert (element (formula ХлоридКалия) (mass (* (/ (+ ?m0 ?m1 ?m2) 3) 0.8890248))))
-   (assert (element (formula ДигидрогенаМонооксид) (mass (* (/ (+ ?m0 ?m1 ?m2) 3) 0.8890248))))
-   (assert (appendmessagehalt (str-cat "MnO2 (" ?m0 ") + Cl2 (" ?m1 ") + KOH (" ?m2 ") -(0.8890248)> KMnO4 (" (* (/ (+ ?m0 ?m1 ?m2) 3) 0.8890248) ") + KCl (" (* (/ (+ ?m0 ?m1 ?m2) 3) 0.8890248) ") + H2O (" (* (/ (+ ?m0 ?m1 ?m2) 3) 0.8890248) ")")))
+   (assert (element (formula ПерманганатКалия) (mass (* (/ (+ ?m0 ?m1 ?m2) 3) 0.509))))
+   (assert (element (formula ХлоридКалия) (mass (* (/ (+ ?m0 ?m1 ?m2) 3) 0.509))))
+   (assert (element (formula ДигидрогенаМонооксид) (mass (* (/ (+ ?m0 ?m1 ?m2) 3) 0.509))))
+   (assert (appendmessagehalt (str-cat "MnO2 (" ?m0 ") + Cl2 (" ?m1 ") + KOH (" ?m2 ") -(0.509)> KMnO4 (" (* (/ (+ ?m0 ?m1 ?m2) 3) 0.509) ") + KCl (" (* (/ (+ ?m0 ?m1 ?m2) 3) 0.509) ") + H2O (" (* (/ (+ ?m0 ?m1 ?m2) 3) 0.509) ")")))
 )
 
 
@@ -1449,22 +1442,22 @@
    (element (formula ПерманганатКалия) (mass ?m0))
    (element (formula Хлор) (mass ?m1))
    =>
-   (assert (element (formula ПерманганатКалия) (mass (* (/ (+ ?m0 ?m1) 2) 0.5416206))))
-   (assert (element (formula ХлоридКалия) (mass (* (/ (+ ?m0 ?m1) 2) 0.5416206))))
-   (assert (appendmessagehalt (str-cat "K2MnO4 (" ?m0 ") + Cl2 (" ?m1 ") -(0.5416206)> KMnO4 (" (* (/ (+ ?m0 ?m1) 2) 0.5416206) ") + KCl (" (* (/ (+ ?m0 ?m1) 2) 0.5416206) ")")))
+   (assert (element (formula ПерманганатКалия) (mass (* (/ (+ ?m0 ?m1) 2) 0.816))))
+   (assert (element (formula ХлоридКалия) (mass (* (/ (+ ?m0 ?m1) 2) 0.816))))
+   (assert (appendmessagehalt (str-cat "K2MnO4 (" ?m0 ") + Cl2 (" ?m1 ") -(0.816)> KMnO4 (" (* (/ (+ ?m0 ?m1) 2) 0.816) ") + KCl (" (* (/ (+ ?m0 ?m1) 2) 0.816) ")")))
 )
 
 
-(defrule ПерманганатКалия_ДигидрогенаМонооксид_ПерманганатКалия_ОксидМарганца_ГидроксидКалия_Водород
+(defrule ПерманганатКалия_ДигидрогенаМонооксид_ПерманганатКалия_ОксидМарганца4_ГидроксидКалия_Водород
    (declare (salience 40))
    (element (formula ПерманганатКалия) (mass ?m0))
    (element (formula ДигидрогенаМонооксид) (mass ?m1))
    =>
-   (assert (element (formula ПерманганатКалия) (mass (* (/ (+ ?m0 ?m1) 4) 0.8822575))))
-   (assert (element (formula ОксидМарганца) (mass (* (/ (+ ?m0 ?m1) 4) 0.8822575))))
-   (assert (element (formula ГидроксидКалия) (mass (* (/ (+ ?m0 ?m1) 4) 0.8822575))))
-   (assert (element (formula Водород) (mass (* (/ (+ ?m0 ?m1) 4) 0.8822575))))
-   (assert (appendmessagehalt (str-cat "K2MnO4 (" ?m0 ") + H2O (" ?m1 ") -(0.8822575)> KMnO4 (" (* (/ (+ ?m0 ?m1) 4) 0.8822575) ") + MnO2 (" (* (/ (+ ?m0 ?m1) 4) 0.8822575) ") + KOH (" (* (/ (+ ?m0 ?m1) 4) 0.8822575) ") + H2 (" (* (/ (+ ?m0 ?m1) 4) 0.8822575) ")")))
+   (assert (element (formula ПерманганатКалия) (mass (* (/ (+ ?m0 ?m1) 4) 0.762))))
+   (assert (element (formula ОксидМарганца4) (mass (* (/ (+ ?m0 ?m1) 4) 0.762))))
+   (assert (element (formula ГидроксидКалия) (mass (* (/ (+ ?m0 ?m1) 4) 0.762))))
+   (assert (element (formula Водород) (mass (* (/ (+ ?m0 ?m1) 4) 0.762))))
+   (assert (appendmessagehalt (str-cat "K2MnO4 (" ?m0 ") + H2O (" ?m1 ") -(0.762)> KMnO4 (" (* (/ (+ ?m0 ?m1) 4) 0.762) ") + MnO2 (" (* (/ (+ ?m0 ?m1) 4) 0.762) ") + KOH (" (* (/ (+ ?m0 ?m1) 4) 0.762) ") + H2 (" (* (/ (+ ?m0 ?m1) 4) 0.762) ")")))
 )
 
 
@@ -1473,9 +1466,9 @@
    (element (formula КарбонатКальция) (mass ?m0))
    (element (formula Тепло) (mass ?m1))
    =>
-   (assert (element (formula ОксидКальция) (mass (* (/ (+ ?m0 ?m1) 2) 0.8064108))))
-   (assert (element (formula УглекислыйГаз) (mass (* (/ (+ ?m0 ?m1) 2) 0.8064108))))
-   (assert (appendmessagehalt (str-cat "CaCO3 (" ?m0 ") + t (" ?m1 ") -(0.8064108)> CaO (" (* (/ (+ ?m0 ?m1) 2) 0.8064108) ") + CO2 (" (* (/ (+ ?m0 ?m1) 2) 0.8064108) ")")))
+   (assert (element (formula ОксидКальция) (mass (* (/ (+ ?m0 ?m1) 2) 0.626))))
+   (assert (element (formula УглекислыйГаз) (mass (* (/ (+ ?m0 ?m1) 2) 0.626))))
+   (assert (appendmessagehalt (str-cat "CaCO3 (" ?m0 ") + t (" ?m1 ") -(0.626)> CaO (" (* (/ (+ ?m0 ?m1) 2) 0.626) ") + CO2 (" (* (/ (+ ?m0 ?m1) 2) 0.626) ")")))
 )
 
 
@@ -1484,8 +1477,8 @@
    (element (formula Кальций) (mass ?m0))
    (element (formula Кислород) (mass ?m1))
    =>
-   (assert (element (formula ОксидКальция) (mass (* (/ (+ ?m0 ?m1) 1) 0.4644389))))
-   (assert (appendmessagehalt (str-cat "Ca (" ?m0 ") + O2 (" ?m1 ") -(0.4644389)> CaO (" (* (/ (+ ?m0 ?m1) 1) 0.4644389) ")")))
+   (assert (element (formula ОксидКальция) (mass (* (/ (+ ?m0 ?m1) 1) 0.353))))
+   (assert (appendmessagehalt (str-cat "Ca (" ?m0 ") + O2 (" ?m1 ") -(0.353)> CaO (" (* (/ (+ ?m0 ?m1) 1) 0.353) ")")))
 )
 
 
@@ -1494,22 +1487,22 @@
    (element (formula НитратКальция) (mass ?m0))
    (element (formula Тепло) (mass ?m1))
    =>
-   (assert (element (formula ОксидКальция) (mass (* (/ (+ ?m0 ?m1) 3) 0.6848614))))
-   (assert (element (formula ОксидАзота4) (mass (* (/ (+ ?m0 ?m1) 3) 0.6848614))))
-   (assert (element (formula Кислород) (mass (* (/ (+ ?m0 ?m1) 3) 0.6848614))))
-   (assert (appendmessagehalt (str-cat "Ca(NO3)2 (" ?m0 ") + t (" ?m1 ") -(0.6848614)> CaO (" (* (/ (+ ?m0 ?m1) 3) 0.6848614) ") + NO2 (" (* (/ (+ ?m0 ?m1) 3) 0.6848614) ") + O2 (" (* (/ (+ ?m0 ?m1) 3) 0.6848614) ")")))
+   (assert (element (formula ОксидКальция) (mass (* (/ (+ ?m0 ?m1) 3) 0.537))))
+   (assert (element (formula ОксидАзота4) (mass (* (/ (+ ?m0 ?m1) 3) 0.537))))
+   (assert (element (formula Кислород) (mass (* (/ (+ ?m0 ?m1) 3) 0.537))))
+   (assert (appendmessagehalt (str-cat "Ca(NO3)2 (" ?m0 ") + t (" ?m1 ") -(0.537)> CaO (" (* (/ (+ ?m0 ?m1) 3) 0.537) ") + NO2 (" (* (/ (+ ?m0 ?m1) 3) 0.537) ") + O2 (" (* (/ (+ ?m0 ?m1) 3) 0.537) ")")))
 )
 
 
-(defrule ОксидКремния_Марганец_Тепло_ОксидМарганца_Кремний
+(defrule ОксидКремния_Марганец_Тепло_ОксидМарганца2_Кремний
    (declare (salience 40))
    (element (formula ОксидКремния) (mass ?m0))
    (element (formula Марганец) (mass ?m1))
    (element (formula Тепло) (mass ?m2))
    =>
-   (assert (element (formula ОксидМарганца) (mass (* (/ (+ ?m0 ?m1 ?m2) 2) 0.4597094))))
-   (assert (element (formula Кремний) (mass (* (/ (+ ?m0 ?m1 ?m2) 2) 0.4597094))))
-   (assert (appendmessagehalt (str-cat "SiO2 (" ?m0 ") + Mn (" ?m1 ") + t (" ?m2 ") -(0.4597094)> MnO (" (* (/ (+ ?m0 ?m1 ?m2) 2) 0.4597094) ") + Si (" (* (/ (+ ?m0 ?m1 ?m2) 2) 0.4597094) ")")))
+   (assert (element (formula ОксидМарганца2) (mass (* (/ (+ ?m0 ?m1 ?m2) 2) 0.929))))
+   (assert (element (formula Кремний) (mass (* (/ (+ ?m0 ?m1 ?m2) 2) 0.929))))
+   (assert (appendmessagehalt (str-cat "SiO2 (" ?m0 ") + Mn (" ?m1 ") + t (" ?m2 ") -(0.929)> MnO (" (* (/ (+ ?m0 ?m1 ?m2) 2) 0.929) ") + Si (" (* (/ (+ ?m0 ?m1 ?m2) 2) 0.929) ")")))
 )
 
 
@@ -1518,9 +1511,9 @@
    (element (formula ХлоридРтути) (mass ?m0))
    (element (formula Сероводород) (mass ?m1))
    =>
-   (assert (element (formula Кордероит) (mass (* (/ (+ ?m0 ?m1) 2) 0.839502))))
-   (assert (element (formula СолянаяКислота) (mass (* (/ (+ ?m0 ?m1) 2) 0.839502))))
-   (assert (appendmessagehalt (str-cat "HgCl2 (" ?m0 ") + H2S (" ?m1 ") -(0.839502)> Hg3S2Cl2 (" (* (/ (+ ?m0 ?m1) 2) 0.839502) ") + HCl (" (* (/ (+ ?m0 ?m1) 2) 0.839502) ")")))
+   (assert (element (formula Кордероит) (mass (* (/ (+ ?m0 ?m1) 2) 0.894))))
+   (assert (element (formula СолянаяКислота) (mass (* (/ (+ ?m0 ?m1) 2) 0.894))))
+   (assert (appendmessagehalt (str-cat "HgCl2 (" ?m0 ") + H2S (" ?m1 ") -(0.894)> Hg3S2Cl2 (" (* (/ (+ ?m0 ?m1) 2) 0.894) ") + HCl (" (* (/ (+ ?m0 ?m1) 2) 0.894) ")")))
 )
 
 
@@ -1529,9 +1522,9 @@
    (element (formula Кордероит) (mass ?m0))
    (element (formula Сероводород) (mass ?m1))
    =>
-   (assert (element (formula СульфидРтути) (mass (* (/ (+ ?m0 ?m1) 2) 0.3592224))))
-   (assert (element (formula СолянаяКислота) (mass (* (/ (+ ?m0 ?m1) 2) 0.3592224))))
-   (assert (appendmessagehalt (str-cat "Hg3S2Cl2 (" ?m0 ") + H2S (" ?m1 ") -(0.3592224)> HgS (" (* (/ (+ ?m0 ?m1) 2) 0.3592224) ") + HCl (" (* (/ (+ ?m0 ?m1) 2) 0.3592224) ")")))
+   (assert (element (formula СульфидРтути) (mass (* (/ (+ ?m0 ?m1) 2) 0.697))))
+   (assert (element (formula СолянаяКислота) (mass (* (/ (+ ?m0 ?m1) 2) 0.697))))
+   (assert (appendmessagehalt (str-cat "Hg3S2Cl2 (" ?m0 ") + H2S (" ?m1 ") -(0.697)> HgS (" (* (/ (+ ?m0 ?m1) 2) 0.697) ") + HCl (" (* (/ (+ ?m0 ?m1) 2) 0.697) ")")))
 )
 
 
@@ -1540,9 +1533,9 @@
    (element (formula СульфатБария) (mass ?m0))
    (element (formula Углерод) (mass ?m1))
    =>
-   (assert (element (formula СульфидБария) (mass (* (/ (+ ?m0 ?m1) 2) 0.7425391))))
-   (assert (element (formula УгарныйГаз) (mass (* (/ (+ ?m0 ?m1) 2) 0.7425391))))
-   (assert (appendmessagehalt (str-cat "BaSO4 (" ?m0 ") + C (" ?m1 ") -(0.7425391)> BaS (" (* (/ (+ ?m0 ?m1) 2) 0.7425391) ") + CO (" (* (/ (+ ?m0 ?m1) 2) 0.7425391) ")")))
+   (assert (element (formula СульфидБария) (mass (* (/ (+ ?m0 ?m1) 2) 0.802))))
+   (assert (element (formula УгарныйГаз) (mass (* (/ (+ ?m0 ?m1) 2) 0.802))))
+   (assert (appendmessagehalt (str-cat "BaSO4 (" ?m0 ") + C (" ?m1 ") -(0.802)> BaS (" (* (/ (+ ?m0 ?m1) 2) 0.802) ") + CO (" (* (/ (+ ?m0 ?m1) 2) 0.802) ")")))
 )
 
 
@@ -1551,73 +1544,73 @@
    (element (formula ГидроксидБария) (mass ?m0))
    (element (formula Сероводород) (mass ?m1))
    =>
-   (assert (element (formula СульфидБария) (mass (* (/ (+ ?m0 ?m1) 2) 0.397617))))
-   (assert (element (formula ДигидрогенаМонооксид) (mass (* (/ (+ ?m0 ?m1) 2) 0.397617))))
-   (assert (appendmessagehalt (str-cat "Ba(OH)2 (" ?m0 ") + H2S (" ?m1 ") -(0.397617)> BaS (" (* (/ (+ ?m0 ?m1) 2) 0.397617) ") + H2O (" (* (/ (+ ?m0 ?m1) 2) 0.397617) ")")))
+   (assert (element (formula СульфидБария) (mass (* (/ (+ ?m0 ?m1) 2) 0.319))))
+   (assert (element (formula ДигидрогенаМонооксид) (mass (* (/ (+ ?m0 ?m1) 2) 0.319))))
+   (assert (appendmessagehalt (str-cat "Ba(OH)2 (" ?m0 ") + H2S (" ?m1 ") -(0.319)> BaS (" (* (/ (+ ?m0 ?m1) 2) 0.319) ") + H2O (" (* (/ (+ ?m0 ?m1) 2) 0.319) ")")))
 )
 
 
-(defrule ОксидМарганца_ГидроксидКалия_НитратКалия_Тепло_ПерманганатКалия_НитритКалия_ДигидрогенаМонооксид
+(defrule ОксидМарганца4_ГидроксидКалия_НитратКалия_Тепло_ПерманганатКалия_НитритКалия_ДигидрогенаМонооксид
    (declare (salience 40))
-   (element (formula ОксидМарганца) (mass ?m0))
+   (element (formula ОксидМарганца4) (mass ?m0))
    (element (formula ГидроксидКалия) (mass ?m1))
    (element (formula НитратКалия) (mass ?m2))
    (element (formula Тепло) (mass ?m3))
    =>
-   (assert (element (formula ПерманганатКалия) (mass (* (/ (+ ?m0 ?m1 ?m2 ?m3) 3) 0.9236407))))
-   (assert (element (formula НитритКалия) (mass (* (/ (+ ?m0 ?m1 ?m2 ?m3) 3) 0.9236407))))
-   (assert (element (formula ДигидрогенаМонооксид) (mass (* (/ (+ ?m0 ?m1 ?m2 ?m3) 3) 0.9236407))))
-   (assert (appendmessagehalt (str-cat "MnO2 (" ?m0 ") + KOH (" ?m1 ") + KNO3 (" ?m2 ") + t (" ?m3 ") -(0.9236407)> K2MnO4 (" (* (/ (+ ?m0 ?m1 ?m2 ?m3) 3) 0.9236407) ") + KNO2 (" (* (/ (+ ?m0 ?m1 ?m2 ?m3) 3) 0.9236407) ") + H2O (" (* (/ (+ ?m0 ?m1 ?m2 ?m3) 3) 0.9236407) ")")))
+   (assert (element (formula ПерманганатКалия) (mass (* (/ (+ ?m0 ?m1 ?m2 ?m3) 3) 0.777))))
+   (assert (element (formula НитритКалия) (mass (* (/ (+ ?m0 ?m1 ?m2 ?m3) 3) 0.777))))
+   (assert (element (formula ДигидрогенаМонооксид) (mass (* (/ (+ ?m0 ?m1 ?m2 ?m3) 3) 0.777))))
+   (assert (appendmessagehalt (str-cat "MnO2 (" ?m0 ") + KOH (" ?m1 ") + KNO3 (" ?m2 ") + t (" ?m3 ") -(0.777)> K2MnO4 (" (* (/ (+ ?m0 ?m1 ?m2 ?m3) 3) 0.777) ") + KNO2 (" (* (/ (+ ?m0 ?m1 ?m2 ?m3) 3) 0.777) ") + H2O (" (* (/ (+ ?m0 ?m1 ?m2 ?m3) 3) 0.777) ")")))
 )
 
 
-(defrule ОксидМарганца_КарбонатКалия_ХлоратКалия_Тепло_ПерманганатКалия_ХлоридКалия_УглекислыйГаз
+(defrule ОксидМарганца4_КарбонатКалия_ХлоратКалия_Тепло_ПерманганатКалия_ХлоридКалия_УглекислыйГаз
    (declare (salience 40))
-   (element (formula ОксидМарганца) (mass ?m0))
+   (element (formula ОксидМарганца4) (mass ?m0))
    (element (formula КарбонатКалия) (mass ?m1))
    (element (formula ХлоратКалия) (mass ?m2))
    (element (formula Тепло) (mass ?m3))
    =>
-   (assert (element (formula ПерманганатКалия) (mass (* (/ (+ ?m0 ?m1 ?m2 ?m3) 3) 0.7739546))))
-   (assert (element (formula ХлоридКалия) (mass (* (/ (+ ?m0 ?m1 ?m2 ?m3) 3) 0.7739546))))
-   (assert (element (formula УглекислыйГаз) (mass (* (/ (+ ?m0 ?m1 ?m2 ?m3) 3) 0.7739546))))
-   (assert (appendmessagehalt (str-cat "MnO2 (" ?m0 ") + K2CO3 (" ?m1 ") + KClO3 (" ?m2 ") + t (" ?m3 ") -(0.7739546)> K2MnO4 (" (* (/ (+ ?m0 ?m1 ?m2 ?m3) 3) 0.7739546) ") + KCl (" (* (/ (+ ?m0 ?m1 ?m2 ?m3) 3) 0.7739546) ") + CO2 (" (* (/ (+ ?m0 ?m1 ?m2 ?m3) 3) 0.7739546) ")")))
+   (assert (element (formula ПерманганатКалия) (mass (* (/ (+ ?m0 ?m1 ?m2 ?m3) 3) 0.712))))
+   (assert (element (formula ХлоридКалия) (mass (* (/ (+ ?m0 ?m1 ?m2 ?m3) 3) 0.712))))
+   (assert (element (formula УглекислыйГаз) (mass (* (/ (+ ?m0 ?m1 ?m2 ?m3) 3) 0.712))))
+   (assert (appendmessagehalt (str-cat "MnO2 (" ?m0 ") + K2CO3 (" ?m1 ") + KClO3 (" ?m2 ") + t (" ?m3 ") -(0.712)> K2MnO4 (" (* (/ (+ ?m0 ?m1 ?m2 ?m3) 3) 0.712) ") + KCl (" (* (/ (+ ?m0 ?m1 ?m2 ?m3) 3) 0.712) ") + CO2 (" (* (/ (+ ?m0 ?m1 ?m2 ?m3) 3) 0.712) ")")))
 )
 
 
-(defrule ОксидМарганца_ГидроксидКалия_Кислород_Тепло_ПерманганатКалия_ДигидрогенаМонооксид
+(defrule ОксидМарганца4_ГидроксидКалия_Кислород_Тепло_ПерманганатКалия_ДигидрогенаМонооксид
    (declare (salience 40))
-   (element (formula ОксидМарганца) (mass ?m0))
+   (element (formula ОксидМарганца4) (mass ?m0))
    (element (formula ГидроксидКалия) (mass ?m1))
    (element (formula Кислород) (mass ?m2))
    (element (formula Тепло) (mass ?m3))
    =>
-   (assert (element (formula ПерманганатКалия) (mass (* (/ (+ ?m0 ?m1 ?m2 ?m3) 2) 0.7893392))))
-   (assert (element (formula ДигидрогенаМонооксид) (mass (* (/ (+ ?m0 ?m1 ?m2 ?m3) 2) 0.7893392))))
-   (assert (appendmessagehalt (str-cat "MnO2 (" ?m0 ") + KOH (" ?m1 ") + O2 (" ?m2 ") + t (" ?m3 ") -(0.7893392)> K2MnO4 (" (* (/ (+ ?m0 ?m1 ?m2 ?m3) 2) 0.7893392) ") + H2O (" (* (/ (+ ?m0 ?m1 ?m2 ?m3) 2) 0.7893392) ")")))
+   (assert (element (formula ПерманганатКалия) (mass (* (/ (+ ?m0 ?m1 ?m2 ?m3) 2) 0.507))))
+   (assert (element (formula ДигидрогенаМонооксид) (mass (* (/ (+ ?m0 ?m1 ?m2 ?m3) 2) 0.507))))
+   (assert (appendmessagehalt (str-cat "MnO2 (" ?m0 ") + KOH (" ?m1 ") + O2 (" ?m2 ") + t (" ?m3 ") -(0.507)> K2MnO4 (" (* (/ (+ ?m0 ?m1 ?m2 ?m3) 2) 0.507) ") + H2O (" (* (/ (+ ?m0 ?m1 ?m2 ?m3) 2) 0.507) ")")))
 )
 
 
-(defrule ПерманганатКалия_Тепло_ПерманганатКалия_ОксидМарганца_Кислород
+(defrule ПерманганатКалия_Тепло_ПерманганатКалия_ОксидМарганца4_Кислород
    (declare (salience 40))
    (element (formula ПерманганатКалия) (mass ?m0))
    (element (formula Тепло) (mass ?m1))
    =>
-   (assert (element (formula ПерманганатКалия) (mass (* (/ (+ ?m0 ?m1) 3) 0.5786104))))
-   (assert (element (formula ОксидМарганца) (mass (* (/ (+ ?m0 ?m1) 3) 0.5786104))))
-   (assert (element (formula Кислород) (mass (* (/ (+ ?m0 ?m1) 3) 0.5786104))))
-   (assert (appendmessagehalt (str-cat "KMnO4 (" ?m0 ") + t (" ?m1 ") -(0.5786104)> K2MnO4 (" (* (/ (+ ?m0 ?m1) 3) 0.5786104) ") + MnO2 (" (* (/ (+ ?m0 ?m1) 3) 0.5786104) ") + O2 (" (* (/ (+ ?m0 ?m1) 3) 0.5786104) ")")))
+   (assert (element (formula ПерманганатКалия) (mass (* (/ (+ ?m0 ?m1) 3) 0.399))))
+   (assert (element (formula ОксидМарганца4) (mass (* (/ (+ ?m0 ?m1) 3) 0.399))))
+   (assert (element (formula Кислород) (mass (* (/ (+ ?m0 ?m1) 3) 0.399))))
+   (assert (appendmessagehalt (str-cat "KMnO4 (" ?m0 ") + t (" ?m1 ") -(0.399)> K2MnO4 (" (* (/ (+ ?m0 ?m1) 3) 0.399) ") + MnO2 (" (* (/ (+ ?m0 ?m1) 3) 0.399) ") + O2 (" (* (/ (+ ?m0 ?m1) 3) 0.399) ")")))
 )
 
 
-(defrule ОксидМарганца_ПероксидКалия_Тепло_ПерманганатКалия
+(defrule ОксидМарганца4_ПероксидКалия_Тепло_ПерманганатКалия
    (declare (salience 40))
-   (element (formula ОксидМарганца) (mass ?m0))
+   (element (formula ОксидМарганца4) (mass ?m0))
    (element (formula ПероксидКалия) (mass ?m1))
    (element (formula Тепло) (mass ?m2))
    =>
-   (assert (element (formula ПерманганатКалия) (mass (* (/ (+ ?m0 ?m1 ?m2) 1) 0.5112388))))
-   (assert (appendmessagehalt (str-cat "MnO2 (" ?m0 ") + K2O2 (" ?m1 ") + t (" ?m2 ") -(0.5112388)> K2MnO4 (" (* (/ (+ ?m0 ?m1 ?m2) 1) 0.5112388) ")")))
+   (assert (element (formula ПерманганатКалия) (mass (* (/ (+ ?m0 ?m1 ?m2) 1) 0.404))))
+   (assert (appendmessagehalt (str-cat "MnO2 (" ?m0 ") + K2O2 (" ?m1 ") + t (" ?m2 ") -(0.404)> K2MnO4 (" (* (/ (+ ?m0 ?m1 ?m2) 1) 0.404) ")")))
 )
 
 
@@ -1626,10 +1619,10 @@
    (element (formula КарбонатКальция) (mass ?m0))
    (element (formula АзотнаяКислота) (mass ?m1))
    =>
-   (assert (element (formula НитратКальция) (mass (* (/ (+ ?m0 ?m1) 3) 0.9217196))))
-   (assert (element (formula УглекислыйГаз) (mass (* (/ (+ ?m0 ?m1) 3) 0.9217196))))
-   (assert (element (formula ДигидрогенаМонооксид) (mass (* (/ (+ ?m0 ?m1) 3) 0.9217196))))
-   (assert (appendmessagehalt (str-cat "CaCO3 (" ?m0 ") + HNO3 (" ?m1 ") -(0.9217196)> Ca(NO3)2 (" (* (/ (+ ?m0 ?m1) 3) 0.9217196) ") + CO2 (" (* (/ (+ ?m0 ?m1) 3) 0.9217196) ") + H2O (" (* (/ (+ ?m0 ?m1) 3) 0.9217196) ")")))
+   (assert (element (formula НитратКальция) (mass (* (/ (+ ?m0 ?m1) 3) 0.465))))
+   (assert (element (formula УглекислыйГаз) (mass (* (/ (+ ?m0 ?m1) 3) 0.465))))
+   (assert (element (formula ДигидрогенаМонооксид) (mass (* (/ (+ ?m0 ?m1) 3) 0.465))))
+   (assert (appendmessagehalt (str-cat "CaCO3 (" ?m0 ") + HNO3 (" ?m1 ") -(0.465)> Ca(NO3)2 (" (* (/ (+ ?m0 ?m1) 3) 0.465) ") + CO2 (" (* (/ (+ ?m0 ?m1) 3) 0.465) ") + H2O (" (* (/ (+ ?m0 ?m1) 3) 0.465) ")")))
 )
 
 
@@ -1638,10 +1631,10 @@
    (element (formula НитратКальция) (mass ?m0))
    (element (formula Тепло) (mass ?m1))
    =>
-   (assert (element (formula ОксидКальция) (mass (* (/ (+ ?m0 ?m1) 3) 0.819558))))
-   (assert (element (formula ОксидАзота4) (mass (* (/ (+ ?m0 ?m1) 3) 0.819558))))
-   (assert (element (formula Кислород) (mass (* (/ (+ ?m0 ?m1) 3) 0.819558))))
-   (assert (appendmessagehalt (str-cat "Ca(NO3)2 (" ?m0 ") + t (" ?m1 ") -(0.819558)> CaO (" (* (/ (+ ?m0 ?m1) 3) 0.819558) ") + NO2 (" (* (/ (+ ?m0 ?m1) 3) 0.819558) ") + O2 (" (* (/ (+ ?m0 ?m1) 3) 0.819558) ")")))
+   (assert (element (formula ОксидКальция) (mass (* (/ (+ ?m0 ?m1) 3) 0.704))))
+   (assert (element (formula ОксидАзота4) (mass (* (/ (+ ?m0 ?m1) 3) 0.704))))
+   (assert (element (formula Кислород) (mass (* (/ (+ ?m0 ?m1) 3) 0.704))))
+   (assert (appendmessagehalt (str-cat "Ca(NO3)2 (" ?m0 ") + t (" ?m1 ") -(0.704)> CaO (" (* (/ (+ ?m0 ?m1) 3) 0.704) ") + NO2 (" (* (/ (+ ?m0 ?m1) 3) 0.704) ") + O2 (" (* (/ (+ ?m0 ?m1) 3) 0.704) ")")))
 )
 
 
@@ -1650,11 +1643,11 @@
    (element (formula Кальций) (mass ?m0))
    (element (formula АзотнаяКислота) (mass ?m1))
    =>
-   (assert (element (formula НитратКальция) (mass (* (/ (+ ?m0 ?m1) 4) 0.7829475))))
-   (assert (element (formula ОксидАзота1) (mass (* (/ (+ ?m0 ?m1) 4) 0.7829475))))
-   (assert (element (formula ОксидАзота2) (mass (* (/ (+ ?m0 ?m1) 4) 0.7829475))))
-   (assert (element (formula ДигидрогенаМонооксид) (mass (* (/ (+ ?m0 ?m1) 4) 0.7829475))))
-   (assert (appendmessagehalt (str-cat "Ca (" ?m0 ") + HNO3 (" ?m1 ") -(0.7829475)> Ca(NO3)2 (" (* (/ (+ ?m0 ?m1) 4) 0.7829475) ") + N2O (" (* (/ (+ ?m0 ?m1) 4) 0.7829475) ") + NO (" (* (/ (+ ?m0 ?m1) 4) 0.7829475) ") + H2O (" (* (/ (+ ?m0 ?m1) 4) 0.7829475) ")")))
+   (assert (element (formula НитратКальция) (mass (* (/ (+ ?m0 ?m1) 4) 0.506))))
+   (assert (element (formula ОксидАзота1) (mass (* (/ (+ ?m0 ?m1) 4) 0.506))))
+   (assert (element (formula ОксидАзота2) (mass (* (/ (+ ?m0 ?m1) 4) 0.506))))
+   (assert (element (formula ДигидрогенаМонооксид) (mass (* (/ (+ ?m0 ?m1) 4) 0.506))))
+   (assert (appendmessagehalt (str-cat "Ca (" ?m0 ") + HNO3 (" ?m1 ") -(0.506)> Ca(NO3)2 (" (* (/ (+ ?m0 ?m1) 4) 0.506) ") + N2O (" (* (/ (+ ?m0 ?m1) 4) 0.506) ") + NO (" (* (/ (+ ?m0 ?m1) 4) 0.506) ") + H2O (" (* (/ (+ ?m0 ?m1) 4) 0.506) ")")))
 )
 
 
@@ -1663,9 +1656,9 @@
    (element (formula ОксидКальция) (mass ?m0))
    (element (formula АзотнаяКислота) (mass ?m1))
    =>
-   (assert (element (formula НитратКальция) (mass (* (/ (+ ?m0 ?m1) 2) 0.4757425))))
-   (assert (element (formula ДигидрогенаМонооксид) (mass (* (/ (+ ?m0 ?m1) 2) 0.4757425))))
-   (assert (appendmessagehalt (str-cat "CaO (" ?m0 ") + HNO3 (" ?m1 ") -(0.4757425)> Ca(NO3)2 (" (* (/ (+ ?m0 ?m1) 2) 0.4757425) ") + H2O (" (* (/ (+ ?m0 ?m1) 2) 0.4757425) ")")))
+   (assert (element (formula НитратКальция) (mass (* (/ (+ ?m0 ?m1) 2) 0.390))))
+   (assert (element (formula ДигидрогенаМонооксид) (mass (* (/ (+ ?m0 ?m1) 2) 0.390))))
+   (assert (appendmessagehalt (str-cat "CaO (" ?m0 ") + HNO3 (" ?m1 ") -(0.390)> Ca(NO3)2 (" (* (/ (+ ?m0 ?m1) 2) 0.390) ") + H2O (" (* (/ (+ ?m0 ?m1) 2) 0.390) ")")))
 )
 
 
@@ -1674,10 +1667,10 @@
    (element (formula ГидроксидКальция) (mass ?m0))
    (element (formula ОксидАзота4) (mass ?m1))
    =>
-   (assert (element (formula НитратКальция) (mass (* (/ (+ ?m0 ?m1) 3) 0.4280505))))
-   (assert (element (formula НитритКальция) (mass (* (/ (+ ?m0 ?m1) 3) 0.4280505))))
-   (assert (element (formula ДигидрогенаМонооксид) (mass (* (/ (+ ?m0 ?m1) 3) 0.4280505))))
-   (assert (appendmessagehalt (str-cat "Ca(OH)2 (" ?m0 ") + NO2 (" ?m1 ") -(0.4280505)> Ca(NO3)2 (" (* (/ (+ ?m0 ?m1) 3) 0.4280505) ") + Ca(NO2)2 (" (* (/ (+ ?m0 ?m1) 3) 0.4280505) ") + H2O (" (* (/ (+ ?m0 ?m1) 3) 0.4280505) ")")))
+   (assert (element (formula НитратКальция) (mass (* (/ (+ ?m0 ?m1) 3) 0.873))))
+   (assert (element (formula НитритКальция) (mass (* (/ (+ ?m0 ?m1) 3) 0.873))))
+   (assert (element (formula ДигидрогенаМонооксид) (mass (* (/ (+ ?m0 ?m1) 3) 0.873))))
+   (assert (appendmessagehalt (str-cat "Ca(OH)2 (" ?m0 ") + NO2 (" ?m1 ") -(0.873)> Ca(NO3)2 (" (* (/ (+ ?m0 ?m1) 3) 0.873) ") + Ca(NO2)2 (" (* (/ (+ ?m0 ?m1) 3) 0.873) ") + H2O (" (* (/ (+ ?m0 ?m1) 3) 0.873) ")")))
 )
 
 
@@ -1686,34 +1679,34 @@
    (element (formula СульфидКальция) (mass ?m0))
    (element (formula АзотнаяКислота) (mass ?m1))
    =>
-   (assert (element (formula НитратКальция) (mass (* (/ (+ ?m0 ?m1) 4) 0.5904143))))
-   (assert (element (formula Сера) (mass (* (/ (+ ?m0 ?m1) 4) 0.5904143))))
-   (assert (element (formula ОксидАзота4) (mass (* (/ (+ ?m0 ?m1) 4) 0.5904143))))
-   (assert (element (formula ДигидрогенаМонооксид) (mass (* (/ (+ ?m0 ?m1) 4) 0.5904143))))
-   (assert (appendmessagehalt (str-cat "CaS (" ?m0 ") + HNO3 (" ?m1 ") -(0.5904143)> Ca(NO3)2 (" (* (/ (+ ?m0 ?m1) 4) 0.5904143) ") + S (" (* (/ (+ ?m0 ?m1) 4) 0.5904143) ") + NO2 (" (* (/ (+ ?m0 ?m1) 4) 0.5904143) ") + H2O (" (* (/ (+ ?m0 ?m1) 4) 0.5904143) ")")))
+   (assert (element (formula НитратКальция) (mass (* (/ (+ ?m0 ?m1) 4) 0.928))))
+   (assert (element (formula Сера) (mass (* (/ (+ ?m0 ?m1) 4) 0.928))))
+   (assert (element (formula ОксидАзота4) (mass (* (/ (+ ?m0 ?m1) 4) 0.928))))
+   (assert (element (formula ДигидрогенаМонооксид) (mass (* (/ (+ ?m0 ?m1) 4) 0.928))))
+   (assert (appendmessagehalt (str-cat "CaS (" ?m0 ") + HNO3 (" ?m1 ") -(0.928)> Ca(NO3)2 (" (* (/ (+ ?m0 ?m1) 4) 0.928) ") + S (" (* (/ (+ ?m0 ?m1) 4) 0.928) ") + NO2 (" (* (/ (+ ?m0 ?m1) 4) 0.928) ") + H2O (" (* (/ (+ ?m0 ?m1) 4) 0.928) ")")))
 )
 
 
-(defrule ОксидМарганца_Тепло_ОксидМарганца
+(defrule ОксидМарганца4_Тепло_ОксидМарганца3
    (declare (salience 40))
-   (element (formula ОксидМарганца) (mass ?m0))
+   (element (formula ОксидМарганца4) (mass ?m0))
    (element (formula Тепло) (mass ?m1))
    =>
-   (assert (element (formula ОксидМарганца) (mass (* (/ (+ ?m0 ?m1) 1) 0.8143638))))
-   (assert (appendmessagehalt (str-cat "MnO2 (" ?m0 ") + t (" ?m1 ") -(0.8143638)> Mn2O3 (" (* (/ (+ ?m0 ?m1) 1) 0.8143638) ")")))
+   (assert (element (formula ОксидМарганца3) (mass (* (/ (+ ?m0 ?m1) 1) 0.875))))
+   (assert (appendmessagehalt (str-cat "MnO2 (" ?m0 ") + t (" ?m1 ") -(0.875)> Mn2O3 (" (* (/ (+ ?m0 ?m1) 1) 0.875) ")")))
 )
 
 
-(defrule ОксидМарганца_Алюминий_Тепло_Марганец_ОксидАлюминия_Тепло
+(defrule ОксидМарганца3_Алюминий_Тепло_Марганец_ОксидАлюминия_Тепло
    (declare (salience 40))
-   (element (formula ОксидМарганца) (mass ?m0))
+   (element (formula ОксидМарганца3) (mass ?m0))
    (element (formula Алюминий) (mass ?m1))
    (element (formula Тепло) (mass ?m2))
    =>
-   (assert (element (formula Марганец) (mass (* (/ (+ ?m0 ?m1 ?m2) 3) 0.8755214))))
-   (assert (element (formula ОксидАлюминия) (mass (* (/ (+ ?m0 ?m1 ?m2) 3) 0.8755214))))
-   (assert (element (formula Тепло) (mass (* (/ (+ ?m0 ?m1 ?m2) 3) 0.8755214))))
-   (assert (appendmessagehalt (str-cat "Mn2O3 (" ?m0 ") + Al (" ?m1 ") + t (" ?m2 ") -(0.8755214)> Mn (" (* (/ (+ ?m0 ?m1 ?m2) 3) 0.8755214) ") + Al2O3 (" (* (/ (+ ?m0 ?m1 ?m2) 3) 0.8755214) ") + t (" (* (/ (+ ?m0 ?m1 ?m2) 3) 0.8755214) ")")))
+   (assert (element (formula Марганец) (mass (* (/ (+ ?m0 ?m1 ?m2) 3) 0.442))))
+   (assert (element (formula ОксидАлюминия) (mass (* (/ (+ ?m0 ?m1 ?m2) 3) 0.442))))
+   (assert (element (formula Тепло) (mass (* (/ (+ ?m0 ?m1 ?m2) 3) 0.442))))
+   (assert (appendmessagehalt (str-cat "Mn2O3 (" ?m0 ") + Al (" ?m1 ") + t (" ?m2 ") -(0.442)> Mn (" (* (/ (+ ?m0 ?m1 ?m2) 3) 0.442) ") + Al2O3 (" (* (/ (+ ?m0 ?m1 ?m2) 3) 0.442) ") + t (" (* (/ (+ ?m0 ?m1 ?m2) 3) 0.442) ")")))
 )
 
 
@@ -1723,8 +1716,8 @@
    (element (formula ХлоридРтути) (mass ?m1))
    (element (formula Тепло) (mass ?m2))
    =>
-   (assert (element (formula Кордероит) (mass (* (/ (+ ?m0 ?m1 ?m2) 1) 0.48884))))
-   (assert (appendmessagehalt (str-cat "HgS (" ?m0 ") + HgCl2 (" ?m1 ") + t (" ?m2 ") -(0.48884)> Hg3S2Cl2 (" (* (/ (+ ?m0 ?m1 ?m2) 1) 0.48884) ")")))
+   (assert (element (formula Кордероит) (mass (* (/ (+ ?m0 ?m1 ?m2) 1) 0.555))))
+   (assert (appendmessagehalt (str-cat "HgS (" ?m0 ") + HgCl2 (" ?m1 ") + t (" ?m2 ") -(0.555)> Hg3S2Cl2 (" (* (/ (+ ?m0 ?m1 ?m2) 1) 0.555) ")")))
 )
 
 
@@ -1733,9 +1726,9 @@
    (element (formula СульфидЖелеза) (mass ?m0))
    (element (formula СолянаяКислота) (mass ?m1))
    =>
-   (assert (element (formula Сероводород) (mass (* (/ (+ ?m0 ?m1) 2) 0.7131879))))
-   (assert (element (formula ХлоридЖелеза) (mass (* (/ (+ ?m0 ?m1) 2) 0.7131879))))
-   (assert (appendmessagehalt (str-cat "FeS (" ?m0 ") + HCl (" ?m1 ") -(0.7131879)> H2S (" (* (/ (+ ?m0 ?m1) 2) 0.7131879) ") + FeCl2 (" (* (/ (+ ?m0 ?m1) 2) 0.7131879) ")")))
+   (assert (element (formula Сероводород) (mass (* (/ (+ ?m0 ?m1) 2) 0.339))))
+   (assert (element (formula ХлоридЖелеза) (mass (* (/ (+ ?m0 ?m1) 2) 0.339))))
+   (assert (appendmessagehalt (str-cat "FeS (" ?m0 ") + HCl (" ?m1 ") -(0.339)> H2S (" (* (/ (+ ?m0 ?m1) 2) 0.339) ") + FeCl2 (" (* (/ (+ ?m0 ?m1) 2) 0.339) ")")))
 )
 
 
@@ -1744,9 +1737,9 @@
    (element (formula СульфидАлюминия) (mass ?m0))
    (element (formula ДигидрогенаМонооксид) (mass ?m1))
    =>
-   (assert (element (formula Сероводород) (mass (* (/ (+ ?m0 ?m1) 2) 0.4856688))))
-   (assert (element (formula ГидроксидАлюминия) (mass (* (/ (+ ?m0 ?m1) 2) 0.4856688))))
-   (assert (appendmessagehalt (str-cat "Al2S3 (" ?m0 ") + H2O (" ?m1 ") -(0.4856688)> H2S (" (* (/ (+ ?m0 ?m1) 2) 0.4856688) ") + Al(OH)3 (" (* (/ (+ ?m0 ?m1) 2) 0.4856688) ")")))
+   (assert (element (formula Сероводород) (mass (* (/ (+ ?m0 ?m1) 2) 0.930))))
+   (assert (element (formula ГидроксидАлюминия) (mass (* (/ (+ ?m0 ?m1) 2) 0.930))))
+   (assert (appendmessagehalt (str-cat "Al2S3 (" ?m0 ") + H2O (" ?m1 ") -(0.930)> H2S (" (* (/ (+ ?m0 ?m1) 2) 0.930) ") + Al(OH)3 (" (* (/ (+ ?m0 ?m1) 2) 0.930) ")")))
 )
 
 
@@ -1755,9 +1748,9 @@
    (element (formula НитратКальция) (mass ?m0))
    (element (formula КарбонатКалия) (mass ?m1))
    =>
-   (assert (element (formula НитратКалия) (mass (* (/ (+ ?m0 ?m1) 2) 0.5258185))))
-   (assert (element (formula КарбонатКальция) (mass (* (/ (+ ?m0 ?m1) 2) 0.5258185))))
-   (assert (appendmessagehalt (str-cat "Ca(NO3)2 (" ?m0 ") + K2CO3 (" ?m1 ") -(0.5258185)> KNO3 (" (* (/ (+ ?m0 ?m1) 2) 0.5258185) ") + CaCO3 (" (* (/ (+ ?m0 ?m1) 2) 0.5258185) ")")))
+   (assert (element (formula НитратКалия) (mass (* (/ (+ ?m0 ?m1) 2) 0.619))))
+   (assert (element (formula КарбонатКальция) (mass (* (/ (+ ?m0 ?m1) 2) 0.619))))
+   (assert (appendmessagehalt (str-cat "Ca(NO3)2 (" ?m0 ") + K2CO3 (" ?m1 ") -(0.619)> KNO3 (" (* (/ (+ ?m0 ?m1) 2) 0.619) ") + CaCO3 (" (* (/ (+ ?m0 ?m1) 2) 0.619) ")")))
 )
 
 
@@ -1766,9 +1759,9 @@
    (element (formula НитратКальция) (mass ?m0))
    (element (formula СульфатКалия) (mass ?m1))
    =>
-   (assert (element (formula НитратКалия) (mass (* (/ (+ ?m0 ?m1) 2) 0.7296854))))
-   (assert (element (formula СульфатКальция) (mass (* (/ (+ ?m0 ?m1) 2) 0.7296854))))
-   (assert (appendmessagehalt (str-cat "Ca(NO3)2 (" ?m0 ") + K2SO4 (" ?m1 ") -(0.7296854)> KNO3 (" (* (/ (+ ?m0 ?m1) 2) 0.7296854) ") + CaSO4 (" (* (/ (+ ?m0 ?m1) 2) 0.7296854) ")")))
+   (assert (element (formula НитратКалия) (mass (* (/ (+ ?m0 ?m1) 2) 0.308))))
+   (assert (element (formula СульфатКальция) (mass (* (/ (+ ?m0 ?m1) 2) 0.308))))
+   (assert (appendmessagehalt (str-cat "Ca(NO3)2 (" ?m0 ") + K2SO4 (" ?m1 ") -(0.308)> KNO3 (" (* (/ (+ ?m0 ?m1) 2) 0.308) ") + CaSO4 (" (* (/ (+ ?m0 ?m1) 2) 0.308) ")")))
 )
 
 
@@ -1778,8 +1771,8 @@
    (element (formula Кислород) (mass ?m1))
    (element (formula Холод) (mass ?m2))
    =>
-   (assert (element (formula ПероксидКалия) (mass (* (/ (+ ?m0 ?m1 ?m2) 1) 0.3551377))))
-   (assert (appendmessagehalt (str-cat "K (" ?m0 ") + O2 (" ?m1 ") + not_t (" ?m2 ") -(0.3551377)> K2O2 (" (* (/ (+ ?m0 ?m1 ?m2) 1) 0.3551377) ")")))
+   (assert (element (formula ПероксидКалия) (mass (* (/ (+ ?m0 ?m1 ?m2) 1) 0.455))))
+   (assert (appendmessagehalt (str-cat "K (" ?m0 ") + O2 (" ?m1 ") + not_t (" ?m2 ") -(0.455)> K2O2 (" (* (/ (+ ?m0 ?m1 ?m2) 1) 0.455) ")")))
 )
 
 
@@ -1788,9 +1781,9 @@
    (element (formula ОксидКальция) (mass ?m0))
    (element (formula Тепло) (mass ?m1))
    =>
-   (assert (element (formula ПероксидКалия) (mass (* (/ (+ ?m0 ?m1) 2) 0.6483526))))
-   (assert (element (formula Кислород) (mass (* (/ (+ ?m0 ?m1) 2) 0.6483526))))
-   (assert (appendmessagehalt (str-cat "KO2 (" ?m0 ") + t (" ?m1 ") -(0.6483526)> K2O2 (" (* (/ (+ ?m0 ?m1) 2) 0.6483526) ") + O2 (" (* (/ (+ ?m0 ?m1) 2) 0.6483526) ")")))
+   (assert (element (formula ПероксидКалия) (mass (* (/ (+ ?m0 ?m1) 2) 0.913))))
+   (assert (element (formula Кислород) (mass (* (/ (+ ?m0 ?m1) 2) 0.913))))
+   (assert (appendmessagehalt (str-cat "KO2 (" ?m0 ") + t (" ?m1 ") -(0.913)> K2O2 (" (* (/ (+ ?m0 ?m1) 2) 0.913) ") + O2 (" (* (/ (+ ?m0 ?m1) 2) 0.913) ")")))
 )
 
 
@@ -1801,10 +1794,10 @@
    (element (formula Тепло) (mass ?m2))
    (element (formula Криолит) (mass ?m3))
    =>
-   (assert (element (formula Алюминий) (mass (* (/ (+ ?m0 ?m1 ?m2 ?m3) 3) 0.9350983))))
-   (assert (element (formula Кислород) (mass (* (/ (+ ?m0 ?m1 ?m2 ?m3) 3) 0.9350983))))
-   (assert (element (formula Криолит) (mass (* (/ (+ ?m0 ?m1 ?m2 ?m3) 3) 0.9350983))))
-   (assert (appendmessagehalt (str-cat "Al2O3 (" ?m0 ") + e (" ?m1 ") + t (" ?m2 ") + Na3AlF6 (" ?m3 ") -(0.9350983)> Al (" (* (/ (+ ?m0 ?m1 ?m2 ?m3) 3) 0.9350983) ") + O2 (" (* (/ (+ ?m0 ?m1 ?m2 ?m3) 3) 0.9350983) ") + Na3AlF6 (" (* (/ (+ ?m0 ?m1 ?m2 ?m3) 3) 0.9350983) ")")))
+   (assert (element (formula Алюминий) (mass (* (/ (+ ?m0 ?m1 ?m2 ?m3) 3) 0.523))))
+   (assert (element (formula Кислород) (mass (* (/ (+ ?m0 ?m1 ?m2 ?m3) 3) 0.523))))
+   (assert (element (formula Криолит) (mass (* (/ (+ ?m0 ?m1 ?m2 ?m3) 3) 0.523))))
+   (assert (appendmessagehalt (str-cat "Al2O3 (" ?m0 ") + e (" ?m1 ") + t (" ?m2 ") + Na3AlF6 (" ?m3 ") -(0.523)> Al (" (* (/ (+ ?m0 ?m1 ?m2 ?m3) 3) 0.523) ") + O2 (" (* (/ (+ ?m0 ?m1 ?m2 ?m3) 3) 0.523) ") + Na3AlF6 (" (* (/ (+ ?m0 ?m1 ?m2 ?m3) 3) 0.523) ")")))
 )
 
 
@@ -1814,9 +1807,9 @@
    (element (formula Калий) (mass ?m1))
    (element (formula Тепло) (mass ?m2))
    =>
-   (assert (element (formula ХлоридКалия) (mass (* (/ (+ ?m0 ?m1 ?m2) 2) 0.8115379))))
-   (assert (element (formula Алюминий) (mass (* (/ (+ ?m0 ?m1 ?m2) 2) 0.8115379))))
-   (assert (appendmessagehalt (str-cat "AlCl3 (" ?m0 ") + K (" ?m1 ") + t (" ?m2 ") -(0.8115379)> KCl (" (* (/ (+ ?m0 ?m1 ?m2) 2) 0.8115379) ") + Al (" (* (/ (+ ?m0 ?m1 ?m2) 2) 0.8115379) ")")))
+   (assert (element (formula ХлоридКалия) (mass (* (/ (+ ?m0 ?m1 ?m2) 2) 0.871))))
+   (assert (element (formula Алюминий) (mass (* (/ (+ ?m0 ?m1 ?m2) 2) 0.871))))
+   (assert (appendmessagehalt (str-cat "AlCl3 (" ?m0 ") + K (" ?m1 ") + t (" ?m2 ") -(0.871)> KCl (" (* (/ (+ ?m0 ?m1 ?m2) 2) 0.871) ") + Al (" (* (/ (+ ?m0 ?m1 ?m2) 2) 0.871) ")")))
 )
 
 
@@ -1825,8 +1818,8 @@
    (element (formula Железо) (mass ?m0))
    (element (formula Сера) (mass ?m1))
    =>
-   (assert (element (formula СульфидЖелеза) (mass (* (/ (+ ?m0 ?m1) 1) 0.7574723))))
-   (assert (appendmessagehalt (str-cat "Fe (" ?m0 ") + S (" ?m1 ") -(0.7574723)> FeS (" (* (/ (+ ?m0 ?m1) 1) 0.7574723) ")")))
+   (assert (element (formula СульфидЖелеза) (mass (* (/ (+ ?m0 ?m1) 1) 0.713))))
+   (assert (appendmessagehalt (str-cat "Fe (" ?m0 ") + S (" ?m1 ") -(0.713)> FeS (" (* (/ (+ ?m0 ?m1) 1) 0.713) ")")))
 )
 
 
@@ -1835,8 +1828,8 @@
    (element (formula СульфидЖелеза) (mass ?m0))
    (element (formula Тепло) (mass ?m1))
    =>
-   (assert (element (formula СульфидЖелеза) (mass (* (/ (+ ?m0 ?m1) 1) 0.4802141))))
-   (assert (appendmessagehalt (str-cat "FeS2 (" ?m0 ") + t (" ?m1 ") -(0.4802141)> FeS (" (* (/ (+ ?m0 ?m1) 1) 0.4802141) ")")))
+   (assert (element (formula СульфидЖелеза) (mass (* (/ (+ ?m0 ?m1) 1) 0.563))))
+   (assert (appendmessagehalt (str-cat "FeS2 (" ?m0 ") + t (" ?m1 ") -(0.563)> FeS (" (* (/ (+ ?m0 ?m1) 1) 0.563) ")")))
 )
 
 
@@ -1846,9 +1839,9 @@
    (element (formula Водород) (mass ?m1))
    (element (formula Сероводород) (mass ?m2))
    =>
-   (assert (element (formula СульфидЖелеза) (mass (* (/ (+ ?m0 ?m1 ?m2) 2) 0.5228826))))
-   (assert (element (formula ДигидрогенаМонооксид) (mass (* (/ (+ ?m0 ?m1 ?m2) 2) 0.5228826))))
-   (assert (appendmessagehalt (str-cat "Fe2O3 (" ?m0 ") + H2 (" ?m1 ") + H2S (" ?m2 ") -(0.5228826)> FeS (" (* (/ (+ ?m0 ?m1 ?m2) 2) 0.5228826) ") + H2O (" (* (/ (+ ?m0 ?m1 ?m2) 2) 0.5228826) ")")))
+   (assert (element (formula СульфидЖелеза) (mass (* (/ (+ ?m0 ?m1 ?m2) 2) 0.939))))
+   (assert (element (formula ДигидрогенаМонооксид) (mass (* (/ (+ ?m0 ?m1 ?m2) 2) 0.939))))
+   (assert (appendmessagehalt (str-cat "Fe2O3 (" ?m0 ") + H2 (" ?m1 ") + H2S (" ?m2 ") -(0.939)> FeS (" (* (/ (+ ?m0 ?m1 ?m2) 2) 0.939) ") + H2O (" (* (/ (+ ?m0 ?m1 ?m2) 2) 0.939) ")")))
 )
 
 
@@ -1858,8 +1851,8 @@
    (element (formula Сера) (mass ?m1))
    (element (formula Тепло) (mass ?m2))
    =>
-   (assert (element (formula СульфидАлюминия) (mass (* (/ (+ ?m0 ?m1 ?m2) 1) 0.67435))))
-   (assert (appendmessagehalt (str-cat "Al (" ?m0 ") + S (" ?m1 ") + t (" ?m2 ") -(0.67435)> Al2S3 (" (* (/ (+ ?m0 ?m1 ?m2) 1) 0.67435) ")")))
+   (assert (element (formula СульфидАлюминия) (mass (* (/ (+ ?m0 ?m1 ?m2) 1) 0.434))))
+   (assert (appendmessagehalt (str-cat "Al (" ?m0 ") + S (" ?m1 ") + t (" ?m2 ") -(0.434)> Al2S3 (" (* (/ (+ ?m0 ?m1 ?m2) 1) 0.434) ")")))
 )
 
 
@@ -1868,9 +1861,9 @@
    (element (formula Натрий) (mass ?m0))
    (element (formula ГидроксидКалия) (mass ?m1))
    =>
-   (assert (element (formula ГидроксидНатрия) (mass (* (/ (+ ?m0 ?m1) 2) 0.8872477))))
-   (assert (element (formula Калий) (mass (* (/ (+ ?m0 ?m1) 2) 0.8872477))))
-   (assert (appendmessagehalt (str-cat "Na (" ?m0 ") + KOH (" ?m1 ") -(0.8872477)> NaOH (" (* (/ (+ ?m0 ?m1) 2) 0.8872477) ") + K (" (* (/ (+ ?m0 ?m1) 2) 0.8872477) ")")))
+   (assert (element (formula ГидроксидНатрия) (mass (* (/ (+ ?m0 ?m1) 2) 0.326))))
+   (assert (element (formula Калий) (mass (* (/ (+ ?m0 ?m1) 2) 0.326))))
+   (assert (appendmessagehalt (str-cat "Na (" ?m0 ") + KOH (" ?m1 ") -(0.326)> NaOH (" (* (/ (+ ?m0 ?m1) 2) 0.326) ") + K (" (* (/ (+ ?m0 ?m1) 2) 0.326) ")")))
 )
 
 
@@ -1880,9 +1873,9 @@
    (element (formula Алюминий) (mass ?m1))
    (element (formula Тепло) (mass ?m2))
    =>
-   (assert (element (formula ОксидАлюминия) (mass (* (/ (+ ?m0 ?m1 ?m2) 2) 0.6712757))))
-   (assert (element (formula Медь) (mass (* (/ (+ ?m0 ?m1 ?m2) 2) 0.6712757))))
-   (assert (appendmessagehalt (str-cat "Cu2O (" ?m0 ") + Al (" ?m1 ") + t (" ?m2 ") -(0.6712757)> Al2O3 (" (* (/ (+ ?m0 ?m1 ?m2) 2) 0.6712757) ") + Cu (" (* (/ (+ ?m0 ?m1 ?m2) 2) 0.6712757) ")")))
+   (assert (element (formula ОксидАлюминия) (mass (* (/ (+ ?m0 ?m1 ?m2) 2) 0.689))))
+   (assert (element (formula Медь) (mass (* (/ (+ ?m0 ?m1 ?m2) 2) 0.689))))
+   (assert (appendmessagehalt (str-cat "Cu2O (" ?m0 ") + Al (" ?m1 ") + t (" ?m2 ") -(0.689)> Al2O3 (" (* (/ (+ ?m0 ?m1 ?m2) 2) 0.689) ") + Cu (" (* (/ (+ ?m0 ?m1 ?m2) 2) 0.689) ")")))
 )
 
 
@@ -1891,9 +1884,9 @@
    (element (formula ГидроксидАлюминия) (mass ?m0))
    (element (formula Тепло) (mass ?m1))
    =>
-   (assert (element (formula ОксидАлюминия) (mass (* (/ (+ ?m0 ?m1) 2) 0.304862))))
-   (assert (element (formula ДигидрогенаМонооксид) (mass (* (/ (+ ?m0 ?m1) 2) 0.304862))))
-   (assert (appendmessagehalt (str-cat "Al(OH)3 (" ?m0 ") + t (" ?m1 ") -(0.304862)> Al2O3 (" (* (/ (+ ?m0 ?m1) 2) 0.304862) ") + H2O (" (* (/ (+ ?m0 ?m1) 2) 0.304862) ")")))
+   (assert (element (formula ОксидАлюминия) (mass (* (/ (+ ?m0 ?m1) 2) 0.587))))
+   (assert (element (formula ДигидрогенаМонооксид) (mass (* (/ (+ ?m0 ?m1) 2) 0.587))))
+   (assert (appendmessagehalt (str-cat "Al(OH)3 (" ?m0 ") + t (" ?m1 ") -(0.587)> Al2O3 (" (* (/ (+ ?m0 ?m1) 2) 0.587) ") + H2O (" (* (/ (+ ?m0 ?m1) 2) 0.587) ")")))
 )
 
 
@@ -1903,9 +1896,9 @@
    (element (formula Водород) (mass ?m1))
    (element (formula Тепло) (mass ?m2))
    =>
-   (assert (element (formula Железо) (mass (* (/ (+ ?m0 ?m1 ?m2) 2) 0.3113468))))
-   (assert (element (formula ДигидрогенаМонооксид) (mass (* (/ (+ ?m0 ?m1 ?m2) 2) 0.3113468))))
-   (assert (appendmessagehalt (str-cat "Fe2O3 (" ?m0 ") + H2 (" ?m1 ") + t (" ?m2 ") -(0.3113468)> Fe (" (* (/ (+ ?m0 ?m1 ?m2) 2) 0.3113468) ") + H2O (" (* (/ (+ ?m0 ?m1 ?m2) 2) 0.3113468) ")")))
+   (assert (element (formula Железо) (mass (* (/ (+ ?m0 ?m1 ?m2) 2) 0.377))))
+   (assert (element (formula ДигидрогенаМонооксид) (mass (* (/ (+ ?m0 ?m1 ?m2) 2) 0.377))))
+   (assert (appendmessagehalt (str-cat "Fe2O3 (" ?m0 ") + H2 (" ?m1 ") + t (" ?m2 ") -(0.377)> Fe (" (* (/ (+ ?m0 ?m1 ?m2) 2) 0.377) ") + H2O (" (* (/ (+ ?m0 ?m1 ?m2) 2) 0.377) ")")))
 )
 
 
@@ -1914,9 +1907,9 @@
    (element (formula ОксидЖелеза3) (mass ?m0))
    (element (formula УгарныйГаз) (mass ?m1))
    =>
-   (assert (element (formula Железо) (mass (* (/ (+ ?m0 ?m1) 2) 0.4092123))))
-   (assert (element (formula УглекислыйГаз) (mass (* (/ (+ ?m0 ?m1) 2) 0.4092123))))
-   (assert (appendmessagehalt (str-cat "Fe2O3 (" ?m0 ") + CO (" ?m1 ") -(0.4092123)> Fe (" (* (/ (+ ?m0 ?m1) 2) 0.4092123) ") + CO2 (" (* (/ (+ ?m0 ?m1) 2) 0.4092123) ")")))
+   (assert (element (formula Железо) (mass (* (/ (+ ?m0 ?m1) 2) 0.942))))
+   (assert (element (formula УглекислыйГаз) (mass (* (/ (+ ?m0 ?m1) 2) 0.942))))
+   (assert (appendmessagehalt (str-cat "Fe2O3 (" ?m0 ") + CO (" ?m1 ") -(0.942)> Fe (" (* (/ (+ ?m0 ?m1) 2) 0.942) ") + CO2 (" (* (/ (+ ?m0 ?m1) 2) 0.942) ")")))
 )
 
 
@@ -1925,9 +1918,9 @@
    (element (formula ОксидЖелеза) (mass ?m0))
    (element (formula УгарныйГаз) (mass ?m1))
    =>
-   (assert (element (formula Железо) (mass (* (/ (+ ?m0 ?m1) 2) 0.3023431))))
-   (assert (element (formula УглекислыйГаз) (mass (* (/ (+ ?m0 ?m1) 2) 0.3023431))))
-   (assert (appendmessagehalt (str-cat "FeO (" ?m0 ") + CO (" ?m1 ") -(0.3023431)> Fe (" (* (/ (+ ?m0 ?m1) 2) 0.3023431) ") + CO2 (" (* (/ (+ ?m0 ?m1) 2) 0.3023431) ")")))
+   (assert (element (formula Железо) (mass (* (/ (+ ?m0 ?m1) 2) 0.760))))
+   (assert (element (formula УглекислыйГаз) (mass (* (/ (+ ?m0 ?m1) 2) 0.760))))
+   (assert (appendmessagehalt (str-cat "FeO (" ?m0 ") + CO (" ?m1 ") -(0.760)> Fe (" (* (/ (+ ?m0 ?m1) 2) 0.760) ") + CO2 (" (* (/ (+ ?m0 ?m1) 2) 0.760) ")")))
 )
 
 
@@ -1936,9 +1929,9 @@
    (element (formula ОксидЖелеза) (mass ?m0))
    (element (formula УгарныйГаз) (mass ?m1))
    =>
-   (assert (element (formula Железо) (mass (* (/ (+ ?m0 ?m1) 2) 0.5178273))))
-   (assert (element (formula УглекислыйГаз) (mass (* (/ (+ ?m0 ?m1) 2) 0.5178273))))
-   (assert (appendmessagehalt (str-cat "FeO (" ?m0 ") + CO (" ?m1 ") -(0.5178273)> Fe (" (* (/ (+ ?m0 ?m1) 2) 0.5178273) ") + CO2 (" (* (/ (+ ?m0 ?m1) 2) 0.5178273) ")")))
+   (assert (element (formula Железо) (mass (* (/ (+ ?m0 ?m1) 2) 0.842))))
+   (assert (element (formula УглекислыйГаз) (mass (* (/ (+ ?m0 ?m1) 2) 0.842))))
+   (assert (appendmessagehalt (str-cat "FeO (" ?m0 ") + CO (" ?m1 ") -(0.842)> Fe (" (* (/ (+ ?m0 ?m1) 2) 0.842) ") + CO2 (" (* (/ (+ ?m0 ?m1) 2) 0.842) ")")))
 )
 
 
@@ -1947,9 +1940,9 @@
    (element (formula ОксидЖелеза3) (mass ?m0))
    (element (formula Алюминий) (mass ?m1))
    =>
-   (assert (element (formula Железо) (mass (* (/ (+ ?m0 ?m1) 2) 0.8208658))))
-   (assert (element (formula ОксидАлюминия) (mass (* (/ (+ ?m0 ?m1) 2) 0.8208658))))
-   (assert (appendmessagehalt (str-cat "Fe2O3 (" ?m0 ") + Al (" ?m1 ") -(0.8208658)> Fe (" (* (/ (+ ?m0 ?m1) 2) 0.8208658) ") + Al2O3 (" (* (/ (+ ?m0 ?m1) 2) 0.8208658) ")")))
+   (assert (element (formula Железо) (mass (* (/ (+ ?m0 ?m1) 2) 0.838))))
+   (assert (element (formula ОксидАлюминия) (mass (* (/ (+ ?m0 ?m1) 2) 0.838))))
+   (assert (appendmessagehalt (str-cat "Fe2O3 (" ?m0 ") + Al (" ?m1 ") -(0.838)> Fe (" (* (/ (+ ?m0 ?m1) 2) 0.838) ") + Al2O3 (" (* (/ (+ ?m0 ?m1) 2) 0.838) ")")))
 )
 
 
@@ -1959,9 +1952,9 @@
    (element (formula Кислород) (mass ?m1))
    (element (formula Тепло) (mass ?m2))
    =>
-   (assert (element (formula ОксидМеди2) (mass (* (/ (+ ?m0 ?m1 ?m2) 2) 0.4149798))))
-   (assert (element (formula ОксидМеди) (mass (* (/ (+ ?m0 ?m1 ?m2) 2) 0.4149798))))
-   (assert (appendmessagehalt (str-cat "Cu (" ?m0 ") + O2 (" ?m1 ") + t (" ?m2 ") -(0.4149798)> CuO (" (* (/ (+ ?m0 ?m1 ?m2) 2) 0.4149798) ") + Cu2O (" (* (/ (+ ?m0 ?m1 ?m2) 2) 0.4149798) ")")))
+   (assert (element (formula ОксидМеди2) (mass (* (/ (+ ?m0 ?m1 ?m2) 2) 0.404))))
+   (assert (element (formula ОксидМеди) (mass (* (/ (+ ?m0 ?m1 ?m2) 2) 0.404))))
+   (assert (appendmessagehalt (str-cat "Cu (" ?m0 ") + O2 (" ?m1 ") + t (" ?m2 ") -(0.404)> CuO (" (* (/ (+ ?m0 ?m1 ?m2) 2) 0.404) ") + Cu2O (" (* (/ (+ ?m0 ?m1 ?m2) 2) 0.404) ")")))
 )
 
 
@@ -1971,9 +1964,9 @@
    (element (formula ОксидАзота1) (mass ?m1))
    (element (formula Тепло) (mass ?m2))
    =>
-   (assert (element (formula ОксидМеди) (mass (* (/ (+ ?m0 ?m1 ?m2) 2) 0.3851685))))
-   (assert (element (formula Азот) (mass (* (/ (+ ?m0 ?m1 ?m2) 2) 0.3851685))))
-   (assert (appendmessagehalt (str-cat "Cu (" ?m0 ") + N2O (" ?m1 ") + t (" ?m2 ") -(0.3851685)> Cu2O (" (* (/ (+ ?m0 ?m1 ?m2) 2) 0.3851685) ") + N2 (" (* (/ (+ ?m0 ?m1 ?m2) 2) 0.3851685) ")")))
+   (assert (element (formula ОксидМеди) (mass (* (/ (+ ?m0 ?m1 ?m2) 2) 0.510))))
+   (assert (element (formula Азот) (mass (* (/ (+ ?m0 ?m1 ?m2) 2) 0.510))))
+   (assert (appendmessagehalt (str-cat "Cu (" ?m0 ") + N2O (" ?m1 ") + t (" ?m2 ") -(0.510)> Cu2O (" (* (/ (+ ?m0 ?m1 ?m2) 2) 0.510) ") + N2 (" (* (/ (+ ?m0 ?m1 ?m2) 2) 0.510) ")")))
 )
 
 
@@ -1982,9 +1975,9 @@
    (element (formula ОксидМеди2) (mass ?m0))
    (element (formula Углерод) (mass ?m1))
    =>
-   (assert (element (formula Медь) (mass (* (/ (+ ?m0 ?m1) 2) 0.6903064))))
-   (assert (element (formula УглекислыйГаз) (mass (* (/ (+ ?m0 ?m1) 2) 0.6903064))))
-   (assert (appendmessagehalt (str-cat "CuO (" ?m0 ") + C (" ?m1 ") -(0.6903064)> Cu (" (* (/ (+ ?m0 ?m1) 2) 0.6903064) ") + CO2 (" (* (/ (+ ?m0 ?m1) 2) 0.6903064) ")")))
+   (assert (element (formula Медь) (mass (* (/ (+ ?m0 ?m1) 2) 0.488))))
+   (assert (element (formula УглекислыйГаз) (mass (* (/ (+ ?m0 ?m1) 2) 0.488))))
+   (assert (appendmessagehalt (str-cat "CuO (" ?m0 ") + C (" ?m1 ") -(0.488)> Cu (" (* (/ (+ ?m0 ?m1) 2) 0.488) ") + CO2 (" (* (/ (+ ?m0 ?m1) 2) 0.488) ")")))
 )
 
 
@@ -1993,9 +1986,9 @@
    (element (formula ОксидМеди2) (mass ?m0))
    (element (formula Водород) (mass ?m1))
    =>
-   (assert (element (formula Медь) (mass (* (/ (+ ?m0 ?m1) 2) 0.5108845))))
-   (assert (element (formula ДигидрогенаМонооксид) (mass (* (/ (+ ?m0 ?m1) 2) 0.5108845))))
-   (assert (appendmessagehalt (str-cat "CuO (" ?m0 ") + H2 (" ?m1 ") -(0.5108845)> Cu (" (* (/ (+ ?m0 ?m1) 2) 0.5108845) ") + H2O (" (* (/ (+ ?m0 ?m1) 2) 0.5108845) ")")))
+   (assert (element (formula Медь) (mass (* (/ (+ ?m0 ?m1) 2) 0.393))))
+   (assert (element (formula ДигидрогенаМонооксид) (mass (* (/ (+ ?m0 ?m1) 2) 0.393))))
+   (assert (appendmessagehalt (str-cat "CuO (" ?m0 ") + H2 (" ?m1 ") -(0.393)> Cu (" (* (/ (+ ?m0 ?m1) 2) 0.393) ") + H2O (" (* (/ (+ ?m0 ?m1) 2) 0.393) ")")))
 )
 
 
@@ -2004,10 +1997,10 @@
    (element (formula Малахит) (mass ?m0))
    (element (formula Тепло) (mass ?m1))
    =>
-   (assert (element (formula ОксидМеди2) (mass (* (/ (+ ?m0 ?m1) 3) 0.6696604))))
-   (assert (element (formula УглекислыйГаз) (mass (* (/ (+ ?m0 ?m1) 3) 0.6696604))))
-   (assert (element (formula ДигидрогенаМонооксид) (mass (* (/ (+ ?m0 ?m1) 3) 0.6696604))))
-   (assert (appendmessagehalt (str-cat "(CuOH)2CO3 (" ?m0 ") + t (" ?m1 ") -(0.6696604)> CuO (" (* (/ (+ ?m0 ?m1) 3) 0.6696604) ") + CO2 (" (* (/ (+ ?m0 ?m1) 3) 0.6696604) ") + H2O (" (* (/ (+ ?m0 ?m1) 3) 0.6696604) ")")))
+   (assert (element (formula ОксидМеди2) (mass (* (/ (+ ?m0 ?m1) 3) 0.871))))
+   (assert (element (formula УглекислыйГаз) (mass (* (/ (+ ?m0 ?m1) 3) 0.871))))
+   (assert (element (formula ДигидрогенаМонооксид) (mass (* (/ (+ ?m0 ?m1) 3) 0.871))))
+   (assert (appendmessagehalt (str-cat "(CuOH)2CO3 (" ?m0 ") + t (" ?m1 ") -(0.871)> CuO (" (* (/ (+ ?m0 ?m1) 3) 0.871) ") + CO2 (" (* (/ (+ ?m0 ?m1) 3) 0.871) ") + H2O (" (* (/ (+ ?m0 ?m1) 3) 0.871) ")")))
 )
 
 
@@ -2017,10 +2010,10 @@
    (element (formula УгарныйГаз) (mass ?m1))
    (element (formula Тепло) (mass ?m2))
    =>
-   (assert (element (formula УглекислыйГаз) (mass (* (/ (+ ?m0 ?m1 ?m2) 3) 0.7463569))))
-   (assert (element (formula Медь) (mass (* (/ (+ ?m0 ?m1 ?m2) 3) 0.7463569))))
-   (assert (element (formula ДигидрогенаМонооксид) (mass (* (/ (+ ?m0 ?m1 ?m2) 3) 0.7463569))))
-   (assert (appendmessagehalt (str-cat "(CuOH)2CO3 (" ?m0 ") + CO (" ?m1 ") + t (" ?m2 ") -(0.7463569)> CO2 (" (* (/ (+ ?m0 ?m1 ?m2) 3) 0.7463569) ") + Cu (" (* (/ (+ ?m0 ?m1 ?m2) 3) 0.7463569) ") + H2O (" (* (/ (+ ?m0 ?m1 ?m2) 3) 0.7463569) ")")))
+   (assert (element (formula УглекислыйГаз) (mass (* (/ (+ ?m0 ?m1 ?m2) 3) 0.718))))
+   (assert (element (formula Медь) (mass (* (/ (+ ?m0 ?m1 ?m2) 3) 0.718))))
+   (assert (element (formula ДигидрогенаМонооксид) (mass (* (/ (+ ?m0 ?m1 ?m2) 3) 0.718))))
+   (assert (appendmessagehalt (str-cat "(CuOH)2CO3 (" ?m0 ") + CO (" ?m1 ") + t (" ?m2 ") -(0.718)> CO2 (" (* (/ (+ ?m0 ?m1 ?m2) 3) 0.718) ") + Cu (" (* (/ (+ ?m0 ?m1 ?m2) 3) 0.718) ") + H2O (" (* (/ (+ ?m0 ?m1 ?m2) 3) 0.718) ")")))
 )
 
 
@@ -2029,21 +2022,21 @@
    (element (formula ХлоридБария) (mass ?m0))
    (element (formula Электролиз) (mass ?m1))
    =>
-   (assert (element (formula Барий) (mass (* (/ (+ ?m0 ?m1) 2) 0.861469))))
-   (assert (element (formula Хлор) (mass (* (/ (+ ?m0 ?m1) 2) 0.861469))))
-   (assert (appendmessagehalt (str-cat "BaCl2 (" ?m0 ") + e (" ?m1 ") -(0.861469)> Ba (" (* (/ (+ ?m0 ?m1) 2) 0.861469) ") + Cl2 (" (* (/ (+ ?m0 ?m1) 2) 0.861469) ")")))
+   (assert (element (formula Барий) (mass (* (/ (+ ?m0 ?m1) 2) 0.501))))
+   (assert (element (formula Хлор) (mass (* (/ (+ ?m0 ?m1) 2) 0.501))))
+   (assert (appendmessagehalt (str-cat "BaCl2 (" ?m0 ") + e (" ?m1 ") -(0.501)> Ba (" (* (/ (+ ?m0 ?m1) 2) 0.501) ") + Cl2 (" (* (/ (+ ?m0 ?m1) 2) 0.501) ")")))
 )
 
 
-(defrule СолянаяКислота_ОксидМарганца_Хлор_ХлоридМарганца_ДигидрогенаМонооксид
+(defrule СолянаяКислота_ОксидМарганца4_Хлор_ХлоридМарганца_ДигидрогенаМонооксид
    (declare (salience 40))
    (element (formula СолянаяКислота) (mass ?m0))
-   (element (formula ОксидМарганца) (mass ?m1))
+   (element (formula ОксидМарганца4) (mass ?m1))
    =>
-   (assert (element (formula Хлор) (mass (* (/ (+ ?m0 ?m1) 3) 0.5301975))))
-   (assert (element (formula ХлоридМарганца) (mass (* (/ (+ ?m0 ?m1) 3) 0.5301975))))
-   (assert (element (formula ДигидрогенаМонооксид) (mass (* (/ (+ ?m0 ?m1) 3) 0.5301975))))
-   (assert (appendmessagehalt (str-cat "HCl (" ?m0 ") + MnO2 (" ?m1 ") -(0.5301975)> Cl2 (" (* (/ (+ ?m0 ?m1) 3) 0.5301975) ") + MnCl2 (" (* (/ (+ ?m0 ?m1) 3) 0.5301975) ") + H2O (" (* (/ (+ ?m0 ?m1) 3) 0.5301975) ")")))
+   (assert (element (formula Хлор) (mass (* (/ (+ ?m0 ?m1) 3) 0.906))))
+   (assert (element (formula ХлоридМарганца) (mass (* (/ (+ ?m0 ?m1) 3) 0.906))))
+   (assert (element (formula ДигидрогенаМонооксид) (mass (* (/ (+ ?m0 ?m1) 3) 0.906))))
+   (assert (appendmessagehalt (str-cat "HCl (" ?m0 ") + MnO2 (" ?m1 ") -(0.906)> Cl2 (" (* (/ (+ ?m0 ?m1) 3) 0.906) ") + MnCl2 (" (* (/ (+ ?m0 ?m1) 3) 0.906) ") + H2O (" (* (/ (+ ?m0 ?m1) 3) 0.906) ")")))
 )
 
 
@@ -2052,9 +2045,9 @@
    (element (formula ХлоридНатрия) (mass ?m0))
    (element (formula Электролиз) (mass ?m1))
    =>
-   (assert (element (formula Натрий) (mass (* (/ (+ ?m0 ?m1) 2) 0.7626747))))
-   (assert (element (formula Хлор) (mass (* (/ (+ ?m0 ?m1) 2) 0.7626747))))
-   (assert (appendmessagehalt (str-cat "NaCl (" ?m0 ") + e (" ?m1 ") -(0.7626747)> Na (" (* (/ (+ ?m0 ?m1) 2) 0.7626747) ") + Cl2 (" (* (/ (+ ?m0 ?m1) 2) 0.7626747) ")")))
+   (assert (element (formula Натрий) (mass (* (/ (+ ?m0 ?m1) 2) 0.817))))
+   (assert (element (formula Хлор) (mass (* (/ (+ ?m0 ?m1) 2) 0.817))))
+   (assert (appendmessagehalt (str-cat "NaCl (" ?m0 ") + e (" ?m1 ") -(0.817)> Na (" (* (/ (+ ?m0 ?m1) 2) 0.817) ") + Cl2 (" (* (/ (+ ?m0 ?m1) 2) 0.817) ")")))
 )
 
 
@@ -2064,9 +2057,9 @@
    (element (formula ДигидрогенаМонооксид) (mass ?m1))
    (element (formula Электролиз) (mass ?m2))
    =>
-   (assert (element (formula ГидроксидКалия) (mass (* (/ (+ ?m0 ?m1 ?m2) 2) 0.897651))))
-   (assert (element (formula СолянаяКислота) (mass (* (/ (+ ?m0 ?m1 ?m2) 2) 0.897651))))
-   (assert (appendmessagehalt (str-cat "KCl (" ?m0 ") + H2O (" ?m1 ") + e (" ?m2 ") -(0.897651)> KOH (" (* (/ (+ ?m0 ?m1 ?m2) 2) 0.897651) ") + HCl (" (* (/ (+ ?m0 ?m1 ?m2) 2) 0.897651) ")")))
+   (assert (element (formula ГидроксидКалия) (mass (* (/ (+ ?m0 ?m1 ?m2) 2) 0.397))))
+   (assert (element (formula СолянаяКислота) (mass (* (/ (+ ?m0 ?m1 ?m2) 2) 0.397))))
+   (assert (appendmessagehalt (str-cat "KCl (" ?m0 ") + H2O (" ?m1 ") + e (" ?m2 ") -(0.397)> KOH (" (* (/ (+ ?m0 ?m1 ?m2) 2) 0.397) ") + HCl (" (* (/ (+ ?m0 ?m1 ?m2) 2) 0.397) ")")))
 )
 
 
@@ -2076,9 +2069,9 @@
    (element (formula Кислород) (mass ?m1))
    (element (formula Тепло) (mass ?m2))
    =>
-   (assert (element (formula СульфидМеди) (mass (* (/ (+ ?m0 ?m1 ?m2) 2) 0.5986105))))
-   (assert (element (formula ОксидЖелеза) (mass (* (/ (+ ?m0 ?m1 ?m2) 2) 0.5986105))))
-   (assert (appendmessagehalt (str-cat "CuFeS2 (" ?m0 ") + O2 (" ?m1 ") + t (" ?m2 ") -(0.5986105)> Cu2S (" (* (/ (+ ?m0 ?m1 ?m2) 2) 0.5986105) ") + FeO (" (* (/ (+ ?m0 ?m1 ?m2) 2) 0.5986105) ")")))
+   (assert (element (formula СульфидМеди) (mass (* (/ (+ ?m0 ?m1 ?m2) 2) 0.531))))
+   (assert (element (formula ОксидЖелеза) (mass (* (/ (+ ?m0 ?m1 ?m2) 2) 0.531))))
+   (assert (appendmessagehalt (str-cat "CuFeS2 (" ?m0 ") + O2 (" ?m1 ") + t (" ?m2 ") -(0.531)> Cu2S (" (* (/ (+ ?m0 ?m1 ?m2) 2) 0.531) ") + FeO (" (* (/ (+ ?m0 ?m1 ?m2) 2) 0.531) ")")))
 )
 
 
@@ -2088,10 +2081,10 @@
    (element (formula ДигидрогенаМонооксид) (mass ?m1))
    (element (formula Тепло) (mass ?m2))
    =>
-   (assert (element (formula Медь) (mass (* (/ (+ ?m0 ?m1 ?m2) 3) 0.6772568))))
-   (assert (element (formula ДиоксидСеры) (mass (* (/ (+ ?m0 ?m1 ?m2) 3) 0.6772568))))
-   (assert (element (formula Водород) (mass (* (/ (+ ?m0 ?m1 ?m2) 3) 0.6772568))))
-   (assert (appendmessagehalt (str-cat "Cu2S (" ?m0 ") + H2O (" ?m1 ") + t (" ?m2 ") -(0.6772568)> Cu (" (* (/ (+ ?m0 ?m1 ?m2) 3) 0.6772568) ") + SO2 (" (* (/ (+ ?m0 ?m1 ?m2) 3) 0.6772568) ") + H2 (" (* (/ (+ ?m0 ?m1 ?m2) 3) 0.6772568) ")")))
+   (assert (element (formula Медь) (mass (* (/ (+ ?m0 ?m1 ?m2) 3) 0.890))))
+   (assert (element (formula ДиоксидСеры) (mass (* (/ (+ ?m0 ?m1 ?m2) 3) 0.890))))
+   (assert (element (formula Водород) (mass (* (/ (+ ?m0 ?m1 ?m2) 3) 0.890))))
+   (assert (appendmessagehalt (str-cat "Cu2S (" ?m0 ") + H2O (" ?m1 ") + t (" ?m2 ") -(0.890)> Cu (" (* (/ (+ ?m0 ?m1 ?m2) 3) 0.890) ") + SO2 (" (* (/ (+ ?m0 ?m1 ?m2) 3) 0.890) ") + H2 (" (* (/ (+ ?m0 ?m1 ?m2) 3) 0.890) ")")))
 )
 
 
@@ -2100,9 +2093,9 @@
    (element (formula СульфидМеди) (mass ?m0))
    (element (formula Тепло) (mass ?m1))
    =>
-   (assert (element (formula Медь) (mass (* (/ (+ ?m0 ?m1) 2) 0.3067362))))
-   (assert (element (formula Сера) (mass (* (/ (+ ?m0 ?m1) 2) 0.3067362))))
-   (assert (appendmessagehalt (str-cat "Cu2S (" ?m0 ") + t (" ?m1 ") -(0.3067362)> Cu (" (* (/ (+ ?m0 ?m1) 2) 0.3067362) ") + S (" (* (/ (+ ?m0 ?m1) 2) 0.3067362) ")")))
+   (assert (element (formula Медь) (mass (* (/ (+ ?m0 ?m1) 2) 0.620))))
+   (assert (element (formula Сера) (mass (* (/ (+ ?m0 ?m1) 2) 0.620))))
+   (assert (appendmessagehalt (str-cat "Cu2S (" ?m0 ") + t (" ?m1 ") -(0.620)> Cu (" (* (/ (+ ?m0 ?m1) 2) 0.620) ") + S (" (* (/ (+ ?m0 ?m1) 2) 0.620) ")")))
 )
 
 
@@ -2111,9 +2104,9 @@
    (element (formula СульфидСвинца) (mass ?m0))
    (element (formula СолянаяКислота) (mass ?m1))
    =>
-   (assert (element (formula ХлоридСвинца) (mass (* (/ (+ ?m0 ?m1) 2) 0.6175708))))
-   (assert (element (formula Сероводород) (mass (* (/ (+ ?m0 ?m1) 2) 0.6175708))))
-   (assert (appendmessagehalt (str-cat "PbS (" ?m0 ") + HCl (" ?m1 ") -(0.6175708)> PbCl2 (" (* (/ (+ ?m0 ?m1) 2) 0.6175708) ") + H2S (" (* (/ (+ ?m0 ?m1) 2) 0.6175708) ")")))
+   (assert (element (formula ХлоридСвинца) (mass (* (/ (+ ?m0 ?m1) 2) 0.371))))
+   (assert (element (formula Сероводород) (mass (* (/ (+ ?m0 ?m1) 2) 0.371))))
+   (assert (appendmessagehalt (str-cat "PbS (" ?m0 ") + HCl (" ?m1 ") -(0.371)> PbCl2 (" (* (/ (+ ?m0 ?m1) 2) 0.371) ") + H2S (" (* (/ (+ ?m0 ?m1) 2) 0.371) ")")))
 )
 
 
@@ -2123,9 +2116,9 @@
    (element (formula Водород) (mass ?m1))
    (element (formula Тепло) (mass ?m2))
    =>
-   (assert (element (formula Свинец) (mass (* (/ (+ ?m0 ?m1 ?m2) 2) 0.7012511))))
-   (assert (element (formula Сероводород) (mass (* (/ (+ ?m0 ?m1 ?m2) 2) 0.7012511))))
-   (assert (appendmessagehalt (str-cat "PbS (" ?m0 ") + H2 (" ?m1 ") + t (" ?m2 ") -(0.7012511)> Pb (" (* (/ (+ ?m0 ?m1 ?m2) 2) 0.7012511) ") + H2S (" (* (/ (+ ?m0 ?m1 ?m2) 2) 0.7012511) ")")))
+   (assert (element (formula Свинец) (mass (* (/ (+ ?m0 ?m1 ?m2) 2) 0.314))))
+   (assert (element (formula Сероводород) (mass (* (/ (+ ?m0 ?m1 ?m2) 2) 0.314))))
+   (assert (appendmessagehalt (str-cat "PbS (" ?m0 ") + H2 (" ?m1 ") + t (" ?m2 ") -(0.314)> Pb (" (* (/ (+ ?m0 ?m1 ?m2) 2) 0.314) ") + H2S (" (* (/ (+ ?m0 ?m1 ?m2) 2) 0.314) ")")))
 )
 
 
@@ -2134,9 +2127,9 @@
    (element (formula СульфидСвинца) (mass ?m0))
    (element (formula Озон) (mass ?m1))
    =>
-   (assert (element (formula СульфатСвинца) (mass (* (/ (+ ?m0 ?m1) 2) 0.4991926))))
-   (assert (element (formula Кислород) (mass (* (/ (+ ?m0 ?m1) 2) 0.4991926))))
-   (assert (appendmessagehalt (str-cat "PbS (" ?m0 ") + O3 (" ?m1 ") -(0.4991926)> PbSO4 (" (* (/ (+ ?m0 ?m1) 2) 0.4991926) ") + O2 (" (* (/ (+ ?m0 ?m1) 2) 0.4991926) ")")))
+   (assert (element (formula СульфатСвинца) (mass (* (/ (+ ?m0 ?m1) 2) 0.557))))
+   (assert (element (formula Кислород) (mass (* (/ (+ ?m0 ?m1) 2) 0.557))))
+   (assert (appendmessagehalt (str-cat "PbS (" ?m0 ") + O3 (" ?m1 ") -(0.557)> PbSO4 (" (* (/ (+ ?m0 ?m1) 2) 0.557) ") + O2 (" (* (/ (+ ?m0 ?m1) 2) 0.557) ")")))
 )
 
 
@@ -2145,9 +2138,9 @@
    (element (formula ХлоридСвинца) (mass ?m0))
    (element (formula ДигидрогенаМонооксид) (mass ?m1))
    =>
-   (assert (element (formula ГидроксидХлоридСвинца) (mass (* (/ (+ ?m0 ?m1) 2) 0.8838909))))
-   (assert (element (formula СолянаяКислота) (mass (* (/ (+ ?m0 ?m1) 2) 0.8838909))))
-   (assert (appendmessagehalt (str-cat "PbCl2 (" ?m0 ") + H2O (" ?m1 ") -(0.8838909)> Pb(OH)Cl (" (* (/ (+ ?m0 ?m1) 2) 0.8838909) ") + HCl (" (* (/ (+ ?m0 ?m1) 2) 0.8838909) ")")))
+   (assert (element (formula ГидроксидХлоридСвинца) (mass (* (/ (+ ?m0 ?m1) 2) 0.609))))
+   (assert (element (formula СолянаяКислота) (mass (* (/ (+ ?m0 ?m1) 2) 0.609))))
+   (assert (appendmessagehalt (str-cat "PbCl2 (" ?m0 ") + H2O (" ?m1 ") -(0.609)> Pb(OH)Cl (" (* (/ (+ ?m0 ?m1) 2) 0.609) ") + HCl (" (* (/ (+ ?m0 ?m1) 2) 0.609) ")")))
 )
 
 
@@ -2157,7 +2150,7 @@
    (element (formula Водород) (mass ?m1))
    (element (formula Тепло) (mass ?m2))
    =>
-   (assert (element (formula Свинец) (mass (* (/ (+ ?m0 ?m1 ?m2) 2) 0.4098166))))
-   (assert (element (formula СолянаяКислота) (mass (* (/ (+ ?m0 ?m1 ?m2) 2) 0.4098166))))
-   (assert (appendmessagehalt (str-cat "PbCl2 (" ?m0 ") + H2 (" ?m1 ") + t (" ?m2 ") -(0.4098166)> Pb (" (* (/ (+ ?m0 ?m1 ?m2) 2) 0.4098166) ") + HCl (" (* (/ (+ ?m0 ?m1 ?m2) 2) 0.4098166) ")")))
+   (assert (element (formula Свинец) (mass (* (/ (+ ?m0 ?m1 ?m2) 2) 0.885))))
+   (assert (element (formula СолянаяКислота) (mass (* (/ (+ ?m0 ?m1 ?m2) 2) 0.885))))
+   (assert (appendmessagehalt (str-cat "PbCl2 (" ?m0 ") + H2 (" ?m1 ") + t (" ?m2 ") -(0.885)> Pb (" (* (/ (+ ?m0 ?m1 ?m2) 2) 0.885) ") + HCl (" (* (/ (+ ?m0 ?m1 ?m2) 2) 0.885) ")")))
 )
